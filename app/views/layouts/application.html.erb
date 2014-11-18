@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CanvasBlog</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+  <main>
+    <div id="canvasWrapper">
+      <canvas id="canvas"></canvas>
+    </div>
+    <div id='div-top'>
+      <div id='container'>
+
+				<%= yield %>
+
+      </div>
+    </div>
+    <div id='post-info'></div>
+  </main>
+
+</body>
+</html>
