@@ -39,10 +39,12 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
 group :development, :test do 
+	gem 'faker' 
 	gem 'rspec-rails' 
 end 
 
 group :test do 
-	gem 'faker' 
 	gem 'capybara' 
 end
+
+gem 'carrierwave'
