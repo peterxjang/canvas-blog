@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20141117002639) do
 
   create_table "postlayouts", force: true do |t|
     t.integer  "canvaslayout_id"
+    t.integer  "post_id"
     t.float    "angle",           default: 0.0
     t.float    "top",             default: 150.0
     t.float    "left",            default: 100.0
@@ -52,7 +53,7 @@ ActiveRecord::Schema.define(version: 20141117002639) do
     t.integer  "user_id"
     t.string   "title"
     t.text     "body"
-    t.string   "image_path"
+    t.string   "image"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

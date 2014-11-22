@@ -12,7 +12,7 @@ class CreateTables < ActiveRecord::Migration
       t.belongs_to :user
       t.string :title
       t.text :body
-      t.string :image_path
+      t.string :image
       t.timestamps
     end
 
@@ -41,6 +41,7 @@ class CreateTables < ActiveRecord::Migration
 
     create_table :postlayouts do |t|
       t.belongs_to :canvaslayout
+      t.belongs_to :post
       t.float :angle, default: 0.0
       t.float :top, default: 150.0
       t.float :left, default: 100.0
