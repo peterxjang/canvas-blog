@@ -36,17 +36,7 @@ class CreateTables < ActiveRecord::Migration
     create_table :canvaslayouts do |t|
       t.belongs_to :user
       t.float :canvas_zoom, default: 1.0
-      t.timestamps
-    end
-
-    create_table :postlayouts do |t|
-      t.belongs_to :canvaslayout
-      t.belongs_to :post
-      t.float :angle, default: 0.0
-      t.float :top, default: 150.0
-      t.float :left, default: 100.0
-      t.float :scaleX
-      t.float :scaleY
+      t.text :objects
       t.timestamps
     end
   end

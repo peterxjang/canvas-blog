@@ -14,4 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require fabric.min
+//= require PxLoader
+//= require PxLoaderImage
+//= require jquery.mousewheel.min
 //= require_tree .

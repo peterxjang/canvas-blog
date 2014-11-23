@@ -48,10 +48,10 @@ function loadPostImages(canvas, canvasData, canvasZoom, objectsData, makeLinks) 
   zoomScale = canvasZoom;
   // console.log(canvasData);
   var loader = new PxLoader();
-  console.log(objectsData);
+  // console.log(objectsData);
   for (var i=0; i< objectsData.length; i++){
     var post = objectsData[i];
-    $('#posts-container').append('<img id="' + post.id + '" class="polaroid" src="' + post.url + '" />');
+    // $('#posts-container').append('<img id="' + post.id + '" class="polaroid" src="' + post.url + '" />');
     loader.addImage(post.url);
   }
   loader.addCompletionListener(function(){

@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20141117002639) do
   create_table "canvaslayouts", force: true do |t|
     t.integer  "user_id"
     t.float    "canvas_zoom", default: 1.0
+    t.text     "objects"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -33,18 +34,6 @@ ActiveRecord::Schema.define(version: 20141117002639) do
   create_table "post_tags", force: true do |t|
     t.integer  "post_id"
     t.integer  "tag_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "postlayouts", force: true do |t|
-    t.integer  "canvaslayout_id"
-    t.integer  "post_id"
-    t.float    "angle",           default: 0.0
-    t.float    "top",             default: 150.0
-    t.float    "left",            default: 100.0
-    t.float    "scaleX"
-    t.float    "scaleY"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

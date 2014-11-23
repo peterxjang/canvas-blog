@@ -9,7 +9,7 @@ $(document).ready(function() {
   canvas.setWidth(window.innerWidth);
   canvas.setHeight(window.innerHeight);
   zoomScale = 1;
-  // makeCanvasZoomable(canvas);
+  makeCanvasZoomable(canvas);
   // canvas.on('selection:cleared', function() {$("#post-info").hide();})
   window.addEventListener('resize', resizeCanvas, false);
   function resizeCanvas() {
@@ -29,6 +29,7 @@ $(document).ready(function() {
         if (response.valid) {
           // $('#container').hide();
           $('#div-top').html(response.html);
+          loadPostImagesEdit(canvas, null, response.canvasZoom, response.canvasObjects);
           console.log(response);
         }
         else {

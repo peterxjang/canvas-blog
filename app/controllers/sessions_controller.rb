@@ -11,7 +11,8 @@ class SessionsController < ApplicationController
 			@posts = @user.posts
 			# redirect_to @user
 			result['valid'] = true
-			result['objectsData'] = @posts
+			result['canvasZoom'] = current_layout.canvas_zoom
+			result['canvasObjects'] = current_layout.objects
 			# result['objectsData'] = []
 			# @posts.each do |post|
 		 #    result['objectsData'] << {
