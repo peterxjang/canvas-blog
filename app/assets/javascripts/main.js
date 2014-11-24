@@ -6,6 +6,7 @@ $(document).ready(function() {
   // $(document).on("click", "#button-sign-out", postSignOut);
   $(document).on("click", "#button-sign-in", postSignIn);
   $("#sign-in").on("click", loadInitialPage);
+  $(document).on("click", "#button-edit-posts", loadInitialPage);
   // $('#graph').bind('mousewheel', onMouseWheel);
 });
 
@@ -30,6 +31,12 @@ function createLayer(stage) {
     // clearBeforeDraw : false
   });
   layer.setDraggable("draggable");
+  stage.add(layer);
+  return layer;
+}
+
+function addZoomBackground(layer) {
+
   var background = new Kinetic.Rect({
     x: -10000,
     y: -10000,
@@ -43,16 +50,11 @@ function createLayer(stage) {
   var startRotate = 0;
   var hammertime = Hammer(layer)
   .on("transformstart", function(e) {
-    // alert('HI');
-    console.log('hi');
-    // console.log(layer.scaleX());
     startScale = layer.scaleX();
     // startScale = background.scaleX();
     // startRotate = background.rotation();
     // layer.draw();
   }).on("transform", function(e) {
-    // console.log(startScale * e.gesture.scale);
-    // layer.setScale(startScale * e.gesture.scale);
     layer.scale({
       x : startScale * e.gesture.scale,
       y : startScale * e.gesture.scale,
@@ -65,8 +67,6 @@ function createLayer(stage) {
     // // background.rotation(startRotate + e.gesture.rotation);
     layer.draw();
   });
-  stage.add(layer);
-  return layer;
 }
 
 function loadInitialPage(event) {
@@ -75,10 +75,9 @@ function loadInitialPage(event) {
     url: '/sessions',
     type: 'POST',
     dataType: 'json',
-    data: $("form").serialize(),
+    data: $("form#form-sign-in").serialize(),
     success: function(response) {
       if (response.valid) {
-        // $('#container').hide();
         $('#div-top').html(response.html);
         $('#menu').html(response.htmlMenu);
         loadImages(response.canvasObjects);
@@ -95,6 +94,9 @@ function loadInitialPage(event) {
 }
 
 function loadImages(objects) {
+  layer.removeChildren();
+
+  addZoomBackground(layer);
   var loader = new PxLoader();
   for (var i=0; i<objects.length; i++) {
     var object = objects[i];

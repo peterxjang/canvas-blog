@@ -2,7 +2,7 @@
 
   <h1>ZoomWorld PhotoBlog</h1>
   <h3>Sign in:</h3>
-  <%= form_tag sessions_path do %>
+  <%= form_tag sessions_path, id: "form-sign-in" do %>
     <p class='error-message' id='error-signin'><%= @message_signin %></p>
     <ul class='list-no-bullets'>
     	<li><%= email_field_tag :email, nil, placeholder: "Email" %></li>
