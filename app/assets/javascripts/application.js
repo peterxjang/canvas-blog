@@ -13,8 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require fabric.min
-//= require PxLoader
-//= require PxLoaderImage
-//= require jquery.mousewheel.min
+//= require kinetic-v5.1.0
+//= require hammer
 //= require_tree .
