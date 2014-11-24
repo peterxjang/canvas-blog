@@ -16,6 +16,7 @@ module ApplicationHelper
 				layout.objects = current_user.posts.each_with_index.map do |post, index|
 					{id: post.id,
 					 title: post.title,
+					 src: post.image.url,
 					 top: 150.0 + 10*index,
 					 left: 100.0 + 10*index,
 					 angle: 0.0,
