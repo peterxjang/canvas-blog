@@ -13,20 +13,6 @@ class SessionsController < ApplicationController
 			result['valid'] = true
 			result['canvasZoom'] = current_layout.canvas_zoom
 			result['canvasObjects'] = current_layout.objects
-			# result['objectsData'] = []
-			# @posts.each do |post|
-		 #    result['objectsData'] << {
-		 #      id: post.id,
-		 #      title: post.title,
-		 #      body: post.body,
-		 #      url: post.image.url,
-		 #      # angle: post.angle,
-		 #      # top: post.top,
-		 #      # left: post.left,
-		 #      # scaleX: post.scaleX,
-		 #      # scaleY: post.scaleY
-		 #    }
-			# end
 			result['html'] = render_to_string(partial: 'show_polaroid')
 		else
 			@error = "Incorrect email or password!"
@@ -35,7 +21,6 @@ class SessionsController < ApplicationController
 			# render "new"
 			result['valid'] = false
 		end
-		# result['user'] = params[:email]
 		render json: result
 	end
 end

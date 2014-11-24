@@ -19,8 +19,8 @@ module ApplicationHelper
 					 top: 150.0 + 10*index,
 					 left: 100.0 + 10*index,
 					 angle: 0.0,
-					 scaleX: 1.0,
-					 scaleY: 1.0} 
+					 scaleX: nil,
+					 scaleY: nil} 
 				end
 			end
 			layout
