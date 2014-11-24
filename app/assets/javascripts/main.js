@@ -29,10 +29,10 @@ function createLayer(stage) {
   });
   layer.setDraggable("draggable");
   var background = new Kinetic.Rect({
-    x: -1000,
-    y: -1000,
-    width: 2000,
-    height: 2000,
+    x: -10000,
+    y: -10000,
+    width: 20000,
+    height: 20000,
     fill: "#000000",
     opacity: 0
   });
@@ -104,18 +104,25 @@ function loadImages(objects) {
       image: e.resource.img,
       draggable: true,
     });
-    // add the shape to the layer
-    layer.add(yoda);
-    layer.draw();
+
+    // yoda.on("click",function(){
+    //   yoda.moveToTop();
+    //   layer.draw();
+    // });
 
     var startScale = 1;
     var startRotate = 0;
     var hammertime = Hammer(yoda)
+    .on("touch", function(e) {
+      yoda.moveToTop();
+      layer.draw();
+    })
     .on("transformstart", function(e) {
       startScale = yoda.scaleX();
       // startRotate = yoda.rotation();
       layer.draw();
-    }).on("transform", function(e) {
+    })
+    .on("transform", function(e) {
       yoda.scale({
         x : startScale * e.gesture.scale,
         y : startScale * e.gesture.scale,
@@ -123,6 +130,12 @@ function loadImages(objects) {
       // yoda.rotation(startRotate + e.gesture.rotation);
       layer.draw();
     });
+
+    // add the shape to the layer
+    layer.add(yoda);
+    layer.draw();
+
+
   });
   loader.start();
 }
