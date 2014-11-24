@@ -4,7 +4,7 @@ $(document).ready(function() {
   stage = createStage();
   layer = stage.getLayers()[0];
   $("#sign-in").on("click", loadInitialPage);
-  $('#graph').bind('mousewheel', onMouseWheel);
+  // $('#graph').bind('mousewheel', onMouseWheel);
 });
 
 
@@ -58,7 +58,7 @@ function loadInitialPage(event) {
 }
 
 function loadImages(objects) {
-  for (var i=0; i<1; i++) {
+  for (var i=0; i<objects.length; i++) {
     var object = objects[i];
     var imageObj = new Image();
     imageObj.src = object.src;
@@ -66,7 +66,8 @@ function loadImages(objects) {
       var yoda = new Kinetic.Image({
         x: object.left,
         y: object.top,
-        image: imageObj
+        image: imageObj,
+    draggable: true,
       });
       // add the shape to the layer
       layer.add(yoda);
@@ -76,15 +77,17 @@ function loadImages(objects) {
       var startRotate = 0;
       var hammertime = Hammer(yoda)
       .on("transformstart", function(e) {
-          alert('hi');
-          startScale = yoda.scaleX();
-          startRotate = yoda.rotation();
+        startScale = yoda.scaleX();
+        // startRotate = yoda.rotation();
+        layer.draw();
       }).on("transform", function(e) {
-          yoda.scale({
-              x : startScale * e.gesture.scale,
-              y : startScale * e.gesture.scale,
-          });
-          yoda.rotation(startRotate + e.gesture.rotation)
+        console.log(startScale * e.gesture.scale);
+        yoda.scale({
+          x : startScale * e.gesture.scale,
+          y : startScale * e.gesture.scale,
+        });
+        // yoda.rotation(startRotate + e.gesture.rotation);
+        layer.draw();
       });
 
     }
