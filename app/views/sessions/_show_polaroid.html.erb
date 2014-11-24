@@ -1,13 +1,3 @@
-<!-- <h1>Hi</h1>
-<h2>Welcome <%= @user.first_name %>!</h2>
-<h3>Posts</h3>
-<ul>
-	<% @posts.each do |post| %>
-	<li><%= post.title %></li>
-	<% end %>
-</ul> -->
-
-
 <% @posts.each do |post| %>
 	<img id=<%= post.id %> class="polaroid" src='<%= post.image.url %>' alt='<%= post.title %>' />
 <% end %>

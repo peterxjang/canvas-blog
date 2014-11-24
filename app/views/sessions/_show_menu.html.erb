@@ -1,0 +1,8 @@
+
+    
+      <% if current_user %>
+        <!-- <button type="button" id='button-sign-out'>Sign out</button> -->
+        <%= button_to "Sign out", destroy_session_path(current_user), method: :delete, :form => { :id => "button-sign-out" } %>
+      <% else %>
+        <!-- <button type="button" id='button-sign-in'>Sign in</button> -->
+      <% end %>

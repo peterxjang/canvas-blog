@@ -14,6 +14,7 @@ class SessionsController < ApplicationController
 			result['canvasZoom'] = current_layout.canvas_zoom
 			result['canvasObjects'] = current_layout.objects
 			result['html'] = render_to_string(partial: 'show_polaroid')
+			result['htmlMenu'] = render_to_string(partial: 'show_menu')
 		else
 			@error = "Incorrect email or password!"
 			session[:user_id] = nil
@@ -22,5 +23,11 @@ class SessionsController < ApplicationController
 			result['valid'] = false
 		end
 		render json: result
+	end
+
+	def destroy
+		session[:user_id] = nil
+		# render 'new'
+		redirect_to '/'
 	end
 end

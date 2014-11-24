@@ -3,6 +3,8 @@ $(document).ready(function() {
   min_scale = 0.1;
   stage = createStage();
   layer = stage.getLayers()[0];
+  // $(document).on("click", "#button-sign-out", postSignOut);
+  $(document).on("click", "#button-sign-in", postSignIn);
   $("#sign-in").on("click", loadInitialPage);
   // $('#graph').bind('mousewheel', onMouseWheel);
 });
@@ -78,6 +80,7 @@ function loadInitialPage(event) {
       if (response.valid) {
         // $('#container').hide();
         $('#div-top').html(response.html);
+        $('#menu').html(response.htmlMenu);
         loadImages(response.canvasObjects);
       }
       else {
@@ -104,11 +107,6 @@ function loadImages(objects) {
       image: e.resource.img,
       draggable: true,
     });
-
-    // yoda.on("click",function(){
-    //   yoda.moveToTop();
-    //   layer.draw();
-    // });
 
     var startScale = 1;
     var startRotate = 0;

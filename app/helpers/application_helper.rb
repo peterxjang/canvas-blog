@@ -27,4 +27,8 @@ module ApplicationHelper
 			layout
 		end
 	end
+
+	def render_menu
+		"<nav id='menu'>dsf</nav>"
+	end
 end

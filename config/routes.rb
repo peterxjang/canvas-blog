@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   # get '/' => 'sessions#new'
   root 'sessions#new'
   post 'sessions' => 'sessions#create'
+  delete 'sessions/:id' => 'sessions#destroy', as: 'destroy_session'
+  # resources :sessions
   get 'user' => 'users#show'
   post 'users' => 'users#create'
   # resources :users, except: [:destroy]

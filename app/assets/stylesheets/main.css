@@ -84,6 +84,11 @@ h2 {
   z-index: 1;
   height: 5%;
   background-color: black;
+  color: white;
+}
+
+#button-sign-in, #button-sign-out {
+  float: right;
 }
 
 
