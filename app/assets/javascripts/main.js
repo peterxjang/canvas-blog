@@ -27,6 +27,42 @@ function createLayer(stage) {
   var layer = new Kinetic.Layer({
     // clearBeforeDraw : false
   });
+  layer.setDraggable("draggable");
+  var background = new Kinetic.Rect({
+    x: -1000,
+    y: -1000,
+    width: 2000,
+    height: 2000,
+    fill: "#000000",
+    opacity: 0
+  });
+  layer.add(background);
+  var startScale = 1;
+  var startRotate = 0;
+  var hammertime = Hammer(layer)
+  .on("transformstart", function(e) {
+    // alert('HI');
+    console.log('hi');
+    // console.log(layer.scaleX());
+    startScale = layer.scaleX();
+    // startScale = background.scaleX();
+    // startRotate = background.rotation();
+    // layer.draw();
+  }).on("transform", function(e) {
+    // console.log(startScale * e.gesture.scale);
+    // layer.setScale(startScale * e.gesture.scale);
+    layer.scale({
+      x : startScale * e.gesture.scale,
+      y : startScale * e.gesture.scale,
+    });
+    // console.log(layer.getScale());
+    // background.scale({
+    //   x : startScale * e.gesture.scale,
+    //   y : startScale * e.gesture.scale,
+    // });
+    // // background.rotation(startRotate + e.gesture.rotation);
+    layer.draw();
+  });
   stage.add(layer);
   return layer;
 }
