@@ -43,8 +43,6 @@ function loadInitialPage(event) {
         // $('#container').hide();
         $('#div-top').html(response.html);
         loadImages(response.canvasObjects);
-        // loadPostImagesEdit(canvas, null, response.canvasZoom, response.canvasObjects);
-        console.log(response);
       }
       else {
         $('#error-signin').text('Incorrect email or password!');
@@ -58,38 +56,37 @@ function loadInitialPage(event) {
 }
 
 function loadImages(objects) {
+  var loader = new PxLoader();
   for (var i=0; i<objects.length; i++) {
     var object = objects[i];
-    var imageObj = new Image();
-    imageObj.src = object.src;
-    imageObj.onload = function() {
-      var yoda = new Kinetic.Image({
-        x: object.left,
-        y: object.top,
-        image: imageObj,
-    draggable: true,
-      });
-      // add the shape to the layer
-      layer.add(yoda);
-      layer.draw();
-
-      var startScale = 1;
-      var startRotate = 0;
-      var hammertime = Hammer(yoda)
-      .on("transformstart", function(e) {
-        startScale = yoda.scaleX();
-        // startRotate = yoda.rotation();
-        layer.draw();
-      }).on("transform", function(e) {
-        console.log(startScale * e.gesture.scale);
-        yoda.scale({
-          x : startScale * e.gesture.scale,
-          y : startScale * e.gesture.scale,
-        });
-        // yoda.rotation(startRotate + e.gesture.rotation);
-        layer.draw();
-      });
-
-    }
+    loader.addImage(object.src);
   }
+  loader.addProgressListener(function(e) {
+    var yoda = new Kinetic.Image({
+      x: object.left,
+      y: object.top,
+      image: e.resource.img,
+      draggable: true,
+    });
+    // add the shape to the layer
+    layer.add(yoda);
+    layer.draw();
+
+    var startScale = 1;
+    var startRotate = 0;
+    var hammertime = Hammer(yoda)
+    .on("transformstart", function(e) {
+      startScale = yoda.scaleX();
+      // startRotate = yoda.rotation();
+      layer.draw();
+    }).on("transform", function(e) {
+      yoda.scale({
+        x : startScale * e.gesture.scale,
+        y : startScale * e.gesture.scale,
+      });
+      // yoda.rotation(startRotate + e.gesture.rotation);
+      layer.draw();
+    });
+  });
+  loader.start();
 }
