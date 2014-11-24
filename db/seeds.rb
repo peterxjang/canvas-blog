@@ -23,7 +23,7 @@ emails.each do |email|
 							 last_name: Faker::Name.last_name,
 							 email: email,
 							 password: 'password')
-	3.times do 
+	5.times do 
 		post = user.posts.new(title: Faker::Company.catch_phrase,
 											    body: Faker::Lorem.paragraphs.join("\n"))
 		post.image = File.open(imagenames.sample)
