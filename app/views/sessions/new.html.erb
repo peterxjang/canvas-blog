@@ -1,11 +1,10 @@
-  <nav id='menu'>
-    <%= render partial: "show_menu", layout: false %>
-  </nav>
-    <!-- <section id='graph'><div id="canvasWrapper"></div></section> -->
-    <div id="canvasWrapper"></div>
-  <div id='div-top'>
-    <% if !current_user %>
-      <%= render partial: "signin", layout: false %>
-    <% end %>
-  </div>
-  <div id='post-info'></div>
+<nav id='menu'>
+  <%= render partial: "show_menu", layout: false %>
+</nav>
+<div id="canvasWrapper"></div>
+<div id='div-top'>
+  <% if !current_user %>
+    <%= render partial: "signin", layout: false %>
+  <% end %>
+</div>
+<div id='post-info'></div>
