@@ -97,6 +97,7 @@ function loadImages(objects) {
   layer.removeChildren();
 
   addZoomBackground(layer);
+
   var loader = new PxLoader();
   for (var i=0; i<objects.length; i++) {
     var object = objects[i];
@@ -104,16 +105,24 @@ function loadImages(objects) {
   }
   loader.addProgressListener(function(e) {
     var yoda = new Kinetic.Image({
-      x: object.left,
-      y: object.top,
+      x: object.left + e.resource.img.width/2,
+      y: object.top + e.resource.img.height/2,
       image: e.resource.img,
       draggable: true,
+      offset: {
+          x: e.resource.img.width/2,
+          y: e.resource.img.height/2
+      },
     });
 
     var startScale = 1;
     var startRotate = 0;
     var hammertime = Hammer(yoda)
     .on("touch", function(e) {
+      // console.log(e.gesture.center);
+      // console.log(yoda.x());
+      // yoda.setOffset(e.gesture.center.pageX - yoda.x(), e.gesture.center.pageY - yoda.y());
+      // yoda.setOffset(200, 200);
       yoda.moveToTop();
       layer.draw();
     })
@@ -123,6 +132,7 @@ function loadImages(objects) {
       layer.draw();
     })
     .on("transform", function(e) {
+      // console.log(e);
       yoda.scale({
         x : startScale * e.gesture.scale,
         y : startScale * e.gesture.scale,
