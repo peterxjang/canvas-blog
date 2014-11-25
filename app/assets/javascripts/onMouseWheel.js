@@ -1,4 +1,9 @@
-function onMouseWheel(e, delta) {
+function _onMouseWheel(e, delta) {
+  e.preventDefault();
+  // console.log(e);
+}
+
+function _x_onMouseWheel(e, delta) {
 	console.log(e);
   delta = e.originalEvent.wheelDelta;
   //prevent only the actual wheel movement
