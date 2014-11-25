@@ -115,7 +115,9 @@ function loadImages(objects) {
     var pxImage = new PxLoaderImage(object.src);
     pxImage.top = object.top;
     pxImage.left = object.left;
+    pxImage.databaseID = object.id;
     loader.add(pxImage);
+    console.log(object.src);
   }
   loader.addProgressListener(function(e) {
     var img = e.resource.img;
@@ -140,7 +142,7 @@ function loadImages(objects) {
     })
     .on("transformstart", function(e) {
       startScale = yoda.scaleX();
-      startRotate = yoda.rotation();
+      // startRotate = yoda.rotation();
       layer.draw();
     })
     .on("transform", function(e) {
@@ -148,7 +150,7 @@ function loadImages(objects) {
         x : startScale * e.gesture.scale,
         y : startScale * e.gesture.scale,
       });
-      yoda.rotation(startRotate + e.gesture.rotation);
+      // yoda.rotation(startRotate + e.gesture.rotation);
       layer.draw();
     });
 
@@ -163,11 +165,43 @@ function loadImages(objects) {
 function saveLayout(event) {
   // console.log(stage.toJSON());
   // stageJSON = stage.toJSON();
+  data = {objects: []};
   layer.getChildren().each(function(node) {
     if (node.className == "Image") {
       console.log(node);
+      data.objects.push({
+        src: node.attrs.image.src,
+        top: node.attrs.y,
+        left: node.attrs.x,
+        angle: node.attrs.rotation,
+        scaleX: node.attrs.scaleX,
+        scaleY: node.attrs.scaleY,
+      });
     }
     // console.log(node.className)
+  });
+  console.log(data);
+  $.ajax({
+    url: '/save_layout',
+    type: 'POST',
+    dataType: 'json',
+    data: data,
+    success: function(response) {
+      // if (response.valid) {
+      //   $('#div-top').html(response.html);
+      //   $('#menu').html(response.htmlMenu);
+      //   loadImages(response.canvasObjects);
+      // }
+      // else {
+      //   $('#error-signin').text('Incorrect email or password!');
+      // }
+      console.log("hi");
+      console.log(response);
+    },
+    error: function(response) {
+      console.log("error!");
+      console.log(response);
+    }
   });
 }
 

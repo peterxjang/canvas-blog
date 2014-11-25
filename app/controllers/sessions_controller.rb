@@ -40,4 +40,10 @@ class SessionsController < ApplicationController
 		# render 'new'
 		redirect_to '/'
 	end
+
+	def save_layout
+		p 'fdsafdsafsdaf'
+		p params[:objects]
+		render json: {message: 'hi', data: params[:objects]}
+	end
 end

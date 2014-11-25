@@ -24,6 +24,8 @@ module ApplicationHelper
 					 scaleY: nil} 
 				end
 			end
+			puts 'aaaaaaaaaaaa'
+			p layout.objects
 			layout
 		end
 	end
