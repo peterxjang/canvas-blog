@@ -124,17 +124,22 @@ function loadImages(objects) {
   var loader = new PxLoader();
   for (var i=0; i<objects.length; i++) {
     var object = objects[i];
-    loader.addImage(object.src);
+    // loader.addImage(object.src);
+    var pxImage = new PxLoaderImage(object.src);
+    pxImage.top = object.top;
+    pxImage.left = object.left;
+    loader.add(pxImage);
   }
   loader.addProgressListener(function(e) {
+    var img = e.resource.img;
     var yoda = new Kinetic.Image({
-      x: object.left + e.resource.img.width/2,
-      y: object.top + e.resource.img.height/2,
-      image: e.resource.img,
+      x: e.resource.left + img.width/2,
+      y: e.resource.top + img.height/2,
+      image: img,
       draggable: true,
       offset: {
-          x: e.resource.img.width/2,
-          y: e.resource.img.height/2
+          x: img.width/2,
+          y: img.height/2
       },
     });
 

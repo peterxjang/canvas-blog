@@ -1,6 +1,7 @@
-@import url(http://fonts.googleapis.com/css?family=Permanent+Marker); /*font-family: 'Permanent Marker', cursive;*/
-@import url(http://fonts.googleapis.com/css?family=Special+Elite); /*font-family: 'Special Elite', serif;*/
-@import url(http://fonts.googleapis.com/css?family=Denk+One); /*font-family: 'Denk One', sans-serif;*/
+/*@import url(http://fonts.googleapis.com/css?family=Permanent+Marker); /*font-family: 'Permanent Marker', cursive;*/*/
+/*@import url(http://fonts.googleapis.com/css?family=Special+Elite); /*font-family: 'Special Elite', serif;*/*/
+/*@import url(http://fonts.googleapis.com/css?family=Denk+One); /*font-family: 'Denk One', sans-serif;*/*/
+
 /*@import url(http://fonts.googleapis.com/css?family=Architects+Daughter);*/ /*font-family: 'Architects Daughter', cursive;*/
 /*@import url(http://fonts.googleapis.com/css?family=Amatic+SC);*/ /*font-family: 'Amatic SC', cursive;*/
 /*@import url(http://fonts.googleapis.com/css?family=Rock+Salt);*/ /*font-family: 'Rock Salt', cursive;*/
@@ -68,8 +69,6 @@ h2 {
     background-color: #131313;
     background-size: 20px 20px;
    position: absolute;
-  display:inline-block;
-  position:relative;
 }
 
 #div-top {
