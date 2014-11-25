@@ -32,6 +32,9 @@ function createLayer(stage) {
   });
   layer.setDraggable("draggable");
   stage.add(layer);
+  // layer.offsetX(window.innerWidth/2);
+  // layer.offsetY(window.innerHeight/2);
+  // console.log(layer.getOffset());
   return layer;
 }
 
@@ -50,6 +53,10 @@ function addZoomBackground(layer) {
   var startRotate = 0;
   var hammertime = Hammer(layer)
   .on("transformstart", function(e) {
+    // console.log(e.gesture.center);
+    // layer.offsetX(e.gesture.center.pageX);
+    // layer.offsetY(e.gesture.center.pageY);
+    // console.log(layer.getOffset());
     startScale = layer.scaleX();
     // startScale = background.scaleX();
     // startRotate = background.rotation();
