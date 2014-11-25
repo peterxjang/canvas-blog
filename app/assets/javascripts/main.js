@@ -7,7 +7,6 @@ $(document).ready(function() {
   $(document).on("click", "#button-sign-in", postSignIn);
   $("#sign-in").on("click", loadInitialPage);
   $(document).on("click", "#button-edit-posts", loadInitialPage);
-  // $('#graph').bind('mousewheel', onMouseWheel);
 });
 
 
@@ -62,6 +61,7 @@ function addZoomBackground(layer) {
     // startRotate = background.rotation();
     // layer.draw();
   }).on("transform", function(e) {
+    // console.log(e.gesture.scale);
     layer.scale({
       x : startScale * e.gesture.scale,
       y : startScale * e.gesture.scale,
@@ -73,6 +73,22 @@ function addZoomBackground(layer) {
     // });
     // // background.rotation(startRotate + e.gesture.rotation);
     layer.draw();
+  });
+
+  $('#canvasWrapper').bind('mousewheel', function(e, delta) {
+    e.preventDefault();
+    var delta = e.originalEvent.wheelDelta;
+    // var cur_scale;
+    // if (delta > 0) {
+    //   startScale = startScale + Math.abs(delta / 640);
+    // } else {
+    //   startScale = startScale - Math.abs(delta / 640);
+    // }
+    // console.log(startScale);
+    // layer.scale({
+    //   x: startScale, //* e.originalEvent.wheelDelta,
+    //   y: startScale, //* e.originalEvent.wheelDelta,
+    // });
   });
 }
 
