@@ -1,4 +1,7 @@
 $(document).ready(function() {
+
+  stageJSON = null;
+
   scale = 1.0;
   min_scale = 0.1;
   stage = createStage();
@@ -7,6 +10,8 @@ $(document).ready(function() {
   $(document).on("click", "#button-sign-in", postSignIn);
   $("#sign-in").on("click", loadInitialPage);
   $(document).on("click", "#button-edit-posts", loadInitialPage);
+  $(document).on("click", "#button-save-posts", saveLayout);
+  $(document).on("click", "#button-view-posts", viewLayout);
 });
 
 
@@ -31,9 +36,6 @@ function createLayer(stage) {
   });
   layer.setDraggable("draggable");
   stage.add(layer);
-  // layer.offsetX(window.innerWidth/2);
-  // layer.offsetY(window.innerHeight/2);
-  // console.log(layer.getOffset());
   return layer;
 }
 
@@ -52,26 +54,12 @@ function addZoomBackground(layer) {
   var startRotate = 0;
   var hammertime = Hammer(layer)
   .on("transformstart", function(e) {
-    // console.log(e.gesture.center);
-    // layer.offsetX(e.gesture.center.pageX);
-    // layer.offsetY(e.gesture.center.pageY);
-    // console.log(layer.getOffset());
     startScale = layer.scaleX();
-    // startScale = background.scaleX();
-    // startRotate = background.rotation();
-    // layer.draw();
   }).on("transform", function(e) {
-    // console.log(e.gesture.scale);
     layer.scale({
       x : startScale * e.gesture.scale,
       y : startScale * e.gesture.scale,
     });
-    // console.log(layer.getScale());
-    // background.scale({
-    //   x : startScale * e.gesture.scale,
-    //   y : startScale * e.gesture.scale,
-    // });
-    // // background.rotation(startRotate + e.gesture.rotation);
     layer.draw();
   });
 
@@ -124,7 +112,6 @@ function loadImages(objects) {
   var loader = new PxLoader();
   for (var i=0; i<objects.length; i++) {
     var object = objects[i];
-    // loader.addImage(object.src);
     var pxImage = new PxLoaderImage(object.src);
     pxImage.top = object.top;
     pxImage.left = object.left;
@@ -132,48 +119,61 @@ function loadImages(objects) {
   }
   loader.addProgressListener(function(e) {
     var img = e.resource.img;
+    var scale = window.innerHeight / 2 / img.height;
     var yoda = new Kinetic.Image({
-      x: e.resource.left + img.width/2,
-      y: e.resource.top + img.height/2,
+      x: e.resource.left,
+      y: e.resource.top,
       image: img,
       draggable: true,
-      offset: {
-          x: img.width/2,
-          y: img.height/2
-      },
+      scaleX: scale,
+      scaleY: scale,
     });
+    // yoda.offsetX(yoda.width()/2);
+    // yoda.offsetY(yoda.height()/2);
 
     var startScale = 1;
     var startRotate = 0;
     var hammertime = Hammer(yoda)
     .on("touch", function(e) {
-      // console.log(e.gesture.center);
-      // console.log(yoda.x());
-      // yoda.setOffset(e.gesture.center.pageX - yoda.x(), e.gesture.center.pageY - yoda.y());
-      // yoda.setOffset(200, 200);
       yoda.moveToTop();
       layer.draw();
     })
     .on("transformstart", function(e) {
       startScale = yoda.scaleX();
-      // startRotate = yoda.rotation();
+      startRotate = yoda.rotation();
       layer.draw();
     })
     .on("transform", function(e) {
-      // console.log(e);
       yoda.scale({
         x : startScale * e.gesture.scale,
         y : startScale * e.gesture.scale,
       });
-      // yoda.rotation(startRotate + e.gesture.rotation);
+      yoda.rotation(startRotate + e.gesture.rotation);
       layer.draw();
     });
 
-    // add the shape to the layer
     layer.add(yoda);
     layer.draw();
 
-
   });
   loader.start();
+}
+
+
+function saveLayout(event) {
+  // console.log(stage.toJSON());
+  // stageJSON = stage.toJSON();
+  layer.getChildren().each(function(node) {
+    if (node.className == "Image") {
+      console.log(node);
+    }
+    // console.log(node.className)
+  });
+}
+
+function viewLayout(event) {
+  // if (stageJSON) {
+  //   stage.destroy();
+  //   stage = Kinetic.Node.create(stageJSON, 'canvasWrapper');
+  // }
 }
