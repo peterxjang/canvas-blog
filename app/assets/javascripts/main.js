@@ -91,7 +91,12 @@ function loadInitialPage(event) {
       if (response.valid) {
         $('#div-top').html(response.html);
         $('#menu').html(response.htmlMenu);
-        loadImages(response.canvasObjects);
+        loadImages(
+          response.objects, 
+          response.scale,
+          response.x,
+          response.y
+        );
       }
       else {
         $('#error-signin').text('Incorrect email or password!');
@@ -104,9 +109,7 @@ function loadInitialPage(event) {
   });
 }
 
-function loadImages(objects) {
-  console.log(objects);
-  console.log(objects.length);
+function loadImages(objects, canvasScale, canvasX, canvasY) {
   layer.removeChildren();
 
   addZoomBackground(layer);
@@ -172,6 +175,13 @@ function loadImages(objects) {
     layer.draw();
 
   });
+  loader.addCompletionListener(function() { 
+    layer.scaleX(canvasScale);
+    layer.scaleY(canvasScale);
+    layer.x(canvasX);
+    layer.y(canvasY);
+    layer.draw();
+  });
   loader.start();
 }
 
@@ -179,10 +189,12 @@ function loadImages(objects) {
 function saveLayout(event) {
   // console.log(stage.toJSON());
   // stageJSON = stage.toJSON();
-  data = {objects: []};
+  data = {objects: [],
+          scale: layer.attrs.scaleX,
+          x: layer.attrs.x,
+          y: layer.attrs.y};
   layer.getChildren().each(function(node) {
     if (node.className == "Image") {
-      console.log(node);
       data.objects.push({
         id: node.attrs.id,
         title: node.attrs.title,
@@ -193,8 +205,11 @@ function saveLayout(event) {
         scaleX: node.attrs.scaleX,
         scaleY: node.attrs.scaleY,
       });
+    } else if (node.className == "Rect"){
+      // console.log(node);
     }
   });
+  console.log(layer);
   console.log(data);
   $.ajax({
     url: '/save_layout',
@@ -202,14 +217,8 @@ function saveLayout(event) {
     // dataType: 'json',
     contentType: 'application/json',
     data: JSON.stringify(data),
-    success: function(response) {
-      console.log("hi");
-      console.log(response);
-    },
-    error: function(response) {
-      console.log("error!");
-      console.log(response);
-    }
+    success: function(response) {},
+    error: function(response) { console.log("error!"); console.log(response);}
   });
 }
 

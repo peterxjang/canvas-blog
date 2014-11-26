@@ -18,8 +18,10 @@ ActiveRecord::Schema.define(version: 20141117002639) do
 
   create_table "canvaslayouts", force: true do |t|
     t.integer  "user_id"
-    t.float    "canvas_zoom", default: 1.0
     t.text     "objects"
+    t.float    "scale",      default: 1.0
+    t.float    "x",          default: 0.0
+    t.float    "y",          default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

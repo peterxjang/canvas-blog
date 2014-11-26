@@ -17,12 +17,12 @@ module ApplicationHelper
 					 scaleX: nil,
 					 scaleY: nil} 
 				end
-				layout = Canvaslayout.create!(user: current_user, objects: objects)
-			else
-				puts 'yoyoyoyoyoyoyoyo'
+				layout = Canvaslayout.create!(user: current_user, 
+																			objects: objects,
+																			scale: 1.0,
+																			x: 0.0,
+																			y: 0.0)
 			end
-			puts 'aaaaaaaaaaaa'
-			p layout.objects
 			layout
 		end
 	end

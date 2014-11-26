@@ -9,8 +9,10 @@ class SessionsController < ApplicationController
 			@user = current_user
 			@posts = @user.posts
 			result['valid'] = true
-			result['canvasZoom'] = current_layout.canvas_zoom
-			result['canvasObjects'] = current_layout.objects
+			result['objects'] = current_layout.objects
+			result['scale'] = current_layout.scale
+			result['x'] = current_layout.x
+			result['y'] = current_layout.y
 			result['html'] = render_to_string(partial: 'show_polaroid')
 			result['htmlMenu'] = render_to_string(partial: 'show_menu')
 		else
@@ -20,8 +22,10 @@ class SessionsController < ApplicationController
 				@posts = @user.posts
 				# redirect_to @user
 				result['valid'] = true
-				result['canvasZoom'] = current_layout.canvas_zoom
-				result['canvasObjects'] = current_layout.objects
+				result['objects'] = current_layout.objects
+				result['scale'] = current_layout.scale
+				result['x'] = current_layout.x
+				result['y'] = current_layout.y
 				result['html'] = render_to_string(partial: 'show_polaroid')
 				result['htmlMenu'] = render_to_string(partial: 'show_menu')
 			else
@@ -42,11 +46,10 @@ class SessionsController < ApplicationController
 	end
 
 	def save_layout
-		p 'fdsafdsafsdaf'
-		current_user.canvaslayout.update_attributes!(objects: params[:objects])
-		p params[:objects]
-		p 'ddddddddddddddd'
-		p current_user.canvaslayout.objects
-		render json: {message: 'hi'}
+		current_user.canvaslayout.update_attributes!(objects: params[:objects],
+																								 scale: params[:scale],
+																								 x: params[:x],
+																								 y: params[:y])
+		render json: {message: 'Successfully saved layout.'}
 	end
 end
