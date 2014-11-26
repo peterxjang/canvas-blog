@@ -105,6 +105,8 @@ function loadInitialPage(event) {
 }
 
 function loadImages(objects) {
+  console.log(objects);
+  console.log(objects.length);
   layer.removeChildren();
 
   addZoomBackground(layer);
@@ -115,6 +117,9 @@ function loadImages(objects) {
     var pxImage = new PxLoaderImage(object.src);
     pxImage.top = object.top;
     pxImage.left = object.left;
+    pxImage.scaleX = object.scaleX;
+    pxImage.scaleY = object.scaleY;
+    pxImage.angle = object.angle;
     pxImage.databaseID = object.id;
     pxImage.databaseSrc = object.src;
     pxImage.databaseTitle = object.title;
@@ -122,16 +127,21 @@ function loadImages(objects) {
   }
   loader.addProgressListener(function(e) {
     var img = e.resource.img;
-    var scale = window.innerHeight / 2 / img.height;
+    // var scale = window.innerHeight / 2 / img.height;
+    var scaleX = e.resource.scaleX;
+    var scaleY = e.resource.scaleY;
+    if (!scaleX) { scaleX = window.innerHeight / 2 / img.height; }
+    if (!scaleY) { scaleY = window.innerHeight / 2 / img.height; }
     var yoda = new Kinetic.Image({
       x: e.resource.left,
       y: e.resource.top,
       image: img,
       draggable: true,
-      scaleX: scale,
-      scaleY: scale,
+      scaleX: scaleX,
+      scaleY: scaleY,
+      rotation: e.resource.angle
     });
-    yoda.attrs.id = e.resource.databaseID;
+    yoda.attrs.id = parseInt(e.resource.databaseID);
     yoda.attrs.src = e.resource.databaseSrc;
     yoda.attrs.title = e.resource.databaseTitle;
     // yoda.offsetX(yoda.width()/2);
@@ -146,7 +156,7 @@ function loadImages(objects) {
     })
     .on("transformstart", function(e) {
       startScale = yoda.scaleX();
-      // startRotate = yoda.rotation();
+      startRotate = yoda.rotation();
       layer.draw();
     })
     .on("transform", function(e) {
@@ -154,7 +164,7 @@ function loadImages(objects) {
         x : startScale * e.gesture.scale,
         y : startScale * e.gesture.scale,
       });
-      // yoda.rotation(startRotate + e.gesture.rotation);
+      yoda.rotation(startRotate + e.gesture.rotation);
       layer.draw();
     });
 
@@ -176,7 +186,7 @@ function saveLayout(event) {
       data.objects.push({
         id: node.attrs.id,
         title: node.attrs.title,
-        src: node.attrs.image.src,
+        src: node.attrs.src,
         top: node.attrs.y,
         left: node.attrs.x,
         angle: node.attrs.rotation,
@@ -184,23 +194,15 @@ function saveLayout(event) {
         scaleY: node.attrs.scaleY,
       });
     }
-    // console.log(node.className)
   });
   console.log(data);
   $.ajax({
     url: '/save_layout',
     type: 'POST',
-    dataType: 'json',
-    data: data,
+    // dataType: 'json',
+    contentType: 'application/json',
+    data: JSON.stringify(data),
     success: function(response) {
-      // if (response.valid) {
-      //   $('#div-top').html(response.html);
-      //   $('#menu').html(response.htmlMenu);
-      //   loadImages(response.canvasObjects);
-      // }
-      // else {
-      //   $('#error-signin').text('Incorrect email or password!');
-      // }
       console.log("hi");
       console.log(response);
     },

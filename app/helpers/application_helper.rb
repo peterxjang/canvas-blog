@@ -7,13 +7,7 @@ module ApplicationHelper
 		if current_user
 			layout = current_user.canvaslayout
 			if layout.nil?
-				layout = Canvaslayout.new(user: current_user)
-				# layout.objects = nil
-				# current_user.posts.each do |post|
-				# 	layout[''] = 
-				# end
-				# data = [{bob: 32}, {smith: 1}]
-				layout.objects = current_user.posts.each_with_index.map do |post, index|
+				objects = current_user.posts.each_with_index.map do |post, index|
 					{id: post.id,
 					 title: post.title,
 					 src: post.image.url,
@@ -23,14 +17,13 @@ module ApplicationHelper
 					 scaleX: nil,
 					 scaleY: nil} 
 				end
+				layout = Canvaslayout.create!(user: current_user, objects: objects)
+			else
+				puts 'yoyoyoyoyoyoyoyo'
 			end
 			puts 'aaaaaaaaaaaa'
 			p layout.objects
 			layout
 		end
-	end
-
-	def render_menu
-		"<nav id='menu'>dsf</nav>"
 	end
 end
