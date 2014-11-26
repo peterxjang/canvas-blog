@@ -42,8 +42,10 @@ class SessionsController < ApplicationController
 	end
 
 	def save_layout
+		current_user.canvaslayout.objects = params[:objects]
+		current_user.save!
 		p 'fdsafdsafsdaf'
-		p params[:objects]
-		render json: {message: 'hi', data: params[:objects]}
+		p current_user.canvaslayout.objects
+		render json: {message: 'hi', data: current_user.canvaslayout.objects}
 	end
 end

@@ -116,8 +116,9 @@ function loadImages(objects) {
     pxImage.top = object.top;
     pxImage.left = object.left;
     pxImage.databaseID = object.id;
+    pxImage.databaseSrc = object.src;
+    pxImage.databaseTitle = object.title;
     loader.add(pxImage);
-    console.log(object.src);
   }
   loader.addProgressListener(function(e) {
     var img = e.resource.img;
@@ -130,6 +131,9 @@ function loadImages(objects) {
       scaleX: scale,
       scaleY: scale,
     });
+    yoda.attrs.id = e.resource.databaseID;
+    yoda.attrs.src = e.resource.databaseSrc;
+    yoda.attrs.title = e.resource.databaseTitle;
     // yoda.offsetX(yoda.width()/2);
     // yoda.offsetY(yoda.height()/2);
 
@@ -170,6 +174,8 @@ function saveLayout(event) {
     if (node.className == "Image") {
       console.log(node);
       data.objects.push({
+        id: node.attrs.id,
+        title: node.attrs.title,
         src: node.attrs.image.src,
         top: node.attrs.y,
         left: node.attrs.x,
