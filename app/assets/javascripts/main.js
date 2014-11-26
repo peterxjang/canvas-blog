@@ -1,4 +1,7 @@
 $(document).ready(function() {
+
+  stageJSON = null;
+
   scale = 1.0;
   min_scale = 0.1;
   stage = createStage();
@@ -7,6 +10,8 @@ $(document).ready(function() {
   $(document).on("click", "#button-sign-in", postSignIn);
   $("#sign-in").on("click", loadInitialPage);
   $(document).on("click", "#button-edit-posts", loadInitialPage);
+  $(document).on("click", "#button-save-posts", saveLayout);
+  $(document).on("click", "#button-view-posts", viewLayout);
 });
 
 
@@ -31,9 +36,6 @@ function createLayer(stage) {
   });
   layer.setDraggable("draggable");
   stage.add(layer);
-  // layer.offsetX(window.innerWidth/2);
-  // layer.offsetY(window.innerHeight/2);
-  // console.log(layer.getOffset());
   return layer;
 }
 
@@ -52,26 +54,12 @@ function addZoomBackground(layer) {
   var startRotate = 0;
   var hammertime = Hammer(layer)
   .on("transformstart", function(e) {
-    // console.log(e.gesture.center);
-    // layer.offsetX(e.gesture.center.pageX);
-    // layer.offsetY(e.gesture.center.pageY);
-    // console.log(layer.getOffset());
     startScale = layer.scaleX();
-    // startScale = background.scaleX();
-    // startRotate = background.rotation();
-    // layer.draw();
   }).on("transform", function(e) {
-    // console.log(e.gesture.scale);
     layer.scale({
       x : startScale * e.gesture.scale,
       y : startScale * e.gesture.scale,
     });
-    // console.log(layer.getScale());
-    // background.scale({
-    //   x : startScale * e.gesture.scale,
-    //   y : startScale * e.gesture.scale,
-    // });
-    // // background.rotation(startRotate + e.gesture.rotation);
     layer.draw();
   });
 
@@ -103,7 +91,12 @@ function loadInitialPage(event) {
       if (response.valid) {
         $('#div-top').html(response.html);
         $('#menu').html(response.htmlMenu);
-        loadImages(response.canvasObjects);
+        loadImages(
+          response.objects, 
+          response.scale,
+          response.x,
+          response.y
+        );
       }
       else {
         $('#error-signin').text('Incorrect email or password!');
@@ -116,7 +109,7 @@ function loadInitialPage(event) {
   });
 }
 
-function loadImages(objects) {
+function loadImages(objects, canvasScale, canvasX, canvasY) {
   layer.removeChildren();
 
   addZoomBackground(layer);
@@ -124,56 +117,114 @@ function loadImages(objects) {
   var loader = new PxLoader();
   for (var i=0; i<objects.length; i++) {
     var object = objects[i];
-    // loader.addImage(object.src);
     var pxImage = new PxLoaderImage(object.src);
     pxImage.top = object.top;
     pxImage.left = object.left;
+    pxImage.scaleX = object.scaleX;
+    pxImage.scaleY = object.scaleY;
+    pxImage.angle = object.angle;
+    pxImage.databaseID = object.id;
+    pxImage.databaseSrc = object.src;
+    pxImage.databaseTitle = object.title;
     loader.add(pxImage);
   }
   loader.addProgressListener(function(e) {
     var img = e.resource.img;
+    // var scale = window.innerHeight / 2 / img.height;
+    var scaleX = e.resource.scaleX;
+    var scaleY = e.resource.scaleY;
+    if (!scaleX) { scaleX = window.innerHeight / 2 / img.height; }
+    if (!scaleY) { scaleY = window.innerHeight / 2 / img.height; }
     var yoda = new Kinetic.Image({
-      x: e.resource.left + img.width/2,
-      y: e.resource.top + img.height/2,
+      x: e.resource.left,
+      y: e.resource.top,
       image: img,
       draggable: true,
-      offset: {
-          x: img.width/2,
-          y: img.height/2
-      },
+      scaleX: scaleX,
+      scaleY: scaleY,
+      rotation: e.resource.angle
     });
+    yoda.attrs.id = parseInt(e.resource.databaseID);
+    yoda.attrs.src = e.resource.databaseSrc;
+    yoda.attrs.title = e.resource.databaseTitle;
+    // yoda.offsetX(yoda.width()/2);
+    // yoda.offsetY(yoda.height()/2);
 
     var startScale = 1;
     var startRotate = 0;
     var hammertime = Hammer(yoda)
     .on("touch", function(e) {
-      // console.log(e.gesture.center);
-      // console.log(yoda.x());
-      // yoda.setOffset(e.gesture.center.pageX - yoda.x(), e.gesture.center.pageY - yoda.y());
-      // yoda.setOffset(200, 200);
       yoda.moveToTop();
       layer.draw();
     })
     .on("transformstart", function(e) {
       startScale = yoda.scaleX();
-      // startRotate = yoda.rotation();
+      startRotate = yoda.rotation();
       layer.draw();
     })
     .on("transform", function(e) {
-      // console.log(e);
       yoda.scale({
         x : startScale * e.gesture.scale,
         y : startScale * e.gesture.scale,
       });
-      // yoda.rotation(startRotate + e.gesture.rotation);
+      yoda.rotation(startRotate + e.gesture.rotation);
       layer.draw();
     });
 
-    // add the shape to the layer
     layer.add(yoda);
     layer.draw();
 
-
+  });
+  loader.addCompletionListener(function() { 
+    layer.scaleX(canvasScale);
+    layer.scaleY(canvasScale);
+    layer.x(canvasX);
+    layer.y(canvasY);
+    layer.draw();
   });
   loader.start();
+}
+
+
+function saveLayout(event) {
+  // console.log(stage.toJSON());
+  // stageJSON = stage.toJSON();
+  data = {objects: [],
+          scale: layer.attrs.scaleX,
+          x: layer.attrs.x,
+          y: layer.attrs.y};
+  layer.getChildren().each(function(node) {
+    if (node.className == "Image") {
+      data.objects.push({
+        id: node.attrs.id,
+        title: node.attrs.title,
+        src: node.attrs.src,
+        top: node.attrs.y,
+        left: node.attrs.x,
+        angle: node.attrs.rotation,
+        scaleX: node.attrs.scaleX,
+        scaleY: node.attrs.scaleY,
+      });
+    } else if (node.className == "Rect"){
+      // console.log(node);
+    }
+  });
+  console.log(layer);
+  console.log(data);
+  $.ajax({
+    url: '/save_layout',
+    type: 'POST',
+    // dataType: 'json',
+    contentType: 'application/json',
+    data: JSON.stringify(data),
+    success: function(response) {},
+    error: function(response) { console.log("error!"); console.log(response);}
+  });
+}
+
+function viewLayout(event) {
+  // if (stageJSON) {
+  //   stage.destroy();
+  //   stage = Kinetic.Node.create(stageJSON, 'canvasWrapper');
+  // }
 }

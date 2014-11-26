@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   # resources :sessions
   get 'user' => 'users#show'
   post 'users' => 'users#create'
+  post 'save_layout' => 'sessions#save_layout'
   # resources :users, except: [:destroy]
 
   # The priority is based upon order of creation: first created -> highest priority.
