@@ -110,6 +110,7 @@ function loadInitialPage(event) {
 }
 
 function loadImages(objects, canvasScale, canvasX, canvasY) {
+  console.log(objects);
   layer.removeChildren();
 
   addZoomBackground(layer);
@@ -122,6 +123,7 @@ function loadImages(objects, canvasScale, canvasX, canvasY) {
     pxImage.left = object.left;
     pxImage.scaleX = object.scaleX;
     pxImage.scaleY = object.scaleY;
+    pxImage.zIndex = object.zIndex;
     pxImage.angle = object.angle;
     pxImage.databaseID = object.id;
     pxImage.databaseSrc = object.src;
@@ -172,6 +174,7 @@ function loadImages(objects, canvasScale, canvasX, canvasY) {
     });
 
     layer.add(yoda);
+    yoda.setZIndex(e.resource.zIndex);
     layer.draw();
 
   });
@@ -204,6 +207,7 @@ function saveLayout(event) {
         angle: node.attrs.rotation,
         scaleX: node.attrs.scaleX,
         scaleY: node.attrs.scaleY,
+        zIndex: node.getZIndex(),
       });
     } else if (node.className == "Rect"){
       // console.log(node);
