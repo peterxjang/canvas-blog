@@ -5,48 +5,56 @@ function createPolaroid(e) {
     var scaleY = e.resource.scaleY;
     if (!scaleX) { scaleX = window.innerHeight / 2 / img.height; }
     if (!scaleY) { scaleY = window.innerHeight / 2 / img.height; }
-    var yoda = new Kinetic.Image({
+    var group = new Kinetic.Group({
+      draggable: true,
       x: e.resource.left,
       y: e.resource.top,
-      image: img,
-      draggable: true,
+      rotation: e.resource.angle,
       scaleX: scaleX,
       scaleY: scaleY,
-      rotation: e.resource.angle,
       opacity: 0
     });
-    yoda.attrs.id = parseInt(e.resource.databaseID);
-    yoda.attrs.src = e.resource.databaseSrc;
-    yoda.attrs.title = e.resource.databaseTitle;
-    // yoda.offsetX(yoda.width()/2);
-    // yoda.offsetY(yoda.height()/2);
-    // yoda.transitionTo({opacity: 1, duration: 4});
+    var yoda = new Kinetic.Image({
+      // x: e.resource.left,
+      // y: e.resource.top,
+      image: img,
+      // scaleX: scaleX,
+      // scaleY: scaleY,
+      // rotation: e.resource.angle,
+      // opacity: 0
+    });
+    group.add(yoda);
+    group.attrs.id = parseInt(e.resource.databaseID);
+    group.attrs.src = e.resource.databaseSrc;
+    group.attrs.title = e.resource.databaseTitle;
+    // group.offsetX(group.width()/2);
+    // group.offsetY(group.height()/2);
 
     var startScale = 1;
     var startRotate = 0;
-    var hammertime = Hammer(yoda)
+    var hammertime = Hammer(group)
     .on("touch", function(e) {
-      yoda.moveToTop();
+      group.moveToTop();
       layer.draw();
     })
     .on("transformstart", function(e) {
-      startScale = yoda.scaleX();
-      startRotate = yoda.rotation();
+      startScale = group.scaleX();
+      startRotate = group.rotation();
       layer.draw();
     })
     .on("transform", function(e) {
-      yoda.scale({
+      group.scale({
         x : startScale * e.gesture.scale,
         y : startScale * e.gesture.scale,
       });
-      yoda.rotation(startRotate + e.gesture.rotation);
+      group.rotation(startRotate + e.gesture.rotation);
       layer.draw();
     });
 
-    layer.add(yoda);
-    yoda.setZIndex(e.resource.zIndex);
+    layer.add(group);
+    group.setZIndex(e.resource.zIndex);
     var tween = new Kinetic.Tween({
-    	node: yoda,
+    	node: group,
     	opacity: 1
     });
     tween.play();

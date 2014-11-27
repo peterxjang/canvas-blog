@@ -100,14 +100,12 @@ function loadImages(objects, canvasScale, canvasX, canvasY) {
 
 
 function saveLayout(event) {
-  // console.log(stage.toJSON());
-  // stageJSON = stage.toJSON();
   data = {objects: [],
           scale: layer.attrs.scaleX,
           x: layer.attrs.x,
           y: layer.attrs.y};
   layer.getChildren().each(function(node) {
-    if (node.className == "Image") {
+    if (node.nodeType == "Group") {
       data.objects.push({
         id: node.attrs.id,
         title: node.attrs.title,
@@ -119,10 +117,10 @@ function saveLayout(event) {
         scaleY: node.attrs.scaleY,
         zIndex: node.getZIndex(),
       });
-    } else if (node.className == "Rect"){
-      // console.log(node);
     }
+    console.log(node.attrs);
   });
+
   console.log(layer);
   console.log(data);
   $.ajax({
