@@ -14,15 +14,26 @@ function createPolaroid(e) {
       scaleY: scaleY,
       opacity: 0
     });
+    var border = img.height / 20;
     var yoda = new Kinetic.Image({
       // x: e.resource.left,
       // y: e.resource.top,
+      x: border,
+      y: border,
       image: img,
       // scaleX: scaleX,
       // scaleY: scaleY,
       // rotation: e.resource.angle,
       // opacity: 0
     });
+    var back = new Kinetic.Rect({
+    	width: img.width + 2*border,
+    	height: img.height + 6*border,
+    	fill: 'white',
+    	stroke: '#ccc',
+    	strokeWidth: border / 10,
+    })
+    group.add(back);
     group.add(yoda);
     group.attrs.id = parseInt(e.resource.databaseID);
     group.attrs.src = e.resource.databaseSrc;
