@@ -65,7 +65,6 @@ function addZoomBackground(layer) {
 
 
 function loadImages(objects, canvasScale, canvasX, canvasY) {
-  console.log(objects);
   layer.removeChildren();
 
   addZoomBackground(layer);
@@ -118,11 +117,7 @@ function saveLayout(event) {
         zIndex: node.getZIndex(),
       });
     }
-    console.log(node.attrs);
   });
-
-  console.log(layer);
-  console.log(data);
   $.ajax({
     url: '/save_layout',
     type: 'POST',

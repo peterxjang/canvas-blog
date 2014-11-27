@@ -94,8 +94,6 @@ function padText(text, container, amount) {
 }
 
 function fitText(text, container, amount) {
-	console.log(text.width());
-	console.log(container.width());
 	var scale = (container.width() - 2*amount) / text.width();
 	text.scaleX(scale);
 	text.scaleY(scale);
