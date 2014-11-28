@@ -66,6 +66,27 @@ function createPolaroid(e, editable) {
       layer.draw();
     });
   }
+  else {
+    var hammertime = Hammer(group)
+    .on("touch", function(e) {
+      $.ajax({
+        url: '/view_post',
+        type: 'POST',
+        dataType: 'json',
+        data: {post_id: group.attrs.id},
+        success: function(response) {
+          if (response.valid) {
+            console.log(response.title);
+            console.log(response.body);
+          }
+          else {
+            console.log("Could not find post!");
+          }
+        },
+        error: function(response) { console.log("view post error!"); console.log(response); }
+      });
+    });
+  }
 
   layer.add(group);
   group.setZIndex(e.resource.zIndex);

@@ -52,4 +52,15 @@ class SessionsController < ApplicationController
 																								 y: params[:y])
 		render json: {message: 'Successfully saved layout.'}
 	end
+
+	def view_post
+		post = Post.find_by_id(params[:post_id])
+		if post
+			render json: {valid: true, 
+										title: post.title, 
+										body: post.body}
+		else
+			render json: {valid: false}
+		end
+	end
 end
