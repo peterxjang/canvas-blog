@@ -1,7 +1,7 @@
 $(document).ready(function() {
   stage = createStage();
   layer = createLayer(stage);
-  menu = createMenu();
+  var menu = createMenu();
 
   $(document).on("click", "#sign-in", viewLayout);
   $(document).on("click", "#pop-up-background", function(){

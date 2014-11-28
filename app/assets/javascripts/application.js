@@ -17,4 +17,5 @@
 //= require hammer
 //= require pxloader
 //= require pxloaderimage
+//= require jquery.mousewheel
 //= require_tree .
