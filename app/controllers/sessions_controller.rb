@@ -56,9 +56,10 @@ class SessionsController < ApplicationController
 	def view_post
 		post = Post.find_by_id(params[:post_id])
 		if post
-			render json: {valid: true, 
-										title: post.title, 
-										body: post.body}
+			render json: {valid: true,
+										html: "<h2>#{post.title}</h2>" + 
+													"<p>#{post.body}</p>"
+										}
 		else
 			render json: {valid: false}
 		end

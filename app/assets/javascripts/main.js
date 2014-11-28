@@ -6,6 +6,12 @@ $(document).ready(function() {
   $(document).on("click", "#button-save-posts", saveLayout);
   $(document).on("click", "#button-cancel-posts", cancelLayout);
   $(document).on("click", "#button-view-posts", viewLayout);
+
+
+  $(document).on("click", "#pop-up-background", function(){
+    $("#pop-up-background").fadeOut("slow");
+    $("#pop-up").fadeOut("slow");
+  });
 });
 
 

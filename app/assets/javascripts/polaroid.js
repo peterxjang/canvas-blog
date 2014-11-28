@@ -76,8 +76,8 @@ function createPolaroid(e, editable) {
         data: {post_id: group.attrs.id},
         success: function(response) {
           if (response.valid) {
-            console.log(response.title);
-            console.log(response.body);
+            $("#pop-up-background").fadeIn("slow");
+            $("#pop-up").html(response.html).fadeIn("slow");
           }
           else {
             console.log("Could not find post!");
