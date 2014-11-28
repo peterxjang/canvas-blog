@@ -3,6 +3,7 @@ function createPolaroid(e, editable) {
   // var scale = window.innerHeight / 2 / img.height;
   var scaleX = e.resource.scaleX;
   var scaleY = e.resource.scaleY;
+  currentGroup  = null;
   if (!scaleX) { scaleX = window.innerHeight / 2 / img.height; }
   if (!scaleY) { scaleY = window.innerHeight / 2 / img.height; }
   var group = new Kinetic.Group({
@@ -45,12 +46,27 @@ function createPolaroid(e, editable) {
   // group.offsetY(group.height()/2);
 
   if (editable) {
+    var front = new Kinetic.Rect({
+      name: 'front',
+      x: 0,
+      y: 0,
+      width: back.width(),
+      height: back.height(),
+      fill: 'gray',
+      opacity: 0.8
+    });
+    group.add(front);
     var startScale = 1;
     var startRotate = 0;
     var hammertime = Hammer(group)
     .on("touch", function(e) {
       group.moveToTop();
+      if (currentGroup) {
+        currentGroup.get('.front').each(function(child) {child.opacity(0.8);});
+      }
+      front.opacity(0);
       layer.draw();
+      currentGroup = group;
     })
     .on("transformstart", function(e) {
       startScale = group.scaleX();
@@ -69,6 +85,7 @@ function createPolaroid(e, editable) {
   else {
     var hammertime = Hammer(group)
     .on("touch", function(e) {
+      e.preventDefault();
       $.ajax({
         url: '/view_post',
         type: 'POST',
