@@ -108,12 +108,7 @@ function updateAnchor(group, activeHandle) {
 	if (newWidth && newHeight) {
 	  // image.setSize(newWidth, newHeight);
 	  // image.parent.setSize(newWidth, newHeight);
-	  image.setSize({width: newWidth, height: newHeight});
-	  image.parent.setSize({width: newWidth, height: newHeight});
-	  // image.parent.scale({
-	  // 	x: image.parent.scaleY() * newHeight / (image.getHeight()),
-	  // 	y: image.parent.scaleY() * newHeight / (image.getHeight()),
-	  // });
+	  resizePolaroid(group, newWidth, newHeight);
 	}
 
 	// make sure the image is still within the safe zone

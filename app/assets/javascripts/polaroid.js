@@ -142,3 +142,12 @@ function fitText(text, container, amount) {
 	text.scaleY(scale);
 }
 
+function resizePolaroid(group, newWidth, newHeight) {
+  var image = group.get(".back")[0];
+  image.setSize({width: newWidth, height: newHeight});
+  image.parent.setSize({width: newWidth, height: newHeight});
+  // image.parent.scale({
+  //  x: image.parent.scaleY() * newHeight / (image.getHeight()),
+  //  y: image.parent.scaleY() * newHeight / (image.getHeight()),
+  // });
+}
