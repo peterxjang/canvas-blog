@@ -9,7 +9,7 @@ function createStage() {
     stage.setWidth(window.innerWidth);
     stage.setHeight(window.innerHeight);
   }
-  createLayer(stage);
+  // createLayer(stage);
   return stage;
 }
 
@@ -64,8 +64,15 @@ function addZoomBackground(layer) {
 }
 
 
-function loadImages(objects, canvasScale, canvasX, canvasY) {
-  console.log(objects);
+function loadImagesEdit(objects, canvasScale, canvasX, canvasY) {
+  loadImages(objects, canvasScale, canvasX, canvasY, true);
+}
+
+function loadImagesView(objects, canvasScale, canvasX, canvasY) {
+  loadImages(objects, canvasScale, canvasX, canvasY, false);
+}
+
+function loadImages(objects, canvasScale, canvasX, canvasY, editable) {
   layer.removeChildren();
 
   addZoomBackground(layer);
@@ -86,7 +93,7 @@ function loadImages(objects, canvasScale, canvasX, canvasY) {
     loader.add(pxImage);
   }
   loader.addProgressListener(function(e) {
-    createPolaroid(e);
+    createPolaroid(e, editable);
   });
   loader.addCompletionListener(function() { 
     layer.scaleX(canvasScale);
@@ -98,45 +105,3 @@ function loadImages(objects, canvasScale, canvasX, canvasY) {
   loader.start();
 }
 
-
-function saveLayout(event) {
-  data = {objects: [],
-          scale: layer.attrs.scaleX,
-          x: layer.attrs.x,
-          y: layer.attrs.y};
-  layer.getChildren().each(function(node) {
-    if (node.nodeType == "Group") {
-      data.objects.push({
-        id: node.attrs.id,
-        title: node.attrs.title,
-        src: node.attrs.src,
-        top: node.attrs.y,
-        left: node.attrs.x,
-        angle: node.attrs.rotation,
-        scaleX: node.attrs.scaleX,
-        scaleY: node.attrs.scaleY,
-        zIndex: node.getZIndex(),
-      });
-    }
-    console.log(node.attrs);
-  });
-
-  console.log(layer);
-  console.log(data);
-  $.ajax({
-    url: '/save_layout',
-    type: 'POST',
-    // dataType: 'json',
-    contentType: 'application/json',
-    data: JSON.stringify(data),
-    success: function(response) {},
-    error: function(response) { console.log("error!"); console.log(response);}
-  });
-}
-
-function viewLayout(event) {
-  // if (stageJSON) {
-  //   stage.destroy();
-  //   stage = Kinetic.Node.create(stageJSON, 'canvasWrapper');
-  // }
-}

@@ -136,3 +136,30 @@ h2 {
 .polaroid{
   display: block; visibility: hidden; position: absolute; top: -1000; left: -1000;
 }
+
+#pop-up {
+  display: none;
+  position: absolute;
+  background: #FFFFFF;
+  padding: 5vh;
+  z-index: 11;
+  color: #336699;
+  position: relative;
+  width: 50%;
+  top: 10vh;
+  height: 70vh;
+  overflow-y: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+#pop-up-background {
+  display: none;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: #000000;
+  opacity: 0.7;
+  z-index: 10;
+}

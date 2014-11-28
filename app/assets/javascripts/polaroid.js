@@ -1,4 +1,4 @@
-function createPolaroid(e) {
+function createPolaroid(e, editable) {
   var img = e.resource.img;
   // var scale = window.innerHeight / 2 / img.height;
   var scaleX = e.resource.scaleX;
@@ -6,7 +6,7 @@ function createPolaroid(e) {
   if (!scaleX) { scaleX = window.innerHeight / 2 / img.height; }
   if (!scaleY) { scaleY = window.innerHeight / 2 / img.height; }
   var group = new Kinetic.Group({
-    draggable: true,
+    draggable: editable,
     x: e.resource.left,
     y: e.resource.top,
     rotation: e.resource.angle,
@@ -16,15 +16,9 @@ function createPolaroid(e) {
   });
   var border = img.height / 20;
   var yoda = new Kinetic.Image({
-    // x: e.resource.left,
-    // y: e.resource.top,
     x: border,
     y: border,
     image: img,
-    // scaleX: scaleX,
-    // scaleY: scaleY,
-    // rotation: e.resource.angle,
-    // opacity: 0
   });
   var back = new Kinetic.Rect({
   	width: img.width + 2*border,
@@ -43,7 +37,6 @@ function createPolaroid(e) {
   group.add(back);
   group.add(yoda);
   group.add(text);
-  // padText(text, back, border );
   fitText(text, back, border );
   group.attrs.id = parseInt(e.resource.databaseID);
   group.attrs.src = e.resource.databaseSrc;
@@ -51,26 +44,49 @@ function createPolaroid(e) {
   // group.offsetX(group.width()/2);
   // group.offsetY(group.height()/2);
 
-  var startScale = 1;
-  var startRotate = 0;
-  var hammertime = Hammer(group)
-  .on("touch", function(e) {
-    group.moveToTop();
-    layer.draw();
-  })
-  .on("transformstart", function(e) {
-    startScale = group.scaleX();
-    startRotate = group.rotation();
-    layer.draw();
-  })
-  .on("transform", function(e) {
-    group.scale({
-      x : startScale * e.gesture.scale,
-      y : startScale * e.gesture.scale,
+  if (editable) {
+    var startScale = 1;
+    var startRotate = 0;
+    var hammertime = Hammer(group)
+    .on("touch", function(e) {
+      group.moveToTop();
+      layer.draw();
+    })
+    .on("transformstart", function(e) {
+      startScale = group.scaleX();
+      startRotate = group.rotation();
+      layer.draw();
+    })
+    .on("transform", function(e) {
+      group.scale({
+        x : startScale * e.gesture.scale,
+        y : startScale * e.gesture.scale,
+      });
+      group.rotation(startRotate + e.gesture.rotation);
+      layer.draw();
     });
-    group.rotation(startRotate + e.gesture.rotation);
-    layer.draw();
-  });
+  }
+  else {
+    var hammertime = Hammer(group)
+    .on("touch", function(e) {
+      $.ajax({
+        url: '/view_post',
+        type: 'POST',
+        dataType: 'json',
+        data: {post_id: group.attrs.id},
+        success: function(response) {
+          if (response.valid) {
+            $("#pop-up-background").fadeIn("slow");
+            $("#pop-up").html(response.html).fadeIn("slow");
+          }
+          else {
+            console.log("Could not find post!");
+          }
+        },
+        error: function(response) { console.log("view post error!"); console.log(response); }
+      });
+    });
+  }
 
   layer.add(group);
   group.setZIndex(e.resource.zIndex);
@@ -94,8 +110,6 @@ function padText(text, container, amount) {
 }
 
 function fitText(text, container, amount) {
-	console.log(text.width());
-	console.log(container.width());
 	var scale = (container.width() - 2*amount) / text.width();
 	text.scaleX(scale);
 	text.scaleY(scale);
