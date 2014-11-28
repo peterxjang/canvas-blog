@@ -19,6 +19,13 @@ function createLayer(stage) {
   });
   layer.setDraggable("draggable");
   stage.add(layer);
+
+
+  // layer.on('mousedown touchstart', function (e) {
+  //   var node = e.targetNode;
+  //   select(node);
+  // });
+
   return layer;
 }
 

@@ -22,6 +22,7 @@ function createPolaroid(e, editable) {
     image: img,
   });
   var back = new Kinetic.Rect({
+    name: 'back',
   	width: img.width + 2*border,
   	height: img.height + 6*border,
   	fill: 'white',
@@ -53,9 +54,18 @@ function createPolaroid(e, editable) {
       width: back.width(),
       height: back.height(),
       fill: 'gray',
+      stroke: 'gray',
+      strokeWidth: border / 10,
       opacity: 0.8
     });
     group.add(front);
+
+
+    addAnchor(group, 0, 0, "topLeft");
+    addAnchor(group, front.width(), 0, "topRight");
+    addAnchor(group, front.width(), front.height(), "bottomRight");
+    addAnchor(group, 0, front.height(), "bottomLeft");
+
     var startScale = 1;
     var startRotate = 0;
     var hammertime = Hammer(group)
@@ -131,3 +141,4 @@ function fitText(text, container, amount) {
 	text.scaleX(scale);
 	text.scaleY(scale);
 }
+
