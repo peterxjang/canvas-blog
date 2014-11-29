@@ -56,7 +56,7 @@ function addZoomBackground(layer) {
   $('#canvasWrapper').bind('mousewheel', function(e, delta) {
     e.preventDefault();
     zoom(layer.getScaleX(), 
-         (e.originalEvent.wheelDelta < 0 ? 0.9 : 1.1), 
+         (e.originalEvent.deltaY > 0 ? 0.9 : 1.1), 
          layer.getOffset(), 
          {x: e.originalEvent.clientX, y: e.originalEvent.clientY});
   });
@@ -112,6 +112,7 @@ function loadImages(objects, canvasScale, canvasX, canvasY, editable) {
     layer.x(canvasX);
     layer.y(canvasY);
     layer.draw();
+    console.log('complete');
   });
   loader.start();
 }

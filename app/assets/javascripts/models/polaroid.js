@@ -1,4 +1,5 @@
 function createPolaroid(e, editable) {
+  console.log({e: e, editable: editable});
   var img = e.resource.img;
   // var scale = window.innerHeight / 2 / img.height;
   var scaleX = e.resource.scaleX;

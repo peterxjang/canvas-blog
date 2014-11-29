@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require kinetic-v5.1.0
 //= require hammer
 //= require pxloader
