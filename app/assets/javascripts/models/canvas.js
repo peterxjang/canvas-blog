@@ -111,6 +111,8 @@ function loadImages(layoutData, editable) {
     layer.scaleY(layoutData.layer.scale);
     layer.x(layoutData.layer.x);
     layer.y(layoutData.layer.y);
+    layer.offsetX(layoutData.layer.offsetX);
+    layer.offsetY(layoutData.layer.offsetY);
     layer.draw();
   });
   loader.start();

@@ -24,6 +24,8 @@ module ApplicationHelper
 						scale: 1.0,
 						x: 0.0,
 						y: 0.0,
+						offsetX: 0.0,
+						offsetY: 0.0,
 					}
 				}
 				layout = Canvaslayout.create!(user: current_user, 

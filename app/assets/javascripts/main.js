@@ -59,7 +59,10 @@ function saveLayout(event) {
              layer: {
                scale: layer.attrs.scaleX,
                x: layer.attrs.x,
-               y: layer.attrs.y}
+               y: layer.attrs.y,
+               offsetX: layer.getOffsetX(),
+               offsetY: layer.getOffsetY(),
+             }
             }
   };
   layer.getChildren().each(function(node) {
