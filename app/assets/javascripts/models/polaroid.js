@@ -44,8 +44,6 @@ function createPolaroid(e, editable) {
   group.attrs.id = parseInt(e.resource.databaseID);
   group.attrs.src = e.resource.databaseSrc;
   group.attrs.title = e.resource.databaseTitle;
-  // group.offsetX(group.width()/2);
-  // group.offsetY(group.height()/2);
 
   if (editable) {
     var front = new Kinetic.Rect({
@@ -165,4 +163,16 @@ function moveObjectUp(event) {
 function moveObjectDown(event) {
   currentGroup.moveDown();
   layer.draw();
+}
+
+function updatePost(event) {
+  
+}
+
+function newPost(event) {
+  
+}
+
+function deletePost(event) {
+
 }

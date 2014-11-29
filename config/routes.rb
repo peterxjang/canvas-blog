@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   post 'save_layout' => 'sessions#save_layout'
   post 'view_post' => 'sessions#view_post'
   # resources :users, except: [:destroy]
+  # resources :posts
+  post 'posts' => 'posts#create'
+  put 'posts/:id' => 'posts#update'
+  delete 'posts/:id' => 'posts#destroy'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

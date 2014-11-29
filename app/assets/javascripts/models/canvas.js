@@ -97,7 +97,7 @@ function loadImages(layoutData, editable) {
     layer.offsetX(layoutData.layer.offsetX);
     layer.offsetY(layoutData.layer.offsetY);
     layer.draw();
-    
+
   var loader = new PxLoader();
   for (var i=0; i<layoutData.objects.length; i++) {
     var object = layoutData.objects[i];
@@ -118,8 +118,7 @@ function loadImages(layoutData, editable) {
   loader.addProgressListener(function(e) {
     createPolaroid(e, editable);
   });
-  // loader.addCompletionListener(function() { 
-  // });
+  // loader.addCompletionListener(function() {});
   loader.start();
 }
 
