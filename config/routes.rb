@@ -7,10 +7,11 @@ Rails.application.routes.draw do
   get 'user' => 'users#show'
   post 'users' => 'users#create'
   post 'save_layout' => 'sessions#save_layout'
-  post 'view_post' => 'sessions#view_post'
+  # post 'view_post' => 'sessions#view_post'
   # resources :users, except: [:destroy]
   # resources :posts
   post 'posts' => 'posts#create'
+  get 'posts/:id' => 'posts#show'
   put 'posts/:id' => 'posts#update'
   delete 'posts/:id' => 'posts#destroy'
 

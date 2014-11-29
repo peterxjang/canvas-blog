@@ -20,7 +20,7 @@ function editLayout(event) {
     data: $("form#form-sign-in").serialize(),
     success: function(response) {
       if (response.valid) {
-        $('#div-top').html(response.html);
+        $('#div-top').html('');
         setMenuEditMode(response.htmlMenu);
         loadImagesEdit(response.layout);
       }
@@ -41,7 +41,7 @@ function viewLayout(event) {
     data: $("form#form-sign-in").serialize(),
     success: function(response) {
       if (response.valid) {
-        $('#div-top').html(response.html);
+        $('#div-top').html('');
         setMenuViewMode(response.htmlMenu);
         loadImagesView(response.layout);
       }

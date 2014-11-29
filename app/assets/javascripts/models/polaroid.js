@@ -99,22 +99,7 @@ function createPolaroid(e, editable) {
     var hammertime = Hammer(group)
     .on("touch", function(e) {
       e.preventDefault();
-      $.ajax({
-        url: '/view_post',
-        type: 'POST',
-        dataType: 'json',
-        data: {post_id: group.attrs.id},
-        success: function(response) {
-          if (response.valid) {
-            $("#pop-up-background").fadeIn("slow");
-            $("#pop-up").html(response.html).fadeIn("slow");
-          }
-          else {
-            console.log("Could not find post!");
-          }
-        },
-        error: function(response) { console.log("view post error!"); console.log(response); }
-      });
+      showPost(group.attrs.id);
     });
   }
 
@@ -165,14 +150,65 @@ function moveObjectDown(event) {
   layer.draw();
 }
 
-function updatePost(event) {
+function showPost(id) {
+  $.ajax({
+    url: '/posts/'+id,
+    type: 'GET',
+    dataType: 'json',
+    success: function(response) {
+      if (response.valid) {
+        $("#pop-up-background").fadeIn("slow");
+        $("#pop-up").html(response.html).fadeIn("slow");
+      }
+      else {
+        console.log("Could not find post!");
+      }
+    },
+    error: function(response) { console.log("view post error!"); console.log(response); }
+  });
+}
+
+function updatePost(id) {
+  $.ajax({
+    url: '/posts/'+id,
+    type: 'PUT',
+    dataType: 'json',
+    success: function(response) {
+      if (response.valid) {
+        $("#pop-up-background").fadeIn("slow");
+        $("#pop-up").html(response.html).fadeIn("slow");
+      }
+      else {
+        console.log("Could not find post!");
+      }
+    },
+    error: function(response) { console.log("view post error!"); console.log(response); }
+  });
+}
+
+function newPost() {
   
 }
 
-function newPost(event) {
-  
-}
-
-function deletePost(event) {
-
+function deletePost(id) {
+  if (confirm('Are you sure you want to delete this post?')) {
+    $.ajax({
+      url: '/posts/'+id,
+      type: 'DELETE',
+      dataType: 'json',
+      success: function(response) {
+        if (response.valid) {
+          // $("#pop-up-background").fadeIn("slow");
+          // $("#pop-up").html(response.html).fadeIn("slow");
+          alert('Post deleted.');
+        }
+        else {
+          console.log("Could not find post!");
+        }
+      },
+      error: function(response) { console.log("view post error!"); console.log(response); }
+    });
+  } else {
+      // Do nothing!
+  }
 }

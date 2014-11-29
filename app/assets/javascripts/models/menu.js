@@ -5,9 +5,15 @@ function createMenu() {
   $(document).on("click", "#button-view-posts", viewLayout);
   $(document).on("click", "#button-moveup", moveObjectUp);
   $(document).on("click", "#button-movedown", moveObjectDown);
-  $(document).on("click", "#button-update-post", updatePost);
-  $(document).on("click", "#button-delete-post", deletePost);
-  $(document).on("click", "#button-new-post", newPost);
+  $(document).on("click", "#button-update-post", function(e) {
+    updatePost(currentGroup.attrs.id);
+  });
+  $(document).on("click", "#button-delete-post", function(e) {
+    deletePost(currentGroup.attrs.id);
+  });
+  $(document).on("click", "#button-new-post", function(e) {
+    newPost();
+  });
 }
 
 function setMenuEditMode(html) {

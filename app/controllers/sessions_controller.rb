@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
 		if @user
 			result['valid'] = true
 			result['layout'] = current_layout.objects
-			result['html'] = render_to_string(partial: 'show_polaroid')
+			# result['html'] = render_to_string(partial: 'show_polaroid')
 			result['htmlMenu'] = render_to_string(partial: 'show_menu')
 		else
 			@error = "Incorrect email or password!"
