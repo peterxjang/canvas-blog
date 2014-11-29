@@ -1,8 +1,10 @@
 function createPolaroid(e, editable) {
+  // console.log({e: e, editable: editable});
   var img = e.resource.img;
   // var scale = window.innerHeight / 2 / img.height;
   var scaleX = e.resource.scaleX;
   var scaleY = e.resource.scaleY;
+  currentGroup  = null;
   if (!scaleX) { scaleX = window.innerHeight / 2 / img.height; }
   if (!scaleY) { scaleY = window.innerHeight / 2 / img.height; }
   var group = new Kinetic.Group({
@@ -21,6 +23,7 @@ function createPolaroid(e, editable) {
     image: img,
   });
   var back = new Kinetic.Rect({
+    name: 'back',
   	width: img.width + 2*border,
   	height: img.height + 6*border,
   	fill: 'white',
@@ -45,12 +48,36 @@ function createPolaroid(e, editable) {
   // group.offsetY(group.height()/2);
 
   if (editable) {
+    var front = new Kinetic.Rect({
+      name: 'front',
+      x: 0,
+      y: 0,
+      width: back.width(),
+      height: back.height(),
+      fill: 'gray',
+      stroke: 'gray',
+      strokeWidth: border / 10,
+      opacity: 0.8
+    });
+    group.add(front);
+
+
+    // addAnchor(group, 0, 0, "topLeft");
+    // addAnchor(group, front.width(), 0, "topRight");
+    // addAnchor(group, front.width(), front.height(), "bottomRight");
+    // addAnchor(group, 0, front.height(), "bottomLeft");
+
     var startScale = 1;
     var startRotate = 0;
     var hammertime = Hammer(group)
     .on("touch", function(e) {
       group.moveToTop();
+      if (currentGroup) {
+        currentGroup.get('.front').each(function(child) {child.opacity(0.8);});
+      }
+      front.opacity(0);
       layer.draw();
+      currentGroup = group;
     })
     .on("transformstart", function(e) {
       startScale = group.scaleX();
@@ -69,6 +96,7 @@ function createPolaroid(e, editable) {
   else {
     var hammertime = Hammer(group)
     .on("touch", function(e) {
+      e.preventDefault();
       $.ajax({
         url: '/view_post',
         type: 'POST',
@@ -90,6 +118,7 @@ function createPolaroid(e, editable) {
 
   layer.add(group);
   group.setZIndex(e.resource.zIndex);
+  console.log({zindex: group.getZIndex(), title: e.resource.databaseTitle});
   var tween = new Kinetic.Tween({
   	node: group,
   	opacity: 1
@@ -113,4 +142,14 @@ function fitText(text, container, amount) {
 	var scale = (container.width() - 2*amount) / text.width();
 	text.scaleX(scale);
 	text.scaleY(scale);
+}
+
+function resizePolaroid(group, newWidth, newHeight) {
+  var image = group.get(".back")[0];
+  image.setSize({width: newWidth, height: newHeight});
+  image.parent.setSize({width: newWidth, height: newHeight});
+  // image.parent.scale({
+  //  x: image.parent.scaleY() * newHeight / (image.getHeight()),
+  //  y: image.parent.scaleY() * newHeight / (image.getHeight()),
+  // });
 }

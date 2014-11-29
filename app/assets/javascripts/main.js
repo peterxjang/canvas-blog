@@ -1,13 +1,9 @@
 $(document).ready(function() {
   stage = createStage();
   layer = createLayer(stage);
+  var menu = createMenu();
+
   $(document).on("click", "#sign-in", viewLayout);
-  $(document).on("click", "#button-edit-posts", editLayout);
-  $(document).on("click", "#button-save-posts", saveLayout);
-  $(document).on("click", "#button-cancel-posts", cancelLayout);
-  $(document).on("click", "#button-view-posts", viewLayout);
-
-
   $(document).on("click", "#pop-up-background", function(){
     $("#pop-up-background").fadeOut("slow");
     $("#pop-up").fadeOut("slow");
@@ -25,11 +21,7 @@ function editLayout(event) {
     success: function(response) {
       if (response.valid) {
         $('#div-top').html(response.html);
-        $('#menu').html(response.htmlMenu);
-        $('#button-edit-posts').hide();
-        $('#button-view-posts').hide();
-        $('#button-save-posts').show();
-        $('#button-cancel-posts').show();
+        setMenuEditMode(response.htmlMenu);
         loadImagesEdit(
           response.objects, 
           response.scale,
@@ -55,11 +47,7 @@ function viewLayout(event) {
     success: function(response) {
       if (response.valid) {
         $('#div-top').html(response.html);
-        $('#menu').html(response.htmlMenu);
-        $('#button-edit-posts').show();
-        $('#button-view-posts').hide();
-        $('#button-save-posts').hide();
-        $('#button-cancel-posts').hide();
+        setMenuViewMode(response.htmlMenu);
         loadImagesView(
           response.objects, 
           response.scale,
@@ -102,10 +90,6 @@ function saveLayout(event) {
     contentType: 'application/json',
     data: JSON.stringify(data),
     success: function(response) {
-      // $('#button-edit-posts').show();
-      // $('#button-view-posts').show();
-      // $('#button-save-posts').hide();
-      // $('#button-cancel-posts').hide();
       viewLayout(event);
     },
     error: function(response) { console.log("error!"); console.log(response);}
@@ -113,10 +97,5 @@ function saveLayout(event) {
 }
 
 function cancelLayout(event) {
-  // console.log('cancel');
-  // $('#button-edit-posts').show();
-  // $('#button-view-posts').show();
-  // $('#button-save-posts').hide();
-  // $('#button-cancel-posts').hide();
   viewLayout(event);
 }

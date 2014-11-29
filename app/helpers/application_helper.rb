@@ -16,7 +16,7 @@ module ApplicationHelper
 					 angle: 0.0,
 					 scaleX: nil,
 					 scaleY: nil,
-					 zIndex: 0} 
+					 zIndex: 1} 
 				end
 				layout = Canvaslayout.create!(user: current_user, 
 																			objects: objects,

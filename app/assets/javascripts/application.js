@@ -12,9 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require kinetic-v5.1.0
 //= require hammer
 //= require pxloader
 //= require pxloaderimage
+//= require jquery.mousewheel
 //= require_tree .

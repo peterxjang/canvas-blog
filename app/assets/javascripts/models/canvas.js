@@ -9,7 +9,6 @@ function createStage() {
     stage.setWidth(window.innerWidth);
     stage.setHeight(window.innerHeight);
   }
-  // createLayer(stage);
   return stage;
 }
 
@@ -19,6 +18,14 @@ function createLayer(stage) {
   });
   layer.setDraggable("draggable");
   stage.add(layer);
+
+
+  layer.on('mousedown touchstart', function (e) {
+    var node = e.targetNode;
+    // select(node);
+    console.log(node);
+  });
+
   return layer;
 }
 
@@ -35,34 +42,39 @@ function addZoomBackground(layer) {
   layer.add(background);
   var startScale = 1;
   var startRotate = 0;
+  var zoomOrigin = {x: 0, y: 0};
   var hammertime = Hammer(layer)
   .on("transformstart", function(e) {
     startScale = layer.scaleX();
+    zoomOrigin = layer.getOffset();
   }).on("transform", function(e) {
-    layer.scale({
-      x : startScale * e.gesture.scale,
-      y : startScale * e.gesture.scale,
-    });
-    layer.draw();
+    zoom(startScale, 
+         e.gesture.scale, 
+         zoomOrigin, 
+         {x: e.gesture.center.pageX, y: e.gesture.center.pageY});
   });
 
   $('#canvasWrapper').bind('mousewheel', function(e, delta) {
     e.preventDefault();
-    var delta = e.originalEvent.wheelDelta;
-    // var cur_scale;
-    // if (delta > 0) {
-    //   startScale = startScale + Math.abs(delta / 640);
-    // } else {
-    //   startScale = startScale - Math.abs(delta / 640);
-    // }
-    // console.log(startScale);
-    // layer.scale({
-    //   x: startScale, //* e.originalEvent.wheelDelta,
-    //   y: startScale, //* e.originalEvent.wheelDelta,
-    // });
+    zoom(layer.getScaleX(), 
+         (e.originalEvent.deltaY > 0 ? 0.9 : 1.1), 
+         layer.getOffset(), 
+         {x: e.originalEvent.clientX, y: e.originalEvent.clientY});
   });
 }
 
+function zoom(oldscale, factor, zoomOrigin, center) {
+  var mx = center.x - layer.getX(),
+      my = center.y - layer.getY(),
+      newscale = oldscale * factor;
+  zoomOrigin = {
+    x: mx / oldscale + zoomOrigin.x - mx / newscale, 
+    y: my / oldscale + zoomOrigin.y - my / newscale,
+  };
+  layer.setOffset({x: zoomOrigin.x, y: zoomOrigin.y});
+  layer.setScale({x: newscale, y: newscale});
+  layer.draw();
+}
 
 function loadImagesEdit(objects, canvasScale, canvasX, canvasY) {
   loadImages(objects, canvasScale, canvasX, canvasY, true);
@@ -101,6 +113,7 @@ function loadImages(objects, canvasScale, canvasX, canvasY, editable) {
     layer.x(canvasX);
     layer.y(canvasY);
     layer.draw();
+    console.log('complete');
   });
   loader.start();
 }
