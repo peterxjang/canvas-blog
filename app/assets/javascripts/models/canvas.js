@@ -20,10 +20,10 @@ function createLayer(stage) {
   stage.add(layer);
 
 
-  layer.on('mousedown touchstart', function (e) {
-    var node = e.targetNode;
-    // select(node);
-  });
+  // layer.on('mousedown touchstart', function (e) {
+  //   var node = e.targetNode;
+  //   // select(node);
+  // });
 
   return layer;
 }
@@ -46,32 +46,35 @@ function addZoomBackground(layer) {
   .on("transformstart", function(e) {
     startScale = layer.scaleX();
     zoomOrigin = layer.getOffset();
+    // zoomOrigin = {x: e.gesture.center.pageX, y: e.gesture.center.pageY};
   }).on("transform", function(e) {
-    zoom(startScale, 
-         e.gesture.scale, 
-         zoomOrigin, 
-         {x: e.gesture.center.pageX, y: e.gesture.center.pageY});
+    zoomObject(layer,
+               startScale, 
+               e.gesture.scale, 
+               zoomOrigin, 
+               {x: e.gesture.center.pageX, y: e.gesture.center.pageY});
   });
 
   $('#canvasWrapper').bind('mousewheel', function(e, delta) {
     e.preventDefault();
-    zoom(layer.getScaleX(), 
-         (e.originalEvent.deltaY > 0 ? 0.9 : 1.1), 
-         layer.getOffset(), 
-         {x: e.originalEvent.clientX, y: e.originalEvent.clientY});
+    zoomObject(layer,
+               layer.getScaleX(), 
+               (e.originalEvent.deltaY > 0 ? 0.9 : 1.1), 
+               layer.getOffset(), 
+               {x: e.originalEvent.clientX, y: e.originalEvent.clientY});
   });
 }
 
-function zoom(oldscale, factor, zoomOrigin, center) {
-  var mx = center.x - layer.getX(),
-      my = center.y - layer.getY(),
+function zoomObject(object, oldscale, factor, zoomOrigin, center) {
+  var mx = center.x - object.getX(),
+      my = center.y - object.getY(),
       newscale = oldscale * factor;
   zoomOrigin = {
     x: mx / oldscale + zoomOrigin.x - mx / newscale, 
     y: my / oldscale + zoomOrigin.y - my / newscale,
   };
-  layer.setOffset({x: zoomOrigin.x, y: zoomOrigin.y});
-  layer.setScale({x: newscale, y: newscale});
+  object.setOffset({x: zoomOrigin.x, y: zoomOrigin.y});
+  object.setScale({x: newscale, y: newscale});
   layer.draw();
 }
 
@@ -96,6 +99,8 @@ function loadImages(layoutData, editable) {
     pxImage.left = object.left;
     pxImage.scaleX = object.scaleX;
     pxImage.scaleY = object.scaleY;
+    pxImage.offsetX = object.offsetX;
+    pxImage.offsetY = object.offsetY;
     pxImage.zIndex = object.zIndex;
     pxImage.angle = object.angle;
     pxImage.databaseID = object.id;

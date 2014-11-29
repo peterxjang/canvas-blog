@@ -76,6 +76,8 @@ function saveLayout(event) {
         angle: node.attrs.rotation,
         scaleX: node.attrs.scaleX,
         scaleY: node.attrs.scaleY,
+        offsetX: node.getOffsetX(),
+        offsetY: node.getOffsetY(),
         zIndex: node.getZIndex(),
       });
     }

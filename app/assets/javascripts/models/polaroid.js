@@ -12,6 +12,8 @@ function createPolaroid(e, editable) {
     rotation: e.resource.angle,
     scaleX: scaleX,
     scaleY: scaleY,
+    offsetX: e.resource.offsetX,
+    offsetY: e.resource.offsetY,
     opacity: 0
   });
   var border = img.height / 20;
@@ -67,6 +69,7 @@ function createPolaroid(e, editable) {
 
     var startScale = 1;
     var startRotate = 0;
+    var zoomOrigin = {x: 0, y: 0};
     var hammertime = Hammer(group)
     .on("touch", function(e) {
       group.moveToTop();
@@ -80,13 +83,19 @@ function createPolaroid(e, editable) {
     .on("transformstart", function(e) {
       startScale = group.scaleX();
       startRotate = group.rotation();
+      zoomOrigin = group.getOffset();
       layer.draw();
     })
     .on("transform", function(e) {
-      group.scale({
-        x : startScale * e.gesture.scale,
-        y : startScale * e.gesture.scale,
-      });
+      zoomObject(group,
+                 startScale, 
+                 e.gesture.scale, 
+                 zoomOrigin, 
+                 {x: e.gesture.center.pageX, y: e.gesture.center.pageY});
+      // group.scale({
+      //   x : startScale * e.gesture.scale,
+      //   y : startScale * e.gesture.scale,
+      // });
       group.rotation(startRotate + e.gesture.rotation);
       layer.draw();
     });
