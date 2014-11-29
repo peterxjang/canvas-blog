@@ -90,7 +90,13 @@ h2 {
   float: right;
 }
 
-#button-save-posts, #button-cancel-posts, #button-moveup, #button-movedown {
+#button-save-posts, 
+#button-cancel-posts, 
+#button-moveup, 
+#button-movedown,
+#button-update-post,
+#button-delete-post,
+#button-new-post {
   display: none;
 }
 

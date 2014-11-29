@@ -15,6 +15,9 @@ function setMenuEditMode(html) {
   $('#button-cancel-posts').show();
   $('#button-moveup').show().prop("disabled",true);
   $('#button-movedown').show().prop("disabled",true);
+  $('#button-update-post').show().prop("disabled",true);
+  $('#button-delete-post').show().prop("disabled",true);
+  $('#button-new-post').show();
 }
 
 function setMenuViewMode(html) {
@@ -25,9 +28,14 @@ function setMenuViewMode(html) {
   $('#button-cancel-posts').hide();
   $('#button-moveup').hide();
   $('#button-movedown').hide();
+  $('#button-update-post').hide();
+  $('#button-delete-post').hide();
+  $('#button-new-post').hide();
 }
 
 function setMenuEditItemMode() {
   $('#button-moveup').prop("disabled",false);
   $('#button-movedown').prop("disabled",false);
+  $('#button-update-post').prop("disabled",false);
+  $('#button-delete-post').prop("disabled",false);
 }
