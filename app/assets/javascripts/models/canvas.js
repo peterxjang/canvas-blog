@@ -46,7 +46,6 @@ function addZoomBackground(layer) {
   .on("transformstart", function(e) {
     startScale = layer.scaleX();
     zoomOrigin = layer.getOffset();
-    // zoomOrigin = {x: e.gesture.center.pageX, y: e.gesture.center.pageY};
   }).on("transform", function(e) {
     zoomObject(layer,
                startScale, 
@@ -67,8 +66,8 @@ function addZoomBackground(layer) {
 }
 
 function zoomObject(object, oldscale, factor, zoomOrigin, center) {
-  var mx = center.x - object.getX(),
-      my = center.y - object.getY(),
+  var mx = center.x - object.getAbsolutePosition().x,
+      my = center.y - object.getAbsolutePosition().y,
       newscale = oldscale * factor;
   zoomOrigin = {
     x: mx / oldscale + zoomOrigin.x - mx / newscale, 
