@@ -18,11 +18,21 @@ module ApplicationHelper
 					 scaleY: nil,
 					 zIndex: 1} 
 				end
+				layoutData = {
+					objects: objects, 
+					layer: {
+						scale: 1.0,
+						x: 0.0,
+						y: 0.0,
+					}
+				}
 				layout = Canvaslayout.create!(user: current_user, 
-																			objects: objects,
-																			scale: 1.0,
-																			x: 0.0,
-																			y: 0.0)
+																			objects: layoutData)
+				# layout = Canvaslayout.create!(user: current_user, 
+				# 															objects: objects,
+				# 															scale: 1.0,
+				# 															x: 0.0,
+				# 															y: 0.0)
 			end
 			layout
 		end

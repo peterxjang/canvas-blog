@@ -23,7 +23,6 @@ function createLayer(stage) {
   layer.on('mousedown touchstart', function (e) {
     var node = e.targetNode;
     // select(node);
-    console.log(node);
   });
 
   return layer;
@@ -76,22 +75,22 @@ function zoom(oldscale, factor, zoomOrigin, center) {
   layer.draw();
 }
 
-function loadImagesEdit(objects, canvasScale, canvasX, canvasY) {
-  loadImages(objects, canvasScale, canvasX, canvasY, true);
+function loadImagesEdit(layoutData) {
+  loadImages(layoutData, true);
 }
 
-function loadImagesView(objects, canvasScale, canvasX, canvasY) {
-  loadImages(objects, canvasScale, canvasX, canvasY, false);
+function loadImagesView(layoutData) {
+  loadImages(layoutData, false);
 }
 
-function loadImages(objects, canvasScale, canvasX, canvasY, editable) {
+function loadImages(layoutData, editable) {
   layer.removeChildren();
 
   addZoomBackground(layer);
 
   var loader = new PxLoader();
-  for (var i=0; i<objects.length; i++) {
-    var object = objects[i];
+  for (var i=0; i<layoutData.objects.length; i++) {
+    var object = layoutData.objects[i];
     var pxImage = new PxLoaderImage(object.src);
     pxImage.top = object.top;
     pxImage.left = object.left;
@@ -108,12 +107,11 @@ function loadImages(objects, canvasScale, canvasX, canvasY, editable) {
     createPolaroid(e, editable);
   });
   loader.addCompletionListener(function() { 
-    layer.scaleX(canvasScale);
-    layer.scaleY(canvasScale);
-    layer.x(canvasX);
-    layer.y(canvasY);
+    layer.scaleX(layoutData.layer.scale);
+    layer.scaleY(layoutData.layer.scale);
+    layer.x(layoutData.layer.x);
+    layer.y(layoutData.layer.y);
     layer.draw();
-    console.log('complete');
   });
   loader.start();
 }
