@@ -1,5 +1,5 @@
 function createPolaroid(e, editable) {
-  console.log({e: e, editable: editable});
+  // console.log({e: e, editable: editable});
   var img = e.resource.img;
   // var scale = window.innerHeight / 2 / img.height;
   var scaleX = e.resource.scaleX;
@@ -62,10 +62,10 @@ function createPolaroid(e, editable) {
     group.add(front);
 
 
-    addAnchor(group, 0, 0, "topLeft");
-    addAnchor(group, front.width(), 0, "topRight");
-    addAnchor(group, front.width(), front.height(), "bottomRight");
-    addAnchor(group, 0, front.height(), "bottomLeft");
+    // addAnchor(group, 0, 0, "topLeft");
+    // addAnchor(group, front.width(), 0, "topRight");
+    // addAnchor(group, front.width(), front.height(), "bottomRight");
+    // addAnchor(group, 0, front.height(), "bottomLeft");
 
     var startScale = 1;
     var startRotate = 0;
@@ -118,6 +118,7 @@ function createPolaroid(e, editable) {
 
   layer.add(group);
   group.setZIndex(e.resource.zIndex);
+  console.log({zindex: group.getZIndex(), title: e.resource.databaseTitle});
   var tween = new Kinetic.Tween({
   	node: group,
   	opacity: 1

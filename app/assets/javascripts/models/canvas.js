@@ -20,10 +20,11 @@ function createLayer(stage) {
   stage.add(layer);
 
 
-  // layer.on('mousedown touchstart', function (e) {
-  //   var node = e.targetNode;
-  //   select(node);
-  // });
+  layer.on('mousedown touchstart', function (e) {
+    var node = e.targetNode;
+    // select(node);
+    console.log(node);
+  });
 
   return layer;
 }
