@@ -20,11 +20,10 @@ function createLayer(stage) {
   stage.add(layer);
 
 
-  layer.on('mousedown touchstart', function (e) {
-    var node = e.targetNode;
-    // select(node);
-    console.log(node);
-  });
+  // layer.on('mousedown touchstart', function (e) {
+  //   var node = e.targetNode;
+  //   // select(node);
+  // });
 
   return layer;
 }
@@ -48,55 +47,59 @@ function addZoomBackground(layer) {
     startScale = layer.scaleX();
     zoomOrigin = layer.getOffset();
   }).on("transform", function(e) {
-    zoom(startScale, 
-         e.gesture.scale, 
-         zoomOrigin, 
-         {x: e.gesture.center.pageX, y: e.gesture.center.pageY});
+    zoomObject(layer,
+               startScale, 
+               e.gesture.scale, 
+               zoomOrigin, 
+               {x: e.gesture.center.pageX, y: e.gesture.center.pageY});
   });
 
   $('#canvasWrapper').bind('mousewheel', function(e, delta) {
     e.preventDefault();
-    zoom(layer.getScaleX(), 
-         (e.originalEvent.deltaY > 0 ? 0.9 : 1.1), 
-         layer.getOffset(), 
-         {x: e.originalEvent.clientX, y: e.originalEvent.clientY});
+    zoomObject(layer,
+               layer.getScaleX(), 
+               (e.originalEvent.deltaY > 0 ? 0.9 : 1.1), 
+               layer.getOffset(), 
+               {x: e.originalEvent.clientX, y: e.originalEvent.clientY});
+    layer.draw();
   });
 }
 
-function zoom(oldscale, factor, zoomOrigin, center) {
-  var mx = center.x - layer.getX(),
-      my = center.y - layer.getY(),
+function zoomObject(object, oldscale, factor, zoomOrigin, center) {
+  var mx = center.x - object.getAbsolutePosition().x,
+      my = center.y - object.getAbsolutePosition().y,
       newscale = oldscale * factor;
   zoomOrigin = {
     x: mx / oldscale + zoomOrigin.x - mx / newscale, 
     y: my / oldscale + zoomOrigin.y - my / newscale,
   };
-  layer.setOffset({x: zoomOrigin.x, y: zoomOrigin.y});
-  layer.setScale({x: newscale, y: newscale});
-  layer.draw();
+  object.setOffset({x: zoomOrigin.x, y: zoomOrigin.y});
+  object.setScale({x: newscale, y: newscale});
 }
 
-function loadImagesEdit(objects, canvasScale, canvasX, canvasY) {
-  loadImages(objects, canvasScale, canvasX, canvasY, true);
+function loadImagesEdit(layoutData) {
+  loadImages(layoutData, true);
 }
 
-function loadImagesView(objects, canvasScale, canvasX, canvasY) {
-  loadImages(objects, canvasScale, canvasX, canvasY, false);
+function loadImagesView(layoutData) {
+  loadImages(layoutData, false);
 }
 
-function loadImages(objects, canvasScale, canvasX, canvasY, editable) {
+function loadImages(layoutData, editable) {
   layer.removeChildren();
 
   addZoomBackground(layer);
 
   var loader = new PxLoader();
-  for (var i=0; i<objects.length; i++) {
-    var object = objects[i];
+  for (var i=0; i<layoutData.objects.length; i++) {
+    var object = layoutData.objects[i];
     var pxImage = new PxLoaderImage(object.src);
     pxImage.top = object.top;
     pxImage.left = object.left;
     pxImage.scaleX = object.scaleX;
     pxImage.scaleY = object.scaleY;
+    pxImage.offsetX = object.offsetX;
+    pxImage.offsetY = object.offsetY;
     pxImage.zIndex = object.zIndex;
     pxImage.angle = object.angle;
     pxImage.databaseID = object.id;
@@ -108,12 +111,13 @@ function loadImages(objects, canvasScale, canvasX, canvasY, editable) {
     createPolaroid(e, editable);
   });
   loader.addCompletionListener(function() { 
-    layer.scaleX(canvasScale);
-    layer.scaleY(canvasScale);
-    layer.x(canvasX);
-    layer.y(canvasY);
+    layer.scaleX(layoutData.layer.scale);
+    layer.scaleY(layoutData.layer.scale);
+    layer.x(layoutData.layer.x);
+    layer.y(layoutData.layer.y);
+    layer.offsetX(layoutData.layer.offsetX);
+    layer.offsetY(layoutData.layer.offsetY);
     layer.draw();
-    console.log('complete');
   });
   loader.start();
 }

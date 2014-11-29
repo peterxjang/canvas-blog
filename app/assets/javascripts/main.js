@@ -22,12 +22,7 @@ function editLayout(event) {
       if (response.valid) {
         $('#div-top').html(response.html);
         setMenuEditMode(response.htmlMenu);
-        loadImagesEdit(
-          response.objects, 
-          response.scale,
-          response.x,
-          response.y
-        );
+        loadImagesEdit(response.layout);
       }
       else {
         $('#error-signin').text('Incorrect email or password!');
@@ -48,12 +43,7 @@ function viewLayout(event) {
       if (response.valid) {
         $('#div-top').html(response.html);
         setMenuViewMode(response.htmlMenu);
-        loadImagesView(
-          response.objects, 
-          response.scale,
-          response.x,
-          response.y
-        );
+        loadImagesView(response.layout);
       }
       else {
         $('#error-signin').text('Incorrect email or password!');
@@ -64,13 +54,20 @@ function viewLayout(event) {
 }
 
 function saveLayout(event) {
-  data = {objects: [],
-          scale: layer.attrs.scaleX,
-          x: layer.attrs.x,
-          y: layer.attrs.y};
+  data = {
+    layout: {objects: [],
+             layer: {
+               scale: layer.attrs.scaleX,
+               x: layer.attrs.x,
+               y: layer.attrs.y,
+               offsetX: layer.getOffsetX(),
+               offsetY: layer.getOffsetY(),
+             }
+            }
+  };
   layer.getChildren().each(function(node) {
     if (node.nodeType == "Group") {
-      data.objects.push({
+      data.layout.objects.push({
         id: node.attrs.id,
         title: node.attrs.title,
         src: node.attrs.src,
@@ -79,6 +76,8 @@ function saveLayout(event) {
         angle: node.attrs.rotation,
         scaleX: node.attrs.scaleX,
         scaleY: node.attrs.scaleY,
+        offsetX: node.getOffsetX(),
+        offsetY: node.getOffsetY(),
         zIndex: node.getZIndex(),
       });
     }
