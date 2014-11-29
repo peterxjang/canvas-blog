@@ -3,6 +3,8 @@ function createMenu() {
   $(document).on("click", "#button-save-posts", saveLayout);
   $(document).on("click", "#button-cancel-posts", cancelLayout);
   $(document).on("click", "#button-view-posts", viewLayout);
+  $(document).on("click", "#button-moveup", moveObjectUp);
+  $(document).on("click", "#button-movedown", moveObjectDown);
 }
 
 function setMenuEditMode(html) {
@@ -11,6 +13,8 @@ function setMenuEditMode(html) {
   $('#button-view-posts').hide();
   $('#button-save-posts').show();
   $('#button-cancel-posts').show();
+  $('#button-moveup').show().prop("disabled",true);
+  $('#button-movedown').show().prop("disabled",true);
 }
 
 function setMenuViewMode(html) {
@@ -19,4 +23,11 @@ function setMenuViewMode(html) {
   $('#button-view-posts').hide();
   $('#button-save-posts').hide();
   $('#button-cancel-posts').hide();
+  $('#button-moveup').hide();
+  $('#button-movedown').hide();
+}
+
+function setMenuEditItemMode() {
+  $('#button-moveup').prop("disabled",false);
+  $('#button-movedown').prop("disabled",false);
 }

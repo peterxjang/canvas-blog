@@ -79,6 +79,7 @@ function createPolaroid(e, editable) {
       front.opacity(0);
       layer.draw();
       currentGroup = group;
+      setMenuEditItemMode();
     })
     .on("transformstart", function(e) {
       startScale = group.scaleX();
@@ -154,4 +155,14 @@ function resizePolaroid(group, newWidth, newHeight) {
   //  x: image.parent.scaleY() * newHeight / (image.getHeight()),
   //  y: image.parent.scaleY() * newHeight / (image.getHeight()),
   // });
+}
+
+function moveObjectUp(event) {
+  currentGroup.moveUp();
+  layer.draw();
+}
+
+function moveObjectDown(event) {
+  currentGroup.moveDown();
+  layer.draw();
 }

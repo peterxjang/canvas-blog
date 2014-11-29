@@ -90,6 +90,14 @@ function loadImages(layoutData, editable) {
 
   addZoomBackground(layer);
 
+    layer.scaleX(layoutData.layer.scale);
+    layer.scaleY(layoutData.layer.scale);
+    layer.x(layoutData.layer.x);
+    layer.y(layoutData.layer.y);
+    layer.offsetX(layoutData.layer.offsetX);
+    layer.offsetY(layoutData.layer.offsetY);
+    layer.draw();
+    
   var loader = new PxLoader();
   for (var i=0; i<layoutData.objects.length; i++) {
     var object = layoutData.objects[i];
@@ -110,15 +118,8 @@ function loadImages(layoutData, editable) {
   loader.addProgressListener(function(e) {
     createPolaroid(e, editable);
   });
-  loader.addCompletionListener(function() { 
-    layer.scaleX(layoutData.layer.scale);
-    layer.scaleY(layoutData.layer.scale);
-    layer.x(layoutData.layer.x);
-    layer.y(layoutData.layer.y);
-    layer.offsetX(layoutData.layer.offsetX);
-    layer.offsetY(layoutData.layer.offsetY);
-    layer.draw();
-  });
+  // loader.addCompletionListener(function() { 
+  // });
   loader.start();
 }
 

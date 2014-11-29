@@ -90,8 +90,8 @@ h2 {
   float: right;
 }
 
-#button-save-posts, #button-cancel-posts {
-  /*display: none;*/
+#button-save-posts, #button-cancel-posts, #button-moveup, #button-movedown {
+  display: none;
 }
 
 
