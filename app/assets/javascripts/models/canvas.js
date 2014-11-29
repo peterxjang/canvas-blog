@@ -62,6 +62,7 @@ function addZoomBackground(layer) {
                (e.originalEvent.deltaY > 0 ? 0.9 : 1.1), 
                layer.getOffset(), 
                {x: e.originalEvent.clientX, y: e.originalEvent.clientY});
+    layer.draw();
   });
 }
 
@@ -75,7 +76,6 @@ function zoomObject(object, oldscale, factor, zoomOrigin, center) {
   };
   object.setOffset({x: zoomOrigin.x, y: zoomOrigin.y});
   object.setScale({x: newscale, y: newscale});
-  layer.draw();
 }
 
 function loadImagesEdit(layoutData) {
