@@ -1,6 +1,6 @@
 <form>
-<ul>
-<li><label>Title</label><input name='title' value='<%= @post.title %>' placeholder='Title'/></li>
-<li><input type='Submit'/></li>
+<ul class='list-no-bullets'>
+<li><label>Title: </label><input name='title' value='<%= @post.title %>' placeholder='Title'/></li>
+<li><input id='button-update-post' type='Submit' data='<%= @post ? @post.id : nil %>'/></li>
 </ul>
 </form>

@@ -14,6 +14,11 @@ function createMenu() {
   $(document).on("click", "#button-new-post", function(e) {
     newPost();
   });
+  $(document).on("click", "#button-update-post", function(e) {
+    e.preventDefault();
+    hidePopup();
+    updatePost($(this).attr('data'));
+  });
 }
 
 function setMenuEditMode(html) {

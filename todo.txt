@@ -4,6 +4,7 @@ crud posts
 clean up routes, multiple blogs for a user
 heroku, file upload
 
+style with jquery mobile (or similar)
 multi-file upload
 connect to flickr? 
 pinterest style browser integration

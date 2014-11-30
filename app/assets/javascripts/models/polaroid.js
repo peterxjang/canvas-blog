@@ -157,8 +157,7 @@ function showPost(id) {
     dataType: 'json',
     success: function(response) {
       if (response.valid) {
-        $("#pop-up-background").fadeIn("slow");
-        $("#pop-up").html(response.html).fadeIn("slow");
+        showPopup(response.html);
       }
       else {
         console.log("Could not find post!");
@@ -175,8 +174,7 @@ function editPost(id) {
     dataType: 'json',
     success: function(response) {
       if (response.valid) {
-        $("#pop-up-background").fadeIn("slow");
-        $("#pop-up").html(response.html).fadeIn("slow");
+        showPopup(response.html);
       }
       else {
         console.log("Could not find post!");
@@ -184,6 +182,10 @@ function editPost(id) {
     },
     error: function(response) { console.log("view post error!"); console.log(response); }
   });
+}
+
+function updatePost(id) {
+  console.log(id);
 }
 
 function newPost() {
@@ -198,8 +200,6 @@ function deletePost(id) {
       dataType: 'json',
       success: function(response) {
         if (response.valid) {
-          // $("#pop-up-background").fadeIn("slow");
-          // $("#pop-up").html(response.html).fadeIn("slow");
           alert('Post deleted.');
         }
         else {

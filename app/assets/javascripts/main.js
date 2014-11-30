@@ -4,12 +4,8 @@ $(document).ready(function() {
   var menu = createMenu();
 
   $(document).on("click", "#sign-in", viewLayout);
-  $(document).on("click", "#pop-up-background", function(){
-    $("#pop-up-background").fadeOut("slow");
-    $("#pop-up").fadeOut("slow");
-  });
+  $(document).on("click", "#pop-up-background", hidePopup);
 });
-
 
 function editLayout(event) {
   event.preventDefault();
