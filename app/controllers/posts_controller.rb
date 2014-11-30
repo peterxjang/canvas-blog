@@ -37,7 +37,7 @@ class PostsController < ApplicationController
 			# @post.image = params[:filename] if params[:filename]
 			@post.save
 			if @post.valid?
-				current_layout.updateJSON(params)
+				current_layout.update_json_object(params[:id].to_i, "title" => params[:title])
 				render json: {valid: true, title: params[:title]}
 			else
 				render json: {valid: false}

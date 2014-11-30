@@ -55,7 +55,6 @@ function addZoomBackground(layer) {
     layer.draw();
   });
 
-
   background.on('mousedown touchstart', function (e) {
     dimCurrentGroup();
     currentGroup = null;

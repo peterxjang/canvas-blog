@@ -71,11 +71,13 @@ function createPolaroid(e, editable) {
     var zoomOrigin = {x: 0, y: 0};
     var hammertime = Hammer(group)
     .on("touch", function(e) {
-      group.moveToTop();
-      front.opacity(0);
-      dimCurrentGroup();
-      currentGroup = group;
-      setMenuEditItemMode();
+      if (currentGroup != group) {
+        group.moveToTop();
+        front.opacity(0);
+        dimCurrentGroup();
+        currentGroup = group;
+        setMenuEditItemMode();
+      }
     })
     .on("transformstart", function(e) {
       startScale = group.scaleX();
