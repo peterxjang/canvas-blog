@@ -1,6 +1,9 @@
 class PostsController < ApplicationController
-	def create
+	def new
 		@post = Post.new
+	end
+
+	def create
 	end
 
 	def show
@@ -15,7 +18,7 @@ class PostsController < ApplicationController
 		end
 	end
 
-	def update
+	def edit
 		@post = Post.find_by_id(params[:id])
 		if @post
 			render json: {valid: true,
@@ -24,6 +27,9 @@ class PostsController < ApplicationController
 		else
 			render json: {valid: false}
 		end
+	end
+
+	def update
 	end
 	
 	def destroy

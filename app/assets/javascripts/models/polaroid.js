@@ -168,10 +168,10 @@ function showPost(id) {
   });
 }
 
-function updatePost(id) {
+function editPost(id) {
   $.ajax({
-    url: '/posts/'+id,
-    type: 'PUT',
+    url: '/posts/'+id+'/edit',
+    type: 'GET',
     dataType: 'json',
     success: function(response) {
       if (response.valid) {

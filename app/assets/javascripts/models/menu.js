@@ -5,8 +5,8 @@ function createMenu() {
   $(document).on("click", "#button-view-posts", viewLayout);
   $(document).on("click", "#button-moveup", moveObjectUp);
   $(document).on("click", "#button-movedown", moveObjectDown);
-  $(document).on("click", "#button-update-post", function(e) {
-    updatePost(currentGroup.attrs.id);
+  $(document).on("click", "#button-edit-post", function(e) {
+    editPost(currentGroup.attrs.id);
   });
   $(document).on("click", "#button-delete-post", function(e) {
     deletePost(currentGroup.attrs.id);
@@ -24,7 +24,7 @@ function setMenuEditMode(html) {
   $('#button-cancel-posts').show();
   $('#button-moveup').show().prop("disabled",true);
   $('#button-movedown').show().prop("disabled",true);
-  $('#button-update-post').show().prop("disabled",true);
+  $('#button-edit-post').show().prop("disabled",true);
   $('#button-delete-post').show().prop("disabled",true);
   $('#button-new-post').show();
 }
@@ -37,7 +37,7 @@ function setMenuViewMode(html) {
   $('#button-cancel-posts').hide();
   $('#button-moveup').hide();
   $('#button-movedown').hide();
-  $('#button-update-post').hide();
+  $('#button-edit-post').hide();
   $('#button-delete-post').hide();
   $('#button-new-post').hide();
 }
@@ -45,6 +45,6 @@ function setMenuViewMode(html) {
 function setMenuEditItemMode() {
   $('#button-moveup').prop("disabled",false);
   $('#button-movedown').prop("disabled",false);
-  $('#button-update-post').prop("disabled",false);
+  $('#button-edit-post').prop("disabled",false);
   $('#button-delete-post').prop("disabled",false);
 }
