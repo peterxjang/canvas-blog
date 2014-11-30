@@ -72,11 +72,8 @@ function createPolaroid(e, editable) {
     var hammertime = Hammer(group)
     .on("touch", function(e) {
       group.moveToTop();
-      if (currentGroup) {
-        currentGroup.get('.front').each(function(child) {child.opacity(0.8);});
-      }
       front.opacity(0);
-      layer.draw();
+      dimCurrentGroup();
       currentGroup = group;
       setMenuEditItemMode();
     })
@@ -112,6 +109,13 @@ function createPolaroid(e, editable) {
   });
   tween.play();
 
+  layer.draw();
+}
+
+function dimCurrentGroup() {
+  if (currentGroup) {
+    currentGroup.get('.front').each(function(child) {child.opacity(0.8);});
+  }
   layer.draw();
 }
 
@@ -218,7 +222,5 @@ function deletePost(id) {
       },
       error: function(response) { console.log("view post error!"); console.log(response); }
     });
-  } else {
-      // Do nothing!
   }
 }

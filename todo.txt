@@ -1,6 +1,5 @@
 add mouse interaction
-fix zoom offset
-crud posts
+crud posts - unselect currentGroup, delete, new
 clean up routes, multiple blogs for a user
 heroku, file upload
 
@@ -10,4 +9,4 @@ connect to flickr?
 pinterest style browser integration
 
 ipad polaroid text not fitting
-ipad popup not hiding on background click
+	ipad popup not hiding on background click

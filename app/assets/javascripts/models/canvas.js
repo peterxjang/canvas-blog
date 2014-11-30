@@ -13,18 +13,9 @@ function createStage() {
 }
 
 function createLayer(stage) {
-  var layer = new Kinetic.Layer({
-    // clearBeforeDraw : false
-  });
+  var layer = new Kinetic.Layer();
   layer.setDraggable("draggable");
   stage.add(layer);
-
-
-  // layer.on('mousedown touchstart', function (e) {
-  //   var node = e.targetNode;
-  //   // select(node);
-  // });
-
   return layer;
 }
 
@@ -62,6 +53,13 @@ function addZoomBackground(layer) {
                layer.getOffset(), 
                {x: e.originalEvent.clientX, y: e.originalEvent.clientY});
     layer.draw();
+  });
+
+
+  background.on('mousedown touchstart', function (e) {
+    dimCurrentGroup();
+    currentGroup = null;
+    setMenuEditItemMode();
   });
 }
 

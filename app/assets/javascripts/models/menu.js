@@ -48,8 +48,9 @@ function setMenuViewMode(html) {
 }
 
 function setMenuEditItemMode() {
-  $('#button-moveup').prop("disabled",false);
-  $('#button-movedown').prop("disabled",false);
-  $('#button-edit-post').prop("disabled",false);
-  $('#button-delete-post').prop("disabled",false);
+  var state = currentGroup === null;
+  $('#button-moveup').prop("disabled",state);
+  $('#button-movedown').prop("disabled",state);
+  $('#button-edit-post').prop("disabled",state);
+  $('#button-delete-post').prop("disabled",state);
 }
