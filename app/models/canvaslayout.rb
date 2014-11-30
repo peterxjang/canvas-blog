@@ -16,12 +16,13 @@ class Canvaslayout < ActiveRecord::Base
 	end
 
 	def delete_json_object(id)
-		self.objects["objects"].each do |object|
-			if object["id"] == id
-				# object["title"] = params[:title]
-				# object["src"] = params[:filename] if params[:filename]
-			end
-		end
+		# self.objects["objects"].each do |object|
+		# 	if object["id"] == id
+		# 		# object["title"] = params[:title]
+		# 		# object["src"] = params[:filename] if params[:filename]
+		# 	end
+		# end
+		self.objects["objects"].delete_if { |object| object["id"] == id }
 		self.save!
 	end
 end

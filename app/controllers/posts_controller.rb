@@ -50,9 +50,9 @@ class PostsController < ApplicationController
 	def destroy
 		@post = Post.find_by_id(params[:id])
 		if @post
-			render json: {valid: true,
-										html: @post.title
-										}
+			@post.delete
+			current_layout.delete_json_object(params[:id].to_i)
+			render json: {valid: true}
 		else
 			render json: {valid: false}
 		end

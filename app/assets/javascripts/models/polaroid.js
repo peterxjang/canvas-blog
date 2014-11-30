@@ -216,13 +216,17 @@ function deletePost(id) {
       dataType: 'json',
       success: function(response) {
         if (response.valid) {
-          alert('Post deleted.');
+          currentGroup.remove();
+          layer.draw();
+          currentGroup = null;
+          setMenuEditItemMode();
+          // alert('Post deleted.');
         }
         else {
           console.log("Could not find post!");
         }
       },
-      error: function(response) { console.log("view post error!"); console.log(response); }
+      error: function(response) { console.log("delete post error!"); console.log(response); }
     });
   }
 }
