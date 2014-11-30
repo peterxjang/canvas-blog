@@ -166,7 +166,7 @@ function showPost(id) {
       if (response.valid) { showPopup(response.html); }
       else { console.log("Could not find post!"); }
     },
-    error: function(response) { console.log("view post error!"); console.log(response); }
+    error: function(response) { console.log("show post error!"); console.log(response); }
   });
 }
 
@@ -179,7 +179,7 @@ function editPost(id) {
       if (response.valid) { showPopup(response.html); }
       else { console.log("Could not find post!"); }
     },
-    error: function(response) { console.log("view post error!"); console.log(response); }
+    error: function(response) { console.log("edit post error!"); console.log(response); }
   });
 }
 
@@ -200,12 +200,42 @@ function updatePost(id) {
       }
       else { console.log("Could not find post!"); }
     },
-    error: function(response) { console.log("view post error!"); console.log(response); }
+    error: function(response) { console.log("update post error!"); console.log(response); }
   });
 }
 
 function newPost() {
-  
+  $.ajax({
+    url: '/posts/new',
+    type: 'GET',
+    dataType: 'json',
+    success: function(response) {
+      if (response.valid) { showPopup(response.html); }
+      else { console.log("Could not find post!"); }
+    },
+    error: function(response) { console.log("new post error!"); console.log(response); }
+  });
+}
+
+function createPost() {
+  $.ajax({
+    url: '/posts',
+    type: 'POST',
+    dataType: 'json',
+    data: $("form#form-create-post").serialize(),
+    success: function(response) {
+      if (response.valid) { 
+        // var text = currentGroup.get('.text')[0];
+        // var container = currentGroup.get('.back')[0];
+        // var amount = text.x();
+        // text.text(response.title);
+        // fitText(text, container, amount);
+        // layer.draw();
+      }
+      else { console.log("Could not find post!"); }
+    },
+    error: function(response) { console.log("create post error!"); console.log(response); }
+  });
 }
 
 function deletePost(id) {

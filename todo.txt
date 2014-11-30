@@ -1,5 +1,5 @@
 add mouse interaction
-crud posts - unselect currentGroup, delete, new
+crud posts - delete, new, show newlines
 clean up routes, multiple blogs for a user
 heroku, file upload
 

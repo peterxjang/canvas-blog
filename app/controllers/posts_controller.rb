@@ -1,9 +1,19 @@
 class PostsController < ApplicationController
 	def new
 		@post = Post.new
+		render json: {valid: true,
+									html: render_to_string(partial: 'form_new')
+									}
 	end
 
 	def create
+		post = current_user.posts.create(
+			title: params[:title], 
+			body: params[:body],
+			image: params[:filename]
+		)
+		current_layout.create_json_object(post)
+		render json: {valid: post.valid?}
 	end
 
 	def show
@@ -22,7 +32,7 @@ class PostsController < ApplicationController
 		@post = Post.find_by_id(params[:id])
 		if @post
 			render json: {valid: true,
-										html: render_to_string(partial: 'form')
+										html: render_to_string(partial: 'form_edit')
 										}
 		else
 			render json: {valid: false}
