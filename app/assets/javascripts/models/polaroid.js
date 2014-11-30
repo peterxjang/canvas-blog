@@ -31,6 +31,7 @@ function createPolaroid(e, editable) {
   	strokeWidth: border / 10,
   })
   var text = new Kinetic.Text({
+    name: 'text',
     x: border,
     y: img.height + 2*border,
     text: e.resource.databaseTitle,
@@ -177,7 +178,24 @@ function editPost(id) {
 }
 
 function updatePost(id) {
-  console.log(id);
+  $.ajax({
+    url: '/posts/'+id,
+    type: 'PUT',
+    dataType: 'json',
+    data: $("form#form-update-post").serialize(),
+    success: function(response) {
+      if (response.valid) { 
+        var text = currentGroup.get('.text')[0];
+        var container = currentGroup.get('.back')[0];
+        var amount = text.x();
+        text.text(response.title);
+        fitText(text, container, amount);
+        layer.draw();
+      }
+      else { console.log("Could not find post!"); }
+    },
+    error: function(response) { console.log("view post error!"); console.log(response); }
+  });
 }
 
 function newPost() {

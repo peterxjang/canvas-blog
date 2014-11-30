@@ -30,6 +30,21 @@ class PostsController < ApplicationController
 	end
 
 	def update
+		@post = Post.find_by_id(params[:id])
+		if @post
+			@post.title = params[:title]
+			@post.body = params[:body]
+			# @post.image = params[:filename] if params[:filename]
+			@post.save
+			if @post.valid?
+				current_layout.updateJSON(params)
+				render json: {valid: true, title: params[:title]}
+			else
+				render json: {valid: false}
+			end
+		else
+			render json: {valid: false}
+		end
 	end
 	
 	def destroy

@@ -4,7 +4,7 @@ $(document).ready(function() {
   var menu = createMenu();
 
   $(document).on("click", "#sign-in", viewLayout);
-  $(document).on("click", "#pop-up-background", hidePopup);
+  $(document).on("mousedown touchstart", "#pop-up-background", hidePopup);
 });
 
 function editLayout(event) {

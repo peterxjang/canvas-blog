@@ -4,7 +4,6 @@ function showPopup(html) {
 }
 
 function hidePopup() {
-	console.log('hi');
   $("#pop-up-background").fadeOut("slow");
   $("#pop-up").fadeOut("slow");
 }
