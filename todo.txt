@@ -8,3 +8,6 @@ style with jquery mobile (or similar)
 multi-file upload
 connect to flickr? 
 pinterest style browser integration
+
+ipad polaroid text not fitting
+ipad popup not hiding on background click

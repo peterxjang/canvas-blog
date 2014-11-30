@@ -27,7 +27,7 @@ body{
   overflow: hidden;
 }
 
-body, input, button {
+body, input, button, textarea {
   font-family: 'Special Elite', serif;
 }
 h1 {
@@ -40,6 +40,10 @@ h2 {
   font-size: 2em;
   margin-bottom: 0.5em;
 }
+#title {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 1.5em;
+}
 
 
 .list-no-bullets {
@@ -51,6 +55,23 @@ h2 {
 li {
   padding: 2px;
 }
+input {
+  width: 100%;
+}
+textarea
+{
+    border:1px solid #999999;
+    width:100%;
+    margin:5px 0;
+    padding:3px;
+}
+
+.boxsizingBorder {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
 .img-fullwidth {
   width: 100%;
 }
@@ -150,7 +171,7 @@ li {
 #pop-up {
   display: none;
   position: absolute;
-  background: #FFFFFF;
+  background: rgba(255,255,255, 0.8);
   padding: 5vh;
   z-index: 11;
   color: #336699;
@@ -161,6 +182,8 @@ li {
   overflow-y: auto;
   margin-left: auto;
   margin-right: auto;
+  box-shadow: 0 0 7px 7px rgb(255,255,255);
+  box-shadow: 0 0 7px 7px rgba(255,255,255, 0.8);
 }
 #pop-up-background {
   display: none;

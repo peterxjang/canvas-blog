@@ -1,6 +1,19 @@
-<form>
+<form enctype="multipart/form-data">
 <ul class='list-no-bullets'>
-<li><label>Title: </label><input name='title' value='<%= @post.title %>' placeholder='Title'/></li>
-<li><input id='button-update-post' type='Submit' data='<%= @post ? @post.id : nil %>'/></li>
+	<li>
+		<label>Image:</label>
+		<input type="file" name="filename">
+	</li>
+	<li>
+		<label>Title: </label>
+		<input name='title' id='title' value='<%= @post.title %>' placeholder='Title'/>
+	</li>
+	<li>
+		<label>Body: </label>
+		<textarea name='body' cols="2" rows="10" ><%= @post.body %></textarea>
+	</li>
+	<li>
+		<input id='button-update-post' type='Submit' data='<%= @post ? @post.id : nil %>'/>
+	</li>
 </ul>
 </form>

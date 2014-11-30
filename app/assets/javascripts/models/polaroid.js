@@ -156,12 +156,8 @@ function showPost(id) {
     type: 'GET',
     dataType: 'json',
     success: function(response) {
-      if (response.valid) {
-        showPopup(response.html);
-      }
-      else {
-        console.log("Could not find post!");
-      }
+      if (response.valid) { showPopup(response.html); }
+      else { console.log("Could not find post!"); }
     },
     error: function(response) { console.log("view post error!"); console.log(response); }
   });
@@ -173,12 +169,8 @@ function editPost(id) {
     type: 'GET',
     dataType: 'json',
     success: function(response) {
-      if (response.valid) {
-        showPopup(response.html);
-      }
-      else {
-        console.log("Could not find post!");
-      }
+      if (response.valid) { showPopup(response.html); }
+      else { console.log("Could not find post!"); }
     },
     error: function(response) { console.log("view post error!"); console.log(response); }
   });
