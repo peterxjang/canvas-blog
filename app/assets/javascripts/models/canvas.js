@@ -54,12 +54,6 @@ function addZoomBackground(layer) {
                layer.getOffset(), 
                {x: e.originalEvent.clientX, y: e.originalEvent.clientY});
     layer.draw();
-    console.log({
-      x: layer.getPosition().x, 
-      y: layer.getPosition().y, 
-      oxs: layer.offsetX() * layer.scaleX(), 
-      oys: layer.offsetY() * layer.scaleY()
-    });
   });
 
   background.on('mousedown touchstart', function (e) {
@@ -69,7 +63,7 @@ function addZoomBackground(layer) {
   });
 }
 
-function zoomObject(object, oldscale, factor, zoomOrigin, center) {
+function zoomObject(object, oldscale, factor, zoomOrigin, center, rotation) {
   var mx = center.x - object.getAbsolutePosition().x,
       my = center.y - object.getAbsolutePosition().y,
       newscale = oldscale * factor;
@@ -77,7 +71,6 @@ function zoomObject(object, oldscale, factor, zoomOrigin, center) {
     x: mx / oldscale + zoomOrigin.x - mx / newscale, 
     y: my / oldscale + zoomOrigin.y - my / newscale,
   };
-  console.log(center);
   object.setOffset({x: zoomOrigin.x, y: zoomOrigin.y});
   object.setScale({x: newscale, y: newscale});
 }

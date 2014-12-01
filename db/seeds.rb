@@ -25,7 +25,7 @@ emails.each do |email|
 							 password: 'password')
 	5.times do 
 		post = user.posts.new(title: Faker::Company.catch_phrase,
-											    body: Faker::Lorem.paragraphs.join("\n"))
+											    body: Faker::Lorem.paragraphs.join("\n\n"))
 		post.image = File.open(imagenames.sample)
 		post.save!
 		4.times do

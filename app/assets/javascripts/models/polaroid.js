@@ -85,7 +85,8 @@ function createPolaroid(e, editable) {
                  startScale, 
                  e.gesture.scale, 
                  zoomOrigin, 
-                 {x: e.gesture.center.pageX, y: e.gesture.center.pageY});
+                 {x: e.gesture.center.pageX, y: e.gesture.center.pageY},
+                 rotation);
       var rotation = startRotate + e.gesture.rotation;
       group.rotation(Math.abs(rotation) < 5 ? 0 : rotation);
     });

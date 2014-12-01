@@ -45,6 +45,9 @@ h2 {
   font-size: 1.5em;
 }
 
+p {
+  /*white-space:pre*/
+}
 
 .list-no-bullets {
   list-style-type: none;

@@ -28,9 +28,10 @@ class PostsController < ApplicationController
 	def show
 		@post = Post.find_by_id(params[:id])
 		if @post
+			body = @post.body.gsub("\n", "<br/>")
 			render json: {valid: true,
 										html: "<h2>#{@post.title}</h2>" + 
-													"<p>#{@post.body}</p>"
+													"<p>#{body}</p>"
 										}
 		else
 			render json: {valid: false}
