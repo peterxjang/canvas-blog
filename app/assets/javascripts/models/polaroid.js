@@ -241,18 +241,22 @@ function createPost() {
     data: formData,
     success: function(response) {
       if (response.valid) { 
+        var firstItem = layer.find('.background')[0];
+        console.log(firstItem.getPosition());
         // var firstItem = layer.find('Image')[0];
         // console.log({x: firstItem.getX(), y: firstItem.getY()});
         // console.log({xlayer: -layer.getX(), ylayer: -layer.getY()});
         var loader = new PxLoader();
         var pxImage = new PxLoaderImage(response.src);
-        pxImage.top = 0; //layer.getY() + layer.offsetY();
-        pxImage.left = 0; //layer.getX() + layer.offsetX();
+        // pxImage.top = -layer.offsetY() * layer.scaleY(); // -  layer.getPosition().y; //0; //layer.getY() + layer.offsetY();
+        // pxImage.left = -layer.offsetX() * layer.scaleX(); // - layer.getPosition().x; //layer.getX() + layer.offsetX();
+        pxImage.top = 0;
+        pxImage.left = 0;
         pxImage.scaleX = null;
         pxImage.scaleY = null;
         pxImage.offsetX = 0;
         pxImage.offsetY = 0;
-        pxImage.zIndex = 100;
+        pxImage.zIndex = 1;
         pxImage.angle = 0;
         pxImage.databaseID = response.id;
         pxImage.databaseSrc = response.src;

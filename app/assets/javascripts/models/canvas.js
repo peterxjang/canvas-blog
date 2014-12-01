@@ -22,6 +22,7 @@ function createLayer(stage) {
 function addZoomBackground(layer) {
 
   var background = new Kinetic.Rect({
+    name: 'background',
     x: -10000,
     y: -10000,
     width: 20000,
@@ -53,7 +54,12 @@ function addZoomBackground(layer) {
                layer.getOffset(), 
                {x: e.originalEvent.clientX, y: e.originalEvent.clientY});
     layer.draw();
-    console.log({x: layer.x(), y: layer.y()});
+    console.log({
+      x: layer.getPosition().x, 
+      y: layer.getPosition().y, 
+      oxs: layer.offsetX() * layer.scaleX(), 
+      oys: layer.offsetY() * layer.scaleY()
+    });
   });
 
   background.on('mousedown touchstart', function (e) {
@@ -71,6 +77,7 @@ function zoomObject(object, oldscale, factor, zoomOrigin, center) {
     x: mx / oldscale + zoomOrigin.x - mx / newscale, 
     y: my / oldscale + zoomOrigin.y - my / newscale,
   };
+  console.log(center);
   object.setOffset({x: zoomOrigin.x, y: zoomOrigin.y});
   object.setScale({x: newscale, y: newscale});
 }
