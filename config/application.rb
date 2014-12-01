@@ -1,10 +1,12 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
-
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+
+# require 'carrierwave'
+# require 'carrierwave/orm/activerecord'
 
 module CanvasBlog
   class Application < Rails::Application
@@ -19,5 +21,7 @@ module CanvasBlog
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+    # config.autoload_paths += "#{Rails.root}/app/uploaders"
+    # config.autoload_paths += Dir[Rails.root.join('app', 'uploaders')]
   end
 end

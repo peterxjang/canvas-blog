@@ -218,15 +218,21 @@ function newPost() {
 }
 
 function createPost() {
-  var formData = new FormData($(this)[0]);
+  var formData = new FormData($("form#form-create-post")[0]);
+  // var formData = new FormData();
+  // jQuery.each($('#form#form-create-post')[0].files, function(i, file) {
+  //     formData.append('file-'+i, file);
+  // });
+  console.log($("form#form-create-post").serialize());
+  console.log(formData);
   $.ajax({
     url: '/posts',
     type: 'POST',
     dataType: 'json',
     contentType: false,
+    processData: false,
     // data: $("form#form-create-post").serialize(),
     data: formData,
-    data: $("form#form-create-post").serialize(),
     success: function(response) {
       if (response.valid) { 
         // var text = currentGroup.get('.text')[0];

@@ -6,7 +6,7 @@ module ApplicationHelper
 	def current_layout
 		if current_user
 			layout = current_user.canvaslayout
-			if layout.nil?
+			if true #layout.nil?
 				objects = current_user.posts.each_with_index.map do |post, index|
 					{id: post.id,
 					 title: post.title,
