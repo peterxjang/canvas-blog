@@ -132,7 +132,11 @@ function padText(text, container, amount) {
 }
 
 function fitText(text, container, amount) {
-	var scale = (container.width() - 2*amount) / text.width();
+  var scaleWidth = (container.width() - 2*amount) / text.width();
+	var scaleHeight = (3*amount) / text.height();
+  // console.log({text: text.attrs.text, width: text.width(), height: text.height(), scaleWidth: scaleWidth, scaleHeight: scaleHeight});
+  var scale = Math.min(scaleWidth, scaleHeight);
+  // var scale = scaleWidth;
 	text.scaleX(scale);
 	text.scaleY(scale);
 }
