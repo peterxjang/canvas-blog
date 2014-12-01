@@ -218,10 +218,14 @@ function newPost() {
 }
 
 function createPost() {
+  var formData = new FormData($(this)[0]);
   $.ajax({
     url: '/posts',
     type: 'POST',
     dataType: 'json',
+    contentType: false,
+    // data: $("form#form-create-post").serialize(),
+    data: formData,
     data: $("form#form-create-post").serialize(),
     success: function(response) {
       if (response.valid) { 
@@ -232,7 +236,7 @@ function createPost() {
         // fitText(text, container, amount);
         // layer.draw();
       }
-      else { console.log("Could not find post!"); }
+      else { console.log("Could not create post!"); }
     },
     error: function(response) { console.log("create post error!"); console.log(response); }
   });

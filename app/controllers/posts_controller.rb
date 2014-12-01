@@ -7,13 +7,20 @@ class PostsController < ApplicationController
 	end
 
 	def create
-		post = current_user.posts.create(
+		post = current_user.posts.new(
 			title: params[:title], 
 			body: params[:body],
-			image: params[:filename]
 		)
-		current_layout.create_json_object(post)
-		render json: {valid: post.valid?}
+		post.image = params[:filename]
+		post.save
+		if post.valid?
+			current_layout.create_json_object(post)
+			render json: {valid: true}
+		else
+			p 'fsdfsdfdsfdsfdsfdsfsfd'
+			p params
+			render json: {valid: false}
+		end
 	end
 
 	def show
