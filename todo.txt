@@ -1,9 +1,13 @@
 add mouse interaction
-fix zoom offset
-crud posts
+crud posts - delete, new, show newlines
 clean up routes, multiple blogs for a user
 heroku, file upload
+zoom fit
 
+style with jquery mobile (or similar)
 multi-file upload
 connect to flickr? 
 pinterest style browser integration
+
+ipad polaroid text not fitting
+	ipad popup not hiding on background click

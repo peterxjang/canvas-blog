@@ -4,12 +4,8 @@ $(document).ready(function() {
   var menu = createMenu();
 
   $(document).on("click", "#sign-in", viewLayout);
-  $(document).on("click", "#pop-up-background", function(){
-    $("#pop-up-background").fadeOut("slow");
-    $("#pop-up").fadeOut("slow");
-  });
+  $(document).on("mousedown touchstart", "#pop-up-background", hidePopup);
 });
-
 
 function editLayout(event) {
   event.preventDefault();
@@ -20,9 +16,9 @@ function editLayout(event) {
     data: $("form#form-sign-in").serialize(),
     success: function(response) {
       if (response.valid) {
-        $('#div-top').html(response.html);
+        $('#div-top').html('');
         setMenuEditMode(response.htmlMenu);
-        loadImagesEdit(response.layout);
+        loadEditLayout(response.layout);
       }
       else {
         $('#error-signin').text('Incorrect email or password!');
@@ -33,7 +29,7 @@ function editLayout(event) {
 }
 
 function viewLayout(event) {
-  event.preventDefault();
+  if (event) { event.preventDefault(); }
   $.ajax({
     url: '/sessions',
     type: 'POST',
@@ -41,9 +37,9 @@ function viewLayout(event) {
     data: $("form#form-sign-in").serialize(),
     success: function(response) {
       if (response.valid) {
-        $('#div-top').html(response.html);
+        $('#div-top').html('');
         setMenuViewMode(response.htmlMenu);
-        loadImagesView(response.layout);
+        loadViewLayout(response.layout);
       }
       else {
         $('#error-signin').text('Incorrect email or password!');
@@ -89,7 +85,7 @@ function saveLayout(event) {
     contentType: 'application/json',
     data: JSON.stringify(data),
     success: function(response) {
-      viewLayout(event);
+      if (event) {viewLayout(event);}
     },
     error: function(response) { console.log("error!"); console.log(response);}
   });

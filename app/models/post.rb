@@ -5,4 +5,6 @@ class Post < ActiveRecord::Base
 	has_many :postlayouts
 
 	mount_uploader :image, ImageUploader
+
+	validates :title, :body, :image, presence: true
 end

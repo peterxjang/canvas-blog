@@ -13,24 +13,16 @@ function createStage() {
 }
 
 function createLayer(stage) {
-  var layer = new Kinetic.Layer({
-    // clearBeforeDraw : false
-  });
+  var layer = new Kinetic.Layer();
   layer.setDraggable("draggable");
   stage.add(layer);
-
-
-  // layer.on('mousedown touchstart', function (e) {
-  //   var node = e.targetNode;
-  //   // select(node);
-  // });
-
   return layer;
 }
 
 function addZoomBackground(layer) {
 
   var background = new Kinetic.Rect({
+    name: 'background',
     x: -10000,
     y: -10000,
     width: 20000,
@@ -63,9 +55,15 @@ function addZoomBackground(layer) {
                {x: e.originalEvent.clientX, y: e.originalEvent.clientY});
     layer.draw();
   });
+
+  background.on('mousedown touchstart', function (e) {
+    dimCurrentGroup();
+    currentGroup = null;
+    setMenuEditItemMode();
+  });
 }
 
-function zoomObject(object, oldscale, factor, zoomOrigin, center) {
+function zoomObject(object, oldscale, factor, zoomOrigin, center, rotation) {
   var mx = center.x - object.getAbsolutePosition().x,
       my = center.y - object.getAbsolutePosition().y,
       newscale = oldscale * factor;
@@ -77,22 +75,34 @@ function zoomObject(object, oldscale, factor, zoomOrigin, center) {
   object.setScale({x: newscale, y: newscale});
 }
 
-function loadImagesEdit(layoutData) {
-  loadImages(layoutData, true);
+function loadEditLayout(layoutData) {
+  loadLayout(layoutData, true);
 }
 
-function loadImagesView(layoutData) {
-  loadImages(layoutData, false);
+function loadViewLayout(layoutData) {
+  loadLayout(layoutData, false);
 }
 
-function loadImages(layoutData, editable) {
+function loadLayout(layoutData, editable) {
   layer.removeChildren();
 
   addZoomBackground(layer);
 
+  layer.scaleX(layoutData.layer.scale);
+  layer.scaleY(layoutData.layer.scale);
+  layer.x(layoutData.layer.x);
+  layer.y(layoutData.layer.y);
+  layer.offsetX(layoutData.layer.offsetX);
+  layer.offsetY(layoutData.layer.offsetY);
+  layer.draw();
+
+  loadImages(layoutData.objects, editable);
+}
+
+function loadImages(objects, editable) {
   var loader = new PxLoader();
-  for (var i=0; i<layoutData.objects.length; i++) {
-    var object = layoutData.objects[i];
+  for (var i=0; i<objects.length; i++) {
+    var object = objects[i];
     var pxImage = new PxLoaderImage(object.src);
     pxImage.top = object.top;
     pxImage.left = object.left;
@@ -110,15 +120,6 @@ function loadImages(layoutData, editable) {
   loader.addProgressListener(function(e) {
     createPolaroid(e, editable);
   });
-  loader.addCompletionListener(function() { 
-    layer.scaleX(layoutData.layer.scale);
-    layer.scaleY(layoutData.layer.scale);
-    layer.x(layoutData.layer.x);
-    layer.y(layoutData.layer.y);
-    layer.offsetX(layoutData.layer.offsetX);
-    layer.offsetY(layoutData.layer.offsetY);
-    layer.draw();
-  });
+  // loader.addCompletionListener(function() {});
   loader.start();
 }
-
