@@ -61,6 +61,10 @@ function addZoomBackground(layer) {
     currentGroup = null;
     setMenuEditItemMode();
   });
+
+  background.on('dblclick dbltap', function(event) {
+    zoomFit(event);
+  });
 }
 
 function zoomObject(object, oldscale, factor, zoomOrigin, center, rotation) {
@@ -73,6 +77,58 @@ function zoomObject(object, oldscale, factor, zoomOrigin, center, rotation) {
   };
   object.setOffset({x: zoomOrigin.x, y: zoomOrigin.y});
   object.setScale({x: newscale, y: newscale});
+}
+
+function zoomFit() {
+  var boundingRect, x, y, w, h, buffer, xBackground, yBackground;
+  var xValues = [], yValues = [];
+  xBackground = layer.find('.background')[0].getAbsolutePosition().x
+  yBackground = layer.find('.background')[0].getAbsolutePosition().y
+  layer.find('Group').each(function(group) {
+    console.log(group.attrs.title); 
+    x = group.getAbsolutePosition().x;// - xBackground;
+    y = group.getAbsolutePosition().y;// - yBackground;
+    buffer = Math.max(
+      group.get(".back")[0].width() * group.scaleX() * layer.scaleX(), 
+      group.get(".back")[0].height() * group.scaleY() * layer.scaleY()
+    );
+    console.log(buffer);
+    xValues.push(x - buffer);
+    xValues.push(x + buffer);
+    yValues.push(y - buffer);
+    yValues.push(y + buffer);
+    // xValues.push(x);
+    // yValues.push(y);
+  });
+  boundingRect = {
+    xmin: Math.min.apply(Math, xValues),
+    xmax: Math.max.apply(Math, xValues),
+    ymin: Math.min.apply(Math, yValues),
+    ymax: Math.max.apply(Math, yValues),
+  }
+  // console.log(boundingRect);
+  // console.log({xb: xBackground, yb: yBackground});
+  // console.log(layer.getAbsolutePosition());
+  var scale = window.innerWidth / (boundingRect.xmax - boundingRect.xmin)
+  // layer.offsetX(layer.offsetX() + event.clientX);
+  // layer.offsetY(layer.offsetY() + event.clientY);
+  // layer.scaleX(layer.scaleX() * scale)
+  // layer.scaleY(layer.scaleY() * scale)
+  // layer.x(boundingRect.xmin);
+  // layer.y(boundingRect.ymin);
+  console.log(event);
+  var tween = new Kinetic.Tween({
+    node: layer,
+    scaleX: layer.scaleX() * scale,
+    scaleY: layer.scaleY() * scale,
+    x: layer.x() - boundingRect.xmin,
+    y: layer.y() - boundingRect.ymin,
+    offsetX: boundingRect.xmax - boundingRect.xmin, //layer.x() - boundingRect.xmin,
+    offsetY: boundingRect.ymax - boundingRect.ymin, //layer.y() - boundingRect.ymin,
+  });
+  tween.play();
+
+  layer.draw();
 }
 
 function loadEditLayout(layoutData) {
