@@ -14,11 +14,13 @@ class PostsController < ApplicationController
 		post.image = params[:filename]
 		post.save
 		if post.valid?
-			current_layout.create_json_object(post)
-			render json: {valid: true}
+			# current_layout.create_json_object(post)
+			render json: {valid: true,
+										id: post.id,
+									  title: post.title,
+										body: post.body,
+										src: post.image.url}
 		else
-			p 'fsdfsdfdsfdsfdsfdsfsfd'
-			p params
 			render json: {valid: false}
 		end
 	end

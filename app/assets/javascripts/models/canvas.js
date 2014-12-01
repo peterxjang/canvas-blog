@@ -53,6 +53,7 @@ function addZoomBackground(layer) {
                layer.getOffset(), 
                {x: e.originalEvent.clientX, y: e.originalEvent.clientY});
     layer.draw();
+    console.log({x: layer.x(), y: layer.y()});
   });
 
   background.on('mousedown touchstart', function (e) {
@@ -74,30 +75,34 @@ function zoomObject(object, oldscale, factor, zoomOrigin, center) {
   object.setScale({x: newscale, y: newscale});
 }
 
-function loadImagesEdit(layoutData) {
-  loadImages(layoutData, true);
+function loadEditLayout(layoutData) {
+  loadLayout(layoutData, true);
 }
 
-function loadImagesView(layoutData) {
-  loadImages(layoutData, false);
+function loadViewLayout(layoutData) {
+  loadLayout(layoutData, false);
 }
 
-function loadImages(layoutData, editable) {
+function loadLayout(layoutData, editable) {
   layer.removeChildren();
 
   addZoomBackground(layer);
 
-    layer.scaleX(layoutData.layer.scale);
-    layer.scaleY(layoutData.layer.scale);
-    layer.x(layoutData.layer.x);
-    layer.y(layoutData.layer.y);
-    layer.offsetX(layoutData.layer.offsetX);
-    layer.offsetY(layoutData.layer.offsetY);
-    layer.draw();
+  layer.scaleX(layoutData.layer.scale);
+  layer.scaleY(layoutData.layer.scale);
+  layer.x(layoutData.layer.x);
+  layer.y(layoutData.layer.y);
+  layer.offsetX(layoutData.layer.offsetX);
+  layer.offsetY(layoutData.layer.offsetY);
+  layer.draw();
 
+  loadImages(layoutData.objects, editable);
+}
+
+function loadImages(objects, editable) {
   var loader = new PxLoader();
-  for (var i=0; i<layoutData.objects.length; i++) {
-    var object = layoutData.objects[i];
+  for (var i=0; i<objects.length; i++) {
+    var object = objects[i];
     var pxImage = new PxLoaderImage(object.src);
     pxImage.top = object.top;
     pxImage.left = object.left;
@@ -118,4 +123,3 @@ function loadImages(layoutData, editable) {
   // loader.addCompletionListener(function() {});
   loader.start();
 }
-

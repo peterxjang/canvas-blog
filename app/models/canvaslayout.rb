@@ -18,20 +18,20 @@ class Canvaslayout < ActiveRecord::Base
 		self.save!
 	end
 
-	def create_json_object(post)
-		self.objects["objects"] << {
-			id: post.id,
-			title: post.title,
-			src: post.image.url,
-			top: 0,
-			left: 0,
-			angle: 0.0,
-			scaleX: nil,
-			scaleY: nil,
-			offsetX: 0,
-			offsetY: 0,
-			zIndex: 1
-		} 
-		self.save!
-	end
+	# def create_json_object(post)
+	# 	self.objects["objects"] << {
+	# 		id: post.id,
+	# 		title: post.title,
+	# 		src: post.image.url,
+	# 		top: 0,
+	# 		left: 0,
+	# 		angle: 0.0,
+	# 		scaleX: nil,
+	# 		scaleY: nil,
+	# 		offsetX: 0,
+	# 		offsetY: 0,
+	# 		zIndex: 1
+	# 	} 
+	# 	self.save!
+	# end
 end

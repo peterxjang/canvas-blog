@@ -18,7 +18,7 @@ function editLayout(event) {
       if (response.valid) {
         $('#div-top').html('');
         setMenuEditMode(response.htmlMenu);
-        loadImagesEdit(response.layout);
+        loadEditLayout(response.layout);
       }
       else {
         $('#error-signin').text('Incorrect email or password!');
@@ -29,7 +29,7 @@ function editLayout(event) {
 }
 
 function viewLayout(event) {
-  event.preventDefault();
+  if (event) { event.preventDefault(); }
   $.ajax({
     url: '/sessions',
     type: 'POST',
@@ -39,7 +39,7 @@ function viewLayout(event) {
       if (response.valid) {
         $('#div-top').html('');
         setMenuViewMode(response.htmlMenu);
-        loadImagesView(response.layout);
+        loadViewLayout(response.layout);
       }
       else {
         $('#error-signin').text('Incorrect email or password!');
@@ -85,7 +85,7 @@ function saveLayout(event) {
     contentType: 'application/json',
     data: JSON.stringify(data),
     success: function(response) {
-      viewLayout(event);
+      if (event) {viewLayout(event);}
     },
     error: function(response) { console.log("error!"); console.log(response);}
   });

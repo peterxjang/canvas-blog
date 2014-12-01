@@ -3,8 +3,8 @@ function createPolaroid(e, editable) {
   var scaleX = e.resource.scaleX;
   var scaleY = e.resource.scaleY;
   currentGroup  = null;
-  if (!scaleX) { scaleX = window.innerHeight / 2 / img.height; }
-  if (!scaleY) { scaleY = window.innerHeight / 2 / img.height; }
+  if (!scaleX) { scaleX = window.innerHeight / 2 / img.height / layer.scaleX(); }
+  if (!scaleY) { scaleY = window.innerHeight / 2 / img.height / layer.scaleY(); }
   var group = new Kinetic.Group({
     draggable: editable,
     x: e.resource.left,
@@ -72,13 +72,7 @@ function createPolaroid(e, editable) {
     var zoomOrigin = {x: 0, y: 0};
     var hammertime = Hammer(group)
     .on("touch", function(e) {
-      if (currentGroup != group) {
-        group.moveToTop();
-        front.opacity(0);
-        dimCurrentGroup();
-        currentGroup = group;
-        setMenuEditItemMode();
-      }
+      selectGroup(group);
     })
     .on("transformstart", function(e) {
       startScale = group.scaleX();
@@ -113,6 +107,18 @@ function createPolaroid(e, editable) {
   tween.play();
 
   layer.draw();
+
+  return group;
+}
+
+function selectGroup(group) {
+  if (currentGroup != group) {
+    group.moveToTop();
+    group.get('.front').opacity(0);
+    dimCurrentGroup();
+    currentGroup = group;
+    setMenuEditItemMode();
+  }
 }
 
 function dimCurrentGroup() {
@@ -225,12 +231,6 @@ function newPost() {
 
 function createPost() {
   var formData = new FormData($("form#form-create-post")[0]);
-  // var formData = new FormData();
-  // jQuery.each($('#form#form-create-post')[0].files, function(i, file) {
-  //     formData.append('file-'+i, file);
-  // });
-  console.log($("form#form-create-post").serialize());
-  console.log(formData);
   $.ajax({
     url: '/posts',
     type: 'POST',
@@ -241,12 +241,29 @@ function createPost() {
     data: formData,
     success: function(response) {
       if (response.valid) { 
-        // var text = currentGroup.get('.text')[0];
-        // var container = currentGroup.get('.back')[0];
-        // var amount = text.x();
-        // text.text(response.title);
-        // fitText(text, container, amount);
-        // layer.draw();
+        // var firstItem = layer.find('Image')[0];
+        // console.log({x: firstItem.getX(), y: firstItem.getY()});
+        // console.log({xlayer: -layer.getX(), ylayer: -layer.getY()});
+        var loader = new PxLoader();
+        var pxImage = new PxLoaderImage(response.src);
+        pxImage.top = 0; //layer.getY() + layer.offsetY();
+        pxImage.left = 0; //layer.getX() + layer.offsetX();
+        pxImage.scaleX = null;
+        pxImage.scaleY = null;
+        pxImage.offsetX = 0;
+        pxImage.offsetY = 0;
+        pxImage.zIndex = 100;
+        pxImage.angle = 0;
+        pxImage.databaseID = response.id;
+        pxImage.databaseSrc = response.src;
+        pxImage.databaseTitle = response.title;
+        loader.add(pxImage);
+        loader.addProgressListener(function(e) {
+          var newGroup = createPolaroid(e, true);
+          selectGroup(newGroup);
+          saveLayout();
+        });
+        loader.start();
       }
       else { console.log("Could not create post!"); }
     },
@@ -263,6 +280,7 @@ function deletePost(id) {
       success: function(response) {
         if (response.valid) {
           currentGroup.remove();
+          saveLayout();
           layer.draw();
           currentGroup = null;
           setMenuEditItemMode();
