@@ -35,6 +35,7 @@ function createPolaroid(e, editable) {
     x: border,
     y: img.height + 2*border,
     text: e.resource.databaseTitle,
+    align: 'center',
     fontFamily: 'Permanent Marker',
     fill: 'black'
   });
@@ -134,11 +135,12 @@ function padText(text, container, amount) {
 function fitText(text, container, amount) {
   var scaleWidth = (container.width() - 2*amount) / text.width();
 	var scaleHeight = (3*amount) / text.height();
-  // console.log({text: text.attrs.text, width: text.width(), height: text.height(), scaleWidth: scaleWidth, scaleHeight: scaleHeight});
   var scale = Math.min(scaleWidth, scaleHeight);
-  // var scale = scaleWidth;
 	text.scaleX(scale);
 	text.scaleY(scale);
+  var textWidth = text.width() * scale;
+  var containerWidth = (container.width() - 2*amount) * container.scaleX();
+  text.offsetX((textWidth - containerWidth) / 2 / scale);
 }
 
 function resizePolaroid(group, newWidth, newHeight) {
