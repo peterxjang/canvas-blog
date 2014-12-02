@@ -48,25 +48,10 @@ function createPolaroid(e, editable) {
   group.attrs.title = e.resource.databaseTitle;
 
   if (editable) {
-    var front = new Kinetic.Rect({
-      name: 'front',
-      x: 0,
-      y: 0,
-      width: back.width(),
-      height: back.height(),
-      fill: 'gray',
-      stroke: 'gray',
-      strokeWidth: border / 10,
-      opacity: 0.8
-    });
-    group.add(front);
-
-
     // addAnchor(group, 0, 0, "topLeft");
     // addAnchor(group, front.width(), 0, "topRight");
     // addAnchor(group, front.width(), front.height(), "bottomRight");
     // addAnchor(group, 0, front.height(), "bottomLeft");
-
     var startScale = 1;
     var startRotate = 0;
     var zoomOrigin = {x: 0, y: 0};
@@ -95,6 +80,8 @@ function createPolaroid(e, editable) {
     var hammertime = Hammer(group)
     .on("touch", function(e) {
       e.preventDefault();
+      console.log(group.getAbsolutePosition());
+      console.log(group.getPosition());
       showPost(group.attrs.id);
     });
   }
@@ -115,7 +102,7 @@ function createPolaroid(e, editable) {
 function selectGroup(group) {
   if (currentGroup != group) {
     group.moveToTop();
-    group.get('.front').opacity(0);
+    group.get('.back').fill("#aff");
     dimCurrentGroup();
     currentGroup = group;
     setMenuEditItemMode();
@@ -124,7 +111,7 @@ function selectGroup(group) {
 
 function dimCurrentGroup() {
   if (currentGroup) {
-    currentGroup.get('.front').each(function(child) {child.opacity(0.8);});
+    currentGroup.get('.back').fill("white");
   }
   layer.draw();
 }
@@ -166,8 +153,11 @@ function moveObjectUp(event) {
 }
 
 function moveObjectDown(event) {
-  currentGroup.moveDown();
-  layer.draw();
+  console.log(currentGroup.getZIndex());
+  if (currentGroup.getZIndex() > 2) {
+    currentGroup.moveDown();
+    layer.draw();
+  }
 }
 
 function showPost(id) {

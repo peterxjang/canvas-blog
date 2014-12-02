@@ -28,8 +28,9 @@ function addZoomBackground(layer) {
     width: 20000,
     height: 20000,
     fill: "#000000",
-    opacity: 0
+    opacity: 0,
   });
+  // background.setZIndex(-1);
   layer.add(background);
   var startScale = 1;
   var startRotate = 0;
@@ -61,6 +62,10 @@ function addZoomBackground(layer) {
     currentGroup = null;
     setMenuEditItemMode();
   });
+
+  background.on('dblclick dbltap', function(event) {
+    zoomFit(event);
+  });
 }
 
 function zoomObject(object, oldscale, factor, zoomOrigin, center, rotation) {
@@ -73,6 +78,67 @@ function zoomObject(object, oldscale, factor, zoomOrigin, center, rotation) {
   };
   object.setOffset({x: zoomOrigin.x, y: zoomOrigin.y});
   object.setScale({x: newscale, y: newscale});
+}
+
+function zoomFit() {
+  var boundingRect, x, y, w, h, buffer;
+  var xValues = [], yValues = [];
+  var xScaledValues = [], yScaledValues = [];
+  layer.find('Group').each(function(group) {
+    x = group.getAbsolutePosition().x;
+    y = group.getAbsolutePosition().y;
+    buffer = Math.max(
+      group.get(".back")[0].width() * group.scaleX() * layer.scaleX(), 
+      group.get(".back")[0].height() * group.scaleY() * layer.scaleY()
+    );
+    buffer = buffer * 0.75;
+    xValues.push(x - buffer);
+    xValues.push(x + buffer);
+    yValues.push(y - buffer);
+    yValues.push(y + buffer);
+
+    xScaledValues.push(group.getPosition().x);
+    yScaledValues.push(group.getPosition().y);
+  });
+  boundingRect = {
+    xmin: Math.min.apply(Math, xValues),
+    xmax: Math.max.apply(Math, xValues),
+    ymin: Math.min.apply(Math, yValues),
+    ymax: Math.max.apply(Math, yValues),
+  }
+  var scaleX = window.innerWidth / (boundingRect.xmax - boundingRect.xmin);
+  var scaleY = window.innerHeight / (boundingRect.ymax - boundingRect.ymin);
+  var scale = Math.min(scaleX, scaleY);
+  // layer.offsetX(0);
+  // layer.offsetY(0);
+  // var tween = new Kinetic.Tween({
+  //   node: layer,
+  //   scaleX: layer.scaleX() * scale,
+  //   scaleY: layer.scaleY() * scale,
+  //   x: layer.x() - boundingRect.xmin,
+  //   y: layer.y() - boundingRect.ymin,
+  //   offsetX: 0, //boundingRect.xmax - boundingRect.xmin, //layer.x() - boundingRect.xmin,
+  //   offsetY: 0, //boundingRect.ymax - boundingRect.ymin, //layer.y() - boundingRect.ymin,
+
+  //       onFinish: function() {
+  //         layer.setAbsolutePosition({x: boundingRect.xmin, y:boundingRect.ymin});
+  //       }
+  // });
+  // tween.play();
+  layer.offset({
+    x: Math.min.apply(Math, xScaledValues), 
+    y: Math.min.apply(Math, yScaledValues)
+  });
+  layer.scale({
+    x: layer.scaleX() * scale, 
+    y: layer.scaleY() * scale
+  });
+  layer.setAbsolutePosition({
+    x: 50,
+    y: 50,
+  });
+
+  layer.draw();
 }
 
 function loadEditLayout(layoutData) {
