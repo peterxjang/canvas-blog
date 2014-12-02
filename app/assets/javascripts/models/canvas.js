@@ -82,10 +82,8 @@ function zoomObject(object, oldscale, factor, zoomOrigin, center, rotation) {
 
 function zoomFit() {
   var boundingRect, x, y, w, h, buffer;
-  // var xBackground, yBackground;
   var xValues = [], yValues = [];
-  // xBackground = layer.find('.background')[0].getAbsolutePosition().x
-  // yBackground = layer.find('.background')[0].getAbsolutePosition().y
+  var xScaledValues = [], yScaledValues = [];
   layer.find('Group').each(function(group) {
     x = group.getAbsolutePosition().x;
     y = group.getAbsolutePosition().y;
@@ -93,10 +91,14 @@ function zoomFit() {
       group.get(".back")[0].width() * group.scaleX() * layer.scaleX(), 
       group.get(".back")[0].height() * group.scaleY() * layer.scaleY()
     );
+    buffer = buffer * 0.75;
     xValues.push(x - buffer);
     xValues.push(x + buffer);
     yValues.push(y - buffer);
     yValues.push(y + buffer);
+
+    xScaledValues.push(group.getPosition().x);
+    yScaledValues.push(group.getPosition().y);
   });
   boundingRect = {
     xmin: Math.min.apply(Math, xValues),
@@ -106,7 +108,7 @@ function zoomFit() {
   }
   var scaleX = window.innerWidth / (boundingRect.xmax - boundingRect.xmin);
   var scaleY = window.innerHeight / (boundingRect.ymax - boundingRect.ymin);
-  var scale = Math.min(scaleX, scaleY)
+  var scale = Math.min(scaleX, scaleY);
   // layer.offsetX(0);
   // layer.offsetY(0);
   // var tween = new Kinetic.Tween({
@@ -123,9 +125,18 @@ function zoomFit() {
   //       }
   // });
   // tween.play();
-  layer.offset({x: 0, y: 0});
-  layer.scale({x: layer.scaleX() * scale, y: layer.scaleY() * scale});
-  layer.setAbsolutePosition({x: 0, y: 0});
+  layer.offset({
+    x: Math.min.apply(Math, xScaledValues), 
+    y: Math.min.apply(Math, yScaledValues)
+  });
+  layer.scale({
+    x: layer.scaleX() * scale, 
+    y: layer.scaleY() * scale
+  });
+  layer.setAbsolutePosition({
+    x: 50,
+    y: 50,
+  });
 
   layer.draw();
 }
