@@ -28,8 +28,9 @@ function addZoomBackground(layer) {
     width: 20000,
     height: 20000,
     fill: "#000000",
-    opacity: 0
+    opacity: 0,
   });
+  // background.setZIndex(-1);
   layer.add(background);
   var startScale = 1;
   var startRotate = 0;
@@ -80,25 +81,22 @@ function zoomObject(object, oldscale, factor, zoomOrigin, center, rotation) {
 }
 
 function zoomFit() {
-  var boundingRect, x, y, w, h, buffer, xBackground, yBackground;
+  var boundingRect, x, y, w, h, buffer;
+  // var xBackground, yBackground;
   var xValues = [], yValues = [];
-  xBackground = layer.find('.background')[0].getAbsolutePosition().x
-  yBackground = layer.find('.background')[0].getAbsolutePosition().y
+  // xBackground = layer.find('.background')[0].getAbsolutePosition().x
+  // yBackground = layer.find('.background')[0].getAbsolutePosition().y
   layer.find('Group').each(function(group) {
-    console.log(group.attrs.title); 
-    x = group.getAbsolutePosition().x;// - xBackground;
-    y = group.getAbsolutePosition().y;// - yBackground;
+    x = group.getAbsolutePosition().x;
+    y = group.getAbsolutePosition().y;
     buffer = Math.max(
       group.get(".back")[0].width() * group.scaleX() * layer.scaleX(), 
       group.get(".back")[0].height() * group.scaleY() * layer.scaleY()
     );
-    console.log(buffer);
     xValues.push(x - buffer);
     xValues.push(x + buffer);
     yValues.push(y - buffer);
     yValues.push(y + buffer);
-    // xValues.push(x);
-    // yValues.push(y);
   });
   boundingRect = {
     xmin: Math.min.apply(Math, xValues),
@@ -106,27 +104,28 @@ function zoomFit() {
     ymin: Math.min.apply(Math, yValues),
     ymax: Math.max.apply(Math, yValues),
   }
-  // console.log(boundingRect);
-  // console.log({xb: xBackground, yb: yBackground});
-  // console.log(layer.getAbsolutePosition());
-  var scale = window.innerWidth / (boundingRect.xmax - boundingRect.xmin)
-  // layer.offsetX(layer.offsetX() + event.clientX);
-  // layer.offsetY(layer.offsetY() + event.clientY);
-  // layer.scaleX(layer.scaleX() * scale)
-  // layer.scaleY(layer.scaleY() * scale)
-  // layer.x(boundingRect.xmin);
-  // layer.y(boundingRect.ymin);
-  console.log(event);
-  var tween = new Kinetic.Tween({
-    node: layer,
-    scaleX: layer.scaleX() * scale,
-    scaleY: layer.scaleY() * scale,
-    x: layer.x() - boundingRect.xmin,
-    y: layer.y() - boundingRect.ymin,
-    offsetX: boundingRect.xmax - boundingRect.xmin, //layer.x() - boundingRect.xmin,
-    offsetY: boundingRect.ymax - boundingRect.ymin, //layer.y() - boundingRect.ymin,
-  });
-  tween.play();
+  var scaleX = window.innerWidth / (boundingRect.xmax - boundingRect.xmin);
+  var scaleY = window.innerHeight / (boundingRect.ymax - boundingRect.ymin);
+  var scale = Math.min(scaleX, scaleY)
+  // layer.offsetX(0);
+  // layer.offsetY(0);
+  // var tween = new Kinetic.Tween({
+  //   node: layer,
+  //   scaleX: layer.scaleX() * scale,
+  //   scaleY: layer.scaleY() * scale,
+  //   x: layer.x() - boundingRect.xmin,
+  //   y: layer.y() - boundingRect.ymin,
+  //   offsetX: 0, //boundingRect.xmax - boundingRect.xmin, //layer.x() - boundingRect.xmin,
+  //   offsetY: 0, //boundingRect.ymax - boundingRect.ymin, //layer.y() - boundingRect.ymin,
+
+  //       onFinish: function() {
+  //         layer.setAbsolutePosition({x: boundingRect.xmin, y:boundingRect.ymin});
+  //       }
+  // });
+  // tween.play();
+  layer.offset({x: 0, y: 0});
+  layer.scale({x: layer.scaleX() * scale, y: layer.scaleY() * scale});
+  layer.setAbsolutePosition({x: 0, y: 0});
 
   layer.draw();
 }

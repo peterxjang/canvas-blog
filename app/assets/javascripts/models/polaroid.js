@@ -166,8 +166,11 @@ function moveObjectUp(event) {
 }
 
 function moveObjectDown(event) {
-  currentGroup.moveDown();
-  layer.draw();
+  console.log(currentGroup.getZIndex());
+  if (currentGroup.getZIndex() > 2) {
+    currentGroup.moveDown();
+    layer.draw();
+  }
 }
 
 function showPost(id) {
