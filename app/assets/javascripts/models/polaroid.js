@@ -48,18 +48,18 @@ function createPolaroid(e, editable) {
   group.attrs.title = e.resource.databaseTitle;
 
   if (editable) {
-    var front = new Kinetic.Rect({
-      name: 'front',
-      x: 0,
-      y: 0,
-      width: back.width(),
-      height: back.height(),
-      fill: 'gray',
-      stroke: 'gray',
-      strokeWidth: border / 10,
-      opacity: 0.8
-    });
-    group.add(front);
+    // var front = new Kinetic.Rect({
+    //   name: 'front',
+    //   x: 0,
+    //   y: 0,
+    //   width: back.width(),
+    //   height: back.height(),
+    //   fill: 'gray',
+    //   stroke: 'gray',
+    //   strokeWidth: border / 10,
+    //   opacity: 0.8
+    // });
+    // group.add(front);
 
 
     // addAnchor(group, 0, 0, "topLeft");
@@ -115,7 +115,8 @@ function createPolaroid(e, editable) {
 function selectGroup(group) {
   if (currentGroup != group) {
     group.moveToTop();
-    group.get('.front').opacity(0);
+    // group.get('.front').opacity(0);
+    group.get('.back').fill("#aff");
     dimCurrentGroup();
     currentGroup = group;
     setMenuEditItemMode();
@@ -124,7 +125,8 @@ function selectGroup(group) {
 
 function dimCurrentGroup() {
   if (currentGroup) {
-    currentGroup.get('.front').each(function(child) {child.opacity(0.8);});
+    // currentGroup.get('.front').each(function(child) {child.opacity(0.8);});
+    currentGroup.get('.back').fill("white");
   }
   layer.draw();
 }
