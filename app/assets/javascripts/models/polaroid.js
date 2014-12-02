@@ -9,6 +9,8 @@ function createPolaroid(e, editable) {
     draggable: editable,
     x: e.resource.left,
     y: e.resource.top,
+    width: img.width + 2*border,
+    height: img.height + 6*border,
     rotation: e.resource.angle,
     scaleX: scaleX,
     scaleY: scaleY,
@@ -48,10 +50,10 @@ function createPolaroid(e, editable) {
   group.attrs.title = e.resource.databaseTitle;
 
   if (editable) {
-    // addAnchor(group, 0, 0, "topLeft");
-    // addAnchor(group, front.width(), 0, "topRight");
-    // addAnchor(group, front.width(), front.height(), "bottomRight");
-    // addAnchor(group, 0, front.height(), "bottomLeft");
+    // addAnchor(group, back, 0, 0, "topLeft");
+    // addAnchor(group, back, back.width(), 0, "topRight");
+    addAnchor(group, back, back.width(), back.height(), "bottomRight");
+    // addAnchor(group, back, 0, back.height(), "bottomLeft");
     var startScale = 1;
     var startRotate = 0;
     var zoomOrigin = {x: 0, y: 0};
@@ -80,8 +82,6 @@ function createPolaroid(e, editable) {
     var hammertime = Hammer(group)
     .on("touch", function(e) {
       e.preventDefault();
-      console.log(group.getAbsolutePosition());
-      console.log(group.getPosition());
       showPost(group.attrs.id);
     });
   }
@@ -138,13 +138,21 @@ function fitText(text, container, amount) {
 }
 
 function resizePolaroid(group, newWidth, newHeight) {
+  // group.setSize({width: newWidth, height: newHeight});
   var image = group.get(".back")[0];
-  image.setSize({width: newWidth, height: newHeight});
-  image.parent.setSize({width: newWidth, height: newHeight});
+  // image.setSize({width: newWidth, height: newHeight});
+  // image.parent.setSize({width: newWidth, height: newHeight});
   // image.parent.scale({
   //  x: image.parent.scaleY() * newHeight / (image.getHeight()),
   //  y: image.parent.scaleY() * newHeight / (image.getHeight()),
   // });
+  // var oldOffset = group.getOffset();
+  group.setOffset({x: 0, y: 0});
+  // group.setPosition({x: -oldOffset.x, y: -oldOffset.y});
+  group.scale({
+    x: group.scaleX() * newHeight / image.getHeight(),
+    y: group.scaleY() * newHeight / image.getHeight()
+  })
 }
 
 function moveObjectUp(event) {
@@ -153,7 +161,6 @@ function moveObjectUp(event) {
 }
 
 function moveObjectDown(event) {
-  console.log(currentGroup.getZIndex());
   if (currentGroup.getZIndex() > 2) {
     currentGroup.moveDown();
     layer.draw();
@@ -233,14 +240,8 @@ function createPost() {
     success: function(response) {
       if (response.valid) { 
         var firstItem = layer.find('.background')[0];
-        console.log(firstItem.getPosition());
-        // var firstItem = layer.find('Image')[0];
-        // console.log({x: firstItem.getX(), y: firstItem.getY()});
-        // console.log({xlayer: -layer.getX(), ylayer: -layer.getY()});
         var loader = new PxLoader();
         var pxImage = new PxLoaderImage(response.src);
-        // pxImage.top = -layer.offsetY() * layer.scaleY(); // -  layer.getPosition().y; //0; //layer.getY() + layer.offsetY();
-        // pxImage.left = -layer.offsetX() * layer.scaleX(); // - layer.getPosition().x; //layer.getX() + layer.offsetX();
         pxImage.top = 0;
         pxImage.left = 0;
         pxImage.scaleX = null;
