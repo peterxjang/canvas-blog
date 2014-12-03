@@ -54,6 +54,7 @@ function updateAnchor(group, activeHandle) {
 	  newHeight,
 	  imageX,
 	  imageY;
+  	group.setOffset({x: 0, y: 0});
 
 	// Update the positions of handles during drag.
 	// This needs to happen so the dimension calculation can use the
@@ -115,10 +116,14 @@ function updateAnchor(group, activeHandle) {
 	}
 
 	// make sure the image is still within the safe zone
-	var x = image.getAbsolutePosition().x;
-	var y = image.getAbsolutePosition().y;
+	// var x = image.getAbsolutePosition().x;
+	// var y = image.getAbsolutePosition().y;
 
 
+}
+
+function removeAnchor(group) {
+	group.get(".bottomRight")[0].remove();
 }
 
 

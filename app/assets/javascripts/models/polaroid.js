@@ -52,8 +52,9 @@ function createPolaroid(e, editable) {
   if (editable) {
     // addAnchor(group, back, 0, 0, "topLeft");
     // addAnchor(group, back, back.width(), 0, "topRight");
-    addAnchor(group, back, back.width(), back.height(), "bottomRight");
+    // addAnchor(group, back, back.width(), back.height(), "bottomRight");
     // addAnchor(group, back, 0, back.height(), "bottomLeft");
+
     var startScale = 1;
     var startRotate = 0;
     var zoomOrigin = {x: 0, y: 0};
@@ -101,6 +102,8 @@ function createPolaroid(e, editable) {
 
 function selectGroup(group) {
   if (currentGroup != group) {
+    var back = group.get(".back")[0];
+    addAnchor(group, back, back.width(), back.height(), "bottomRight");
     group.moveToTop();
     group.get('.back').fill("#aff");
     dimCurrentGroup();
@@ -111,6 +114,7 @@ function selectGroup(group) {
 
 function dimCurrentGroup() {
   if (currentGroup) {
+    removeAnchor(currentGroup);
     currentGroup.get('.back').fill("white");
   }
   layer.draw();
@@ -147,7 +151,7 @@ function resizePolaroid(group, newWidth, newHeight) {
   //  y: image.parent.scaleY() * newHeight / (image.getHeight()),
   // });
   // var oldOffset = group.getOffset();
-  group.setOffset({x: 0, y: 0});
+  // group.setOffset({x: 0, y: 0});
   // group.setPosition({x: -oldOffset.x, y: -oldOffset.y});
   group.scale({
     x: group.scaleX() * newHeight / image.getHeight(),
