@@ -1,13 +1,14 @@
 == README
 
-A blog rendered entirely on an infinite canvas, with each post represented as a polaroid picture.
+A blog rendered entirely on an infinitely zoomable canvas. Each blog post is represented as a polaroid picture, which can be resized, rotated, and placed anywhere on the canvas.
 
 * Configuration
-git clone
+git clone ___
 bundle install
 rake db:create
 rake db:migrate
 rake db:seed
 rails s
 
-You can log using the email test@test.com, password: password to see an example account.
+Open your browswer to your local host.
+You can log in using the email test@test.com, password: password to see an example account.
