@@ -1,8 +1,9 @@
 function createPolaroid(e, editable) {
+  currentGroup  = null;
   var img = e.resource.img;
+  var border = img.height / 20;
   var scaleX = e.resource.scaleX;
   var scaleY = e.resource.scaleY;
-  currentGroup  = null;
   if (!scaleX) { scaleX = window.innerHeight / 2 / img.height / layer.scaleX(); }
   if (!scaleY) { scaleY = window.innerHeight / 2 / img.height / layer.scaleY(); }
   var group = new Kinetic.Group({
@@ -18,8 +19,8 @@ function createPolaroid(e, editable) {
     offsetY: e.resource.offsetY,
     opacity: 0
   });
-  var border = img.height / 20;
   var yoda = new Kinetic.Image({
+    name: 'image',
     x: border,
     y: border,
     image: img,
