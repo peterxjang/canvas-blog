@@ -81,8 +81,12 @@ function createPolaroid(e, editable) {
     });
   }
   else {
-    var hammertime = Hammer(group)
-    .on("touch", function(e) {
+    // var hammertime = Hammer(group)
+    // .on("touch", function(e) {
+    //   e.preventDefault();
+    //   showPost(group.attrs.id);
+    // });
+    group.on('dblclick dbltap', function(e) {
       e.preventDefault();
       showPost(group.attrs.id);
     });
