@@ -67,6 +67,8 @@ function saveLayout(event) {
         id: node.attrs.id,
         title: node.attrs.title,
         src: node.attrs.src,
+        srcWidth: node.find(".image")[0].width(),
+        srcHeight: node.find(".image")[0].height(),
         top: node.attrs.y,
         left: node.attrs.x,
         angle: node.attrs.rotation,

@@ -165,26 +165,34 @@ function loadLayout(layoutData, editable) {
   loadImages(layoutData.objects, editable);
 }
 
-function loadImages(objects, editable) {
+function loadImages(objects, editable, create) {
   var loader = new PxLoader();
   for (var i=0; i<objects.length; i++) {
     var object = objects[i];
+    
     var pxImage = new PxLoaderImage(object.src);
-    pxImage.top = object.top;
-    pxImage.left = object.left;
-    pxImage.scaleX = object.scaleX;
-    pxImage.scaleY = object.scaleY;
-    pxImage.offsetX = object.offsetX;
-    pxImage.offsetY = object.offsetY;
-    pxImage.zIndex = object.zIndex;
-    pxImage.angle = object.angle;
-    pxImage.databaseID = object.id;
-    pxImage.databaseSrc = object.src;
-    pxImage.databaseTitle = object.title;
+    pxImage.data = object;
+
+    if (object.srcWidth) {
+      var group = createPolaroidNoImage(object, editable);
+      pxImage.group = group;
+    }
     loader.add(pxImage);
   }
   loader.addProgressListener(function(e) {
-    createPolaroid(e, editable);
+    // createPolaroid(e, editable);
+    if (!e.resource.data.srcWidth) {
+      var data = e.resource.data;
+      data.srcWidth = e.resource.img.width;
+      data.srcHeight = e.resource.img.height;
+      var group = createPolaroidNoImage(data, editable);
+      e.resource.group = group;
+    }
+    createPolaroidImage(e);
+    if (create) {
+      selectGroup(group);
+      saveLayout();
+    }
   });
   // loader.addCompletionListener(function() {});
   loader.start();

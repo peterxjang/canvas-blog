@@ -19,7 +19,17 @@ class PostsController < ApplicationController
 										id: post.id,
 									  title: post.title,
 										body: post.body,
-										src: post.image.url}
+										src: post.image.url,
+										top: 0,
+										left: 0,
+										srcWidth: nil,
+										srcHeight: nil,
+										scaleX: nil,
+										scaleY: nil,
+										offsetX: 0,
+										offsetY: 0,
+										angle: 0,
+										zIndex: 1}
 		else
 			render json: {valid: false}
 		end
