@@ -11,14 +11,16 @@ module ApplicationHelper
 					{id: post.id,
 					 title: post.title,
 					 src: post.image.url,
-					 top: 150.0 + 10*index,
-					 left: 100.0 + 10*index,
+					 top: 150.0 + 50*index,
+					 left: 100.0 + 50*index,
 					 angle: 0.0,
+					 srcWidth: nil,
+					 srcHeight: nil,
 					 scaleX: nil,
 					 scaleY: nil,
 					 offsetX: 0,
 					 offsetY: 0,
-					 zIndex: 1} 
+					 zIndex: 1 + index} 
 				end
 				layoutData = {
 					objects: objects, 

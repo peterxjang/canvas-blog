@@ -1,54 +1,47 @@
-function createPolaroid(e, editable) {
+function createPolaroidNoImage(object, editable) {
   currentGroup  = null;
-  var img = e.resource.img;
-  var border = img.height / 20;
-  var scaleX = e.resource.scaleX;
-  var scaleY = e.resource.scaleY;
-  if (!scaleX) { scaleX = window.innerHeight / 2 / img.height / layer.scaleX(); }
-  if (!scaleY) { scaleY = window.innerHeight / 2 / img.height / layer.scaleY(); }
+  var border = object.srcHeight / 20;
+  var scaleX = object.scaleX;
+  var scaleY = object.scaleY;
+  if (!scaleX) { scaleX = window.innerHeight / 2 / object.srcHeight / layer.scaleX(); }
+  if (!scaleY) { scaleY = window.innerHeight / 2 / object.srcHeight / layer.scaleY(); }
   var group = new Kinetic.Group({
+    name: object.id,
     draggable: editable,
-    x: e.resource.left,
-    y: e.resource.top,
-    width: img.width + 2*border,
-    height: img.height + 6*border,
-    rotation: e.resource.angle,
+    x: object.left,
+    y: object.top,
+    width: object.srcWidth + 2*border,
+    height: object.srcHeight + 6*border,
+    rotation: object.angle,
     scaleX: scaleX,
     scaleY: scaleY,
-    offsetX: e.resource.offsetX,
-    offsetY: e.resource.offsetY,
-    opacity: 0
-  });
-  var yoda = new Kinetic.Image({
-    name: 'image',
-    x: border,
-    y: border,
-    image: img,
+    offsetX: object.offsetX,
+    offsetY: object.offsetY,
+    opacity: 1
   });
   var back = new Kinetic.Rect({
     name: 'back',
-  	width: img.width + 2*border,
-  	height: img.height + 6*border,
-  	fill: 'white',
-  	stroke: '#ccc',
-  	strokeWidth: border / 10,
+    width: object.srcWidth + 2*border,
+    height: object.srcHeight + 6*border,
+    fill: 'white',
+    stroke: '#ccc',
+    strokeWidth: border / 10,
   })
   var text = new Kinetic.Text({
     name: 'text',
     x: border,
-    y: img.height + 2*border,
-    text: e.resource.databaseTitle,
+    y: object.srcHeight + 2*border,
+    text: object.title,
     align: 'center',
     fontFamily: 'Permanent Marker',
     fill: 'black'
   });
   group.add(back);
-  group.add(yoda);
   group.add(text);
   fitText(text, back, border );
-  group.attrs.id = parseInt(e.resource.databaseID);
-  group.attrs.src = e.resource.databaseSrc;
-  group.attrs.title = e.resource.databaseTitle;
+  group.attrs.id = parseInt(object.id);
+  group.attrs.src = object.src;
+  group.attrs.title = object.title;
 
   if (editable) {
     // addAnchor(group, back, 0, 0, "topLeft");
@@ -93,16 +86,41 @@ function createPolaroid(e, editable) {
   }
 
   layer.add(group);
-  group.setZIndex(e.resource.zIndex);
-  var tween = new Kinetic.Tween({
-  	node: group,
-  	opacity: 1
-  });
-  tween.play();
+  group.setZIndex(object.zIndex);
+
+  // var tween = new Kinetic.Tween({
+  //   node: group,
+  //   opacity: 1
+  // });
+  // tween.play();
 
   layer.draw();
 
   return group;
+}
+
+function createPolaroidImage(e) {
+  var img = e.resource.img;
+  var id = e.resource.data.id;
+  var border = img.height / 20;
+  // var group = layer.find('.'+id)[0];
+  var group = e.resource.group;
+  var yoda = new Kinetic.Image({
+    name: 'image',
+    x: border,
+    y: border,
+    image: img,
+    opacity: 0
+  });
+  group.add(yoda);
+
+
+  var tween = new Kinetic.Tween({
+    node: yoda,
+    duration: 1,
+    opacity: 1
+  });
+  tween.play();
 }
 
 function selectGroup(group) {
@@ -237,38 +255,16 @@ function newPost() {
 }
 
 function createPost() {
-  var formData = new FormData($("form#form-create-post")[0]);
   $.ajax({
     url: '/posts',
     type: 'POST',
     dataType: 'json',
     contentType: false,
     processData: false,
-    // data: $("form#form-create-post").serialize(),
-    data: formData,
+    data: new FormData($("form#form-create-post")[0]),
     success: function(response) {
       if (response.valid) { 
-        var firstItem = layer.find('.background')[0];
-        var loader = new PxLoader();
-        var pxImage = new PxLoaderImage(response.src);
-        pxImage.top = 0;
-        pxImage.left = 0;
-        pxImage.scaleX = null;
-        pxImage.scaleY = null;
-        pxImage.offsetX = 0;
-        pxImage.offsetY = 0;
-        pxImage.zIndex = 1;
-        pxImage.angle = 0;
-        pxImage.databaseID = response.id;
-        pxImage.databaseSrc = response.src;
-        pxImage.databaseTitle = response.title;
-        loader.add(pxImage);
-        loader.addProgressListener(function(e) {
-          var newGroup = createPolaroid(e, true);
-          selectGroup(newGroup);
-          saveLayout();
-        });
-        loader.start();
+        loadImages([response], true, true);
       }
       else { console.log("Could not create post!"); }
     },
@@ -289,7 +285,6 @@ function deletePost(id) {
           layer.draw();
           currentGroup = null;
           setMenuEditItemMode();
-          // alert('Post deleted.');
         }
         else {
           console.log("Could not find post!");
