@@ -17,7 +17,7 @@ function createPolaroidNoImage(object, editable) {
     scaleY: scaleY,
     offsetX: object.offsetX,
     offsetY: object.offsetY,
-    opacity: 1
+    opacity: 1,
   });
   var back = new Kinetic.Rect({
     name: 'back',
@@ -70,7 +70,7 @@ function createPolaroidNoImage(object, editable) {
                  {x: e.gesture.center.pageX, y: e.gesture.center.pageY},
                  rotation);
       var rotation = startRotate + e.gesture.rotation;
-      group.rotation(Math.abs(rotation) < 5 ? 0 : rotation);
+      rotatePolaroid(group, rotation);
     });
   }
   else {
@@ -164,9 +164,9 @@ function fitText(text, container, amount) {
   text.offsetX((textWidth - containerWidth) / 2 / scale);
 }
 
-function resizePolaroid(group, newWidth, newHeight) {
+function resizePolaroid(group, scaleFactor) {
   // group.setSize({width: newWidth, height: newHeight});
-  var image = group.get(".back")[0];
+  // var image = group.get(".back")[0];
   // image.setSize({width: newWidth, height: newHeight});
   // image.parent.setSize({width: newWidth, height: newHeight});
   // image.parent.scale({
@@ -175,11 +175,19 @@ function resizePolaroid(group, newWidth, newHeight) {
   // });
   // var oldOffset = group.getOffset();
   // group.setOffset({x: 0, y: 0});
+  // group.setPosition({x: 0, y: 0});
+  // console.log({offset: group.offset(), pos: group.getPosition()})
   // group.setPosition({x: -oldOffset.x, y: -oldOffset.y});
   group.scale({
-    x: group.scaleX() * newHeight / image.getHeight(),
-    y: group.scaleY() * newHeight / image.getHeight()
+    // x: group.scaleX() * newHeight / image.getHeight(),
+    // y: group.scaleY() * newHeight / image.getHeight()
+    x: group.scaleX() * scaleFactor,
+    y: group.scaleY() * scaleFactor
   })
+}
+
+function rotatePolaroid(group, rotation) {
+  group.rotation(Math.abs(rotation) < 5 ? 0 : rotation);
 }
 
 function moveObjectUp(event) {
