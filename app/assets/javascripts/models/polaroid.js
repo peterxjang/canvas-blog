@@ -17,7 +17,7 @@ function createPolaroidNoImage(object, editable) {
     scaleY: scaleY,
     offsetX: object.offsetX,
     offsetY: object.offsetY,
-    opacity: 1
+    opacity: 1,
   });
   var back = new Kinetic.Rect({
     name: 'back',
@@ -44,11 +44,6 @@ function createPolaroidNoImage(object, editable) {
   group.attrs.title = object.title;
 
   if (editable) {
-    // addAnchor(group, back, 0, 0, "topLeft");
-    // addAnchor(group, back, back.width(), 0, "topRight");
-    // addAnchor(group, back, back.width(), back.height(), "bottomRight");
-    // addAnchor(group, back, 0, back.height(), "bottomLeft");
-
     var startScale = 1;
     var startRotate = 0;
     var zoomOrigin = {x: 0, y: 0};
@@ -67,35 +62,19 @@ function createPolaroidNoImage(object, editable) {
                  startScale, 
                  e.gesture.scale, 
                  zoomOrigin, 
-                 {x: e.gesture.center.pageX, y: e.gesture.center.pageY},
-                 rotation);
-      var rotation = startRotate + e.gesture.rotation;
-      group.rotation(Math.abs(rotation) < 5 ? 0 : rotation);
+                 {x: e.gesture.center.pageX, y: e.gesture.center.pageY});
+      rotatePolaroid(group, startRotate + e.gesture.rotation);
     });
   }
   else {
-    // var hammertime = Hammer(group)
-    // .on("touch", function(e) {
-    //   e.preventDefault();
-    //   showPost(group.attrs.id);
-    // });
     group.on('dblclick dbltap', function(e) {
       e.preventDefault();
       showPost(group.attrs.id);
     });
   }
-
   layer.add(group);
   group.setZIndex(object.zIndex);
-
-  // var tween = new Kinetic.Tween({
-  //   node: group,
-  //   opacity: 1
-  // });
-  // tween.play();
-
   layer.draw();
-
   return group;
 }
 
@@ -114,7 +93,6 @@ function createPolaroidImage(e) {
   });
   group.add(yoda);
 
-
   var tween = new Kinetic.Tween({
     node: yoda,
     duration: 1,
@@ -128,6 +106,15 @@ function selectGroup(group) {
     var back = group.get(".back")[0];
     addAnchor(group, back, back.width(), back.height(), "bottomRight");
     group.moveToTop();
+
+    var curPos = group.getPosition();
+    var curOffset = group.offset();
+    group.setOffset({x: 0, y: 0});
+    group.setPosition({
+      x: curPos.x - curOffset.x * group.getScaleX(),
+      y: curPos.y - curOffset.y * group.getScaleY()
+    });
+    
     group.get('.back').fill("#aff");
     dimCurrentGroup();
     currentGroup = group;
@@ -164,22 +151,15 @@ function fitText(text, container, amount) {
   text.offsetX((textWidth - containerWidth) / 2 / scale);
 }
 
-function resizePolaroid(group, newWidth, newHeight) {
-  // group.setSize({width: newWidth, height: newHeight});
-  var image = group.get(".back")[0];
-  // image.setSize({width: newWidth, height: newHeight});
-  // image.parent.setSize({width: newWidth, height: newHeight});
-  // image.parent.scale({
-  //  x: image.parent.scaleY() * newHeight / (image.getHeight()),
-  //  y: image.parent.scaleY() * newHeight / (image.getHeight()),
-  // });
-  // var oldOffset = group.getOffset();
-  // group.setOffset({x: 0, y: 0});
-  // group.setPosition({x: -oldOffset.x, y: -oldOffset.y});
+function resizePolaroid(group, scaleFactor) {
   group.scale({
-    x: group.scaleX() * newHeight / image.getHeight(),
-    y: group.scaleY() * newHeight / image.getHeight()
+    x: group.scaleX() * scaleFactor,
+    y: group.scaleY() * scaleFactor
   })
+}
+
+function rotatePolaroid(group, rotation) {
+  group.rotation(Math.abs(rotation) < 5 ? 0 : rotation);
 }
 
 function moveObjectUp(event) {

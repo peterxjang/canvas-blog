@@ -68,7 +68,7 @@ function addZoomBackground(layer) {
   });
 }
 
-function zoomObject(object, oldscale, factor, zoomOrigin, center, rotation) {
+function zoomObject(object, oldscale, factor, zoomOrigin, center) {
   var mx = center.x - object.getAbsolutePosition().x,
       my = center.y - object.getAbsolutePosition().y,
       newscale = oldscale * factor;
