@@ -44,11 +44,6 @@ function createPolaroidNoImage(object, editable) {
   group.attrs.title = object.title;
 
   if (editable) {
-    // addAnchor(group, back, 0, 0, "topLeft");
-    // addAnchor(group, back, back.width(), 0, "topRight");
-    // addAnchor(group, back, back.width(), back.height(), "bottomRight");
-    // addAnchor(group, back, 0, back.height(), "bottomLeft");
-
     var startScale = 1;
     var startRotate = 0;
     var zoomOrigin = {x: 0, y: 0};
@@ -67,35 +62,19 @@ function createPolaroidNoImage(object, editable) {
                  startScale, 
                  e.gesture.scale, 
                  zoomOrigin, 
-                 {x: e.gesture.center.pageX, y: e.gesture.center.pageY},
-                 rotation);
-      var rotation = startRotate + e.gesture.rotation;
-      rotatePolaroid(group, rotation);
+                 {x: e.gesture.center.pageX, y: e.gesture.center.pageY});
+      rotatePolaroid(group, startRotate + e.gesture.rotation);
     });
   }
   else {
-    // var hammertime = Hammer(group)
-    // .on("touch", function(e) {
-    //   e.preventDefault();
-    //   showPost(group.attrs.id);
-    // });
     group.on('dblclick dbltap', function(e) {
       e.preventDefault();
       showPost(group.attrs.id);
     });
   }
-
   layer.add(group);
   group.setZIndex(object.zIndex);
-
-  // var tween = new Kinetic.Tween({
-  //   node: group,
-  //   opacity: 1
-  // });
-  // tween.play();
-
   layer.draw();
-
   return group;
 }
 
@@ -113,7 +92,6 @@ function createPolaroidImage(e) {
     opacity: 0
   });
   group.add(yoda);
-
 
   var tween = new Kinetic.Tween({
     node: yoda,
@@ -165,22 +143,7 @@ function fitText(text, container, amount) {
 }
 
 function resizePolaroid(group, scaleFactor) {
-  // group.setSize({width: newWidth, height: newHeight});
-  // var image = group.get(".back")[0];
-  // image.setSize({width: newWidth, height: newHeight});
-  // image.parent.setSize({width: newWidth, height: newHeight});
-  // image.parent.scale({
-  //  x: image.parent.scaleY() * newHeight / (image.getHeight()),
-  //  y: image.parent.scaleY() * newHeight / (image.getHeight()),
-  // });
-  // var oldOffset = group.getOffset();
-  // group.setOffset({x: 0, y: 0});
-  // group.setPosition({x: 0, y: 0});
-  // console.log({offset: group.offset(), pos: group.getPosition()})
-  // group.setPosition({x: -oldOffset.x, y: -oldOffset.y});
   group.scale({
-    // x: group.scaleX() * newHeight / image.getHeight(),
-    // y: group.scaleY() * newHeight / image.getHeight()
     x: group.scaleX() * scaleFactor,
     y: group.scaleY() * scaleFactor
   })
