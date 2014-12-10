@@ -106,6 +106,15 @@ function selectGroup(group) {
     var back = group.get(".back")[0];
     addAnchor(group, back, back.width(), back.height(), "bottomRight");
     group.moveToTop();
+
+    var curPos = group.getPosition();
+    var curOffset = group.offset();
+    group.setOffset({x: 0, y: 0});
+    group.setPosition({
+      x: curPos.x - curOffset.x * group.getScaleX(),
+      y: curPos.y - curOffset.y * group.getScaleY()
+    });
+    
     group.get('.back').fill("#aff");
     dimCurrentGroup();
     currentGroup = group;

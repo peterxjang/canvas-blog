@@ -62,7 +62,9 @@ function updateAnchor(group, activeHandle) {
 	  newHeight,
 	  imageX,
 	  imageY;
-  	group.setOffset({x: 0, y: 0});
+  
+  // console.log(group.getOffset());
+  // group.setOffset({x: 0, y: 0});
 
 	var diag1, diag2;
 	diag1 = distance(0, 0, activeHandle.getX(), activeHandle.getY());
@@ -71,7 +73,6 @@ function updateAnchor(group, activeHandle) {
   var angle1, angle2;
   angle1 = degrees(Math.atan2(image.height(), image.width()));
   angle2 = degrees(Math.atan2(activeHandle.getY(), activeHandle.getX()));
-
   resizePolaroid(group, diag1 / diag2);
   rotatePolaroid(group, angle2 - angle1 + group.rotation());
 
