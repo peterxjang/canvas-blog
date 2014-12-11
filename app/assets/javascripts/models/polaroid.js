@@ -220,6 +220,7 @@ function updatePost(id) {
         var amount = text.x();
         text.text(response.title);
         fitText(text, container, amount);
+        saveLayout();
         layer.draw();
       }
       else { console.log("Could not find post!"); }

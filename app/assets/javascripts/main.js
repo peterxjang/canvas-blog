@@ -65,7 +65,7 @@ function saveLayout(event) {
     if (node.nodeType == "Group") {
       data.layout.objects.push({
         id: node.attrs.id,
-        title: node.attrs.title,
+        title: node.find('.text')[0].text(),
         src: node.attrs.src,
         srcWidth: node.find(".image")[0].width(),
         srcHeight: node.find(".image")[0].height(),
