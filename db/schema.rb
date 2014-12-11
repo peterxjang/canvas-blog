@@ -17,11 +17,17 @@ ActiveRecord::Schema.define(version: 20141117002639) do
   enable_extension "plpgsql"
 
   create_table "canvaslayouts", force: true do |t|
-    t.integer  "user_id"
+    t.integer  "category_id"
     t.text     "objects"
-    t.float    "scale",      default: 1.0
-    t.float    "x",          default: 0.0
-    t.float    "y",          default: 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "categories", force: true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.text     "description"
+    t.string   "image"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -41,7 +47,7 @@ ActiveRecord::Schema.define(version: 20141117002639) do
   end
 
   create_table "posts", force: true do |t|
-    t.integer  "user_id"
+    t.integer  "category_id"
     t.string   "title"
     t.text     "body"
     t.string   "image"

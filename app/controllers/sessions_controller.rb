@@ -7,12 +7,12 @@ class SessionsController < ApplicationController
 		result = {}
 		if current_user
 			@user = current_user
-			@posts = @user.posts
+			@posts = current_category.posts
 		else
 			@user = User.find_by_email(params[:email])
 			if @user && @user.authenticate(params[:password])
 				session[:user_id] = @user.id
-				@posts = @user.posts
+				@posts = current_category.posts
 			end
 		end
 		if @user
@@ -37,7 +37,7 @@ class SessionsController < ApplicationController
 	end
 
 	def save_layout
-		current_user.canvaslayout.update_attributes!(objects: params[:layout])
+		current_layout.update_attributes!(objects: params[:layout])
 		render json: {message: 'Successfully saved layout.'}
 	end
 
