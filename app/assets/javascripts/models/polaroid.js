@@ -71,6 +71,11 @@ function createPolaroidNoImage(object, editable) {
       e.preventDefault();
       showPost(group.attrs.id);
     });
+    var hammertime = Hammer(group)
+    .on("hold", function(e) {
+      e.preventDefault();
+      showPost(group.attrs.id);
+    })
   }
   layer.add(group);
   group.setZIndex(object.zIndex);
