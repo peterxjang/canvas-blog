@@ -3,17 +3,17 @@ $(document).ready(function() {
   layer = createLayer(stage);
   var menu = createMenu();
 
-  $(document).on("click", "#sign-in", viewLayout);
+  // $(document).on("click", "#sign-in", viewLayout);
   $(document).on("mousedown touchstart", "#pop-up-background", hidePopup);
 });
 
 function editLayout(event) {
   event.preventDefault();
   $.ajax({
-    url: '/sessions',
-    type: 'POST',
+    url: '/get_layout',
+    type: 'GET',
     dataType: 'json',
-    data: $("form#form-sign-in").serialize(),
+    // data: $("form#form-sign-in").serialize(),
     success: function(response) {
       if (response.valid) {
         $('#div-top').html('');
@@ -31,10 +31,10 @@ function editLayout(event) {
 function viewLayout(event) {
   if (event) { event.preventDefault(); }
   $.ajax({
-    url: '/sessions',
-    type: 'POST',
+    url: '/get_layout',
+    type: 'GET',
     dataType: 'json',
-    data: $("form#form-sign-in").serialize(),
+    // data: $("form#form-sign-in").serialize(),
     success: function(response) {
       if (response.valid) {
         $('#div-top').html('');

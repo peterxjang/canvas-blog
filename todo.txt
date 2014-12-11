@@ -1,4 +1,7 @@
 clean up routes, multiple blogs for a user
+
+context-specific toolbars (edit, view)
+
 heroku, file upload
 zoom fit
 
