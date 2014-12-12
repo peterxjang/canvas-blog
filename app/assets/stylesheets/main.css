@@ -202,13 +202,13 @@ textarea
 a.menu-item {
   padding: 10px;
   text-decoration: none;
-  color: white;
+  color: #888;
 }
 
 a.menu-item:hover {
   padding: 10px;
   text-decoration: none;
-  color: #ccf;
+  color: white;
 }
 
 .menu-title {
