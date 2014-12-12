@@ -2,6 +2,7 @@ class CanvaslayoutsController < ApplicationController
 	def get_layout
 		result = {}
 		if current_user
+			@categories = current_user.categories
 			result['valid'] = true
 			result['layout'] = current_layout.objects
 			result['htmlMenu'] = render_to_string(partial: 'show_menu')

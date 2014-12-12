@@ -1,24 +1,24 @@
 <% if current_user %>
-  <ul id="main-menu" class="sm sm-simple">
-    <li><a href="#">Item 1</a></li>
-    <li><a href="#">Item 2</a>
+  <ul id='category-menu'>
+    <li><span class='menu-title'id='button-category'><%= current_category.name %></span>
     <ul>
-      <li><a href="#">Item 2-1</a></li>
-      <li><a href="#">Item 2-2</a></li>
-      <li><a href="#">Item 2-3</a></li>
+    <% @categories.each do |category| %>
+      <% if category != current_category %>
+        <li><%= link_to category.name, category, class: 'menu-title' %></li>
+      <% end %>
+    <% end %>
     </ul>
     </li>
-    <li><a href="#">Item 3</a></li>
   </ul>
-  <button type="button" id='button-edit-posts'>Edit posts</button>
-  <button type="button" id='button-save-posts'>Save</button>
-  <button type="button" id='button-cancel-posts'>Cancel</button>
-  <button type="button" id='button-view-posts'>View posts</button>
-  <button type="button" id='button-moveup'>Move up</button>
-  <button type="button" id='button-movedown'>Move down</button>
-  <button type="button" id='button-edit-post'>Edit post</button>
-  <button type="button" id='button-delete-post'>Delete post</button>
-  <button type="button" id='button-new-post'>New post</button>
+  <a href="#" class='menu-item' id='button-edit-posts'>Edit posts</a>
+  <a href="#" class='menu-item' id='button-save-posts'>Save</a>
+  <a href="#" class='menu-item' id='button-cancel-posts'>Cancel</a>
+  <a href="#" class='menu-item' id='button-view-posts'>View posts</a>
+  <a href="#" class='menu-item' id='button-moveup'>Move up</a>
+  <a href="#" class='menu-item' id='button-movedown'>Move down</a>
+  <a href="#" class='menu-item' id='button-edit-post'>Edit post</a>
+  <a href="#" class='menu-item' id='button-delete-post'>Delete post</a>
+  <a href="#" class='menu-item' id='button-new-post'>New post</a>
   <%= button_to "Sign out", destroy_session_path(current_user), method: :delete, :form => { :id => "button-sign-out" } %>
 <% else %>
   <!-- <button type="button" id='button-sign-in'>Sign in</button> -->

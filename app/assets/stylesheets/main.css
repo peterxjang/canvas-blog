@@ -110,24 +110,15 @@ textarea
   width: 100%;
   z-index: 1;
   height: 5%;
+  padding-bottom: 10px;
   background-color: black;
   color: white;
 }
 
 #button-sign-in, #button-sign-out {
   float: right;
+  padding: 10px;
 }
-
-#button-save-posts, 
-#button-cancel-posts, 
-#button-moveup, 
-#button-movedown,
-#button-edit-post,
-#button-delete-post,
-#button-new-post {
-  display: none;
-}
-
 
 #container {
   background-color: rgba(255,255,255,0.4);
@@ -205,5 +196,86 @@ textarea
 }
 
 #button-moveup, #button-edit-post {
-  margin-left: 20px;
+  margin-left: 40px;
+}
+
+a.menu-item {
+  padding: 10px;
+  text-decoration: none;
+  color: white;
+}
+
+a.menu-item:hover {
+  padding: 10px;
+  text-decoration: none;
+  color: #ccf;
+}
+
+.menu-title {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 1.5em;
+  padding: 10px;
+  text-decoration: none;
+  color: white;
+}
+
+ul#category-menu {
+  text-align: left;
+  display: inline;
+  margin: 0;
+  padding: 15px 4px 17px 0;
+  list-style: none;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+ul#category-menu li {
+  /*font: bold 12px/18px sans-serif;*/
+  display: inline-block;
+  margin-right: -4px;
+  position: relative;
+  /*padding: 15px 20px;*/
+  /*background: #fff;*/
+  cursor: pointer;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
+}
+ul#category-menu li:hover {
+  background: #222;
+  /*color: #fff;*/
+}
+ul#category-menu li ul {
+  padding: 0;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 250px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transiton: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  -ms-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  -transition: opacity 0.2s;
+}
+ul#category-menu li ul li { 
+  background: #222; 
+  display: block; 
+  color: #fff;
+  padding: 2px;
+}
+ul#category-menu li ul li:hover { 
+  background: #666; 
+}
+ul#category-menu li:hover ul {
+  display: block;
+  opacity: 1;
+  visibility: visible;
 }

@@ -38,7 +38,7 @@ function setMenuEditMode(html) {
   $('#button-edit-post').show().prop("disabled",true);
   $('#button-delete-post').show().prop("disabled",true);
   $('#button-new-post').show();
-  activateSmartMenu();
+  // activateSmartMenu();
 }
 
 function setMenuViewMode(html) {
@@ -52,7 +52,7 @@ function setMenuViewMode(html) {
   $('#button-edit-post').hide();
   $('#button-delete-post').hide();
   $('#button-new-post').hide();
-  activateSmartMenu();
+  // activateSmartMenu();
 }
 
 function setMenuEditItemMode() {
@@ -61,12 +61,12 @@ function setMenuEditItemMode() {
   $('#button-movedown').prop("disabled",state);
   $('#button-edit-post').prop("disabled",state);
   $('#button-delete-post').prop("disabled",state);
-  activateSmartMenu();
+  // activateSmartMenu();
 }
 
-function activateSmartMenu() {
-  $('#main-menu').smartmenus({
-      mainMenuSubOffsetX: -1,
-      subMenusSubOffsetX: 10,
-      subMenusSubOffsetY: 0
-    });}
+// function activateSmartMenu() {
+//   $('#main-menu').smartmenus({
+//       mainMenuSubOffsetX: -1,
+//       subMenusSubOffsetX: 10,
+//       subMenusSubOffsetY: 0
+//     });}
