@@ -3,11 +3,15 @@ module ApplicationHelper
 		User.find_by_id(session[:user_id])
 	end
 
+	def current_category
+		Category.find_by_id(session[:category_id])
+	end
+
 	def current_layout
 		if current_user
-			layout = current_user.canvaslayout
+			layout = current_category.canvaslayout
 			if layout.nil?
-				objects = current_user.posts.each_with_index.map do |post, index|
+				objects = current_category.posts.each_with_index.map do |post, index|
 					{id: post.id,
 					 title: post.title,
 					 src: post.image.url,
@@ -32,7 +36,7 @@ module ApplicationHelper
 						offsetY: 0.0,
 					}
 				}
-				layout = Canvaslayout.create!(user: current_user, objects: layoutData)
+				layout = Canvaslayout.create!(category: current_category, objects: layoutData)
 			end
 			layout
 		end

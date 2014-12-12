@@ -58,8 +58,7 @@ function addZoomBackground(layer) {
   });
 
   background.on('mousedown touchstart', function (e) {
-    dimCurrentGroup();
-    currentGroup = null;
+    deselectCurrentGroup();
     setMenuEditItemMode();
   });
 

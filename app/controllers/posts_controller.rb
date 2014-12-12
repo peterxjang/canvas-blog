@@ -7,7 +7,7 @@ class PostsController < ApplicationController
 	end
 
 	def create
-		post = current_user.posts.new(
+		post = current_category.posts.new(
 			title: params[:title], 
 			body: params[:body],
 		)
@@ -64,10 +64,9 @@ class PostsController < ApplicationController
 		if @post
 			@post.title = params[:title]
 			@post.body = params[:body]
-			# @post.image = params[:filename] if params[:filename]
 			@post.save
 			if @post.valid?
-				current_layout.update_json_object(params[:id].to_i, "title" => params[:title])
+				# current_layout.update_json_object(params[:id].to_i, "title" => params[:title])
 				render json: {valid: true, title: params[:title]}
 			else
 				render json: {valid: false}

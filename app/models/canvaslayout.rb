@@ -1,5 +1,5 @@
 class Canvaslayout < ActiveRecord::Base
-	belongs_to :user
+	belongs_to :category
 	serialize :objects, JSON
 
 	def update_json_object(id, args)

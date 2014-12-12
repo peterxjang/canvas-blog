@@ -49,6 +49,7 @@ function addAnchor(group, back, x, y, name) {
 	});
 
 	group.add(anchor);
+	createControls(group, back.width()/17);
 }
 
 function updateAnchor(group, activeHandle) {
@@ -92,6 +93,7 @@ function updateAnchor(group, activeHandle) {
 function removeAnchor(group) {
 	group.get(".bottomRight")[0].remove();
 	group.get(".visualAnchor")[0].remove();
+	group.get(".controls")[0].remove();
 }
 
 

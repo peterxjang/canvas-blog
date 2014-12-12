@@ -5,12 +5,8 @@ function createMenu() {
   $(document).on("click", "#button-view-posts", viewLayout);
   $(document).on("click", "#button-moveup", moveObjectUp);
   $(document).on("click", "#button-movedown", moveObjectDown);
-  $(document).on("click", "#button-edit-post", function(e) {
-    editPost(currentGroup.attrs.id);
-  });
-  $(document).on("click", "#button-delete-post", function(e) {
-    deletePost(currentGroup.attrs.id);
-  });
+  $(document).on("click", "#button-edit-post", editCurrentPost);
+  $(document).on("click", "#button-delete-post", deleteCurrentPost);
   $(document).on("click", "#button-new-post", function(e) {
     newPost();
   });
@@ -23,6 +19,11 @@ function createMenu() {
     e.preventDefault();
     hidePopup();
     createPost();
+  });
+  $(document).on("click", "#button-delete-confirmed", function(e) {
+    e.preventDefault();
+    hidePopup();
+    deletePostConfirmed(currentGroup.attrs.id);
   });
 }
 
@@ -37,6 +38,7 @@ function setMenuEditMode(html) {
   $('#button-edit-post').show().prop("disabled",true);
   $('#button-delete-post').show().prop("disabled",true);
   $('#button-new-post').show();
+  // activateSmartMenu();
 }
 
 function setMenuViewMode(html) {
@@ -50,6 +52,7 @@ function setMenuViewMode(html) {
   $('#button-edit-post').hide();
   $('#button-delete-post').hide();
   $('#button-new-post').hide();
+  // activateSmartMenu();
 }
 
 function setMenuEditItemMode() {
@@ -58,4 +61,12 @@ function setMenuEditItemMode() {
   $('#button-movedown').prop("disabled",state);
   $('#button-edit-post').prop("disabled",state);
   $('#button-delete-post').prop("disabled",state);
+  // activateSmartMenu();
 }
+
+// function activateSmartMenu() {
+//   $('#main-menu').smartmenus({
+//       mainMenuSubOffsetX: -1,
+//       subMenusSubOffsetX: 10,
+//       subMenusSubOffsetY: 0
+//     });}

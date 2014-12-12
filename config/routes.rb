@@ -1,19 +1,20 @@
 Rails.application.routes.draw do
-  # get '/' => 'sessions#new'
+
   root 'sessions#new'
   post 'sessions' => 'sessions#create'
   delete 'sessions/:id' => 'sessions#destroy', as: 'destroy_session'
-  # resources :sessions
+
   get 'user' => 'users#show'
   post 'users' => 'users#create'
-  post 'save_layout' => 'sessions#save_layout'
-  # post 'view_post' => 'sessions#view_post'
-  # resources :users, except: [:destroy]
+
   resources :posts
-  # post 'posts' => 'posts#create'
-  # get 'posts/:id' => 'posts#show'
-  # put 'posts/:id' => 'posts#update'
-  # delete 'posts/:id' => 'posts#destroy'
+
+  # get 'categories' => 'categories#index'
+  # get 'categories/:id' => 'categories#show'
+  resources :categories
+
+  post 'save_layout' => 'canvaslayouts#save_layout'
+  get 'get_layout' => 'canvaslayouts#get_layout'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

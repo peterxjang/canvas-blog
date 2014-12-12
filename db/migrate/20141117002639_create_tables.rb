@@ -8,8 +8,16 @@ class CreateTables < ActiveRecord::Migration
     	t.timestamps
     end
 
-    create_table :posts do |t|
+    create_table :categories do |t|
       t.belongs_to :user
+      t.string :name
+      t.text :description
+      t.string :image
+      t.timestamps
+    end
+
+    create_table :posts do |t|
+      t.belongs_to :category
       t.string :title
       t.text :body
       t.string :image
@@ -34,7 +42,7 @@ class CreateTables < ActiveRecord::Migration
     end
 
     create_table :canvaslayouts do |t|
-      t.belongs_to :user
+      t.belongs_to :category
       t.text :objects
       t.timestamps
     end

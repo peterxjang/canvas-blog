@@ -1,0 +1,16 @@
+<nav id='menu'>
+</nav>
+<div id="canvasWrapper"></div>
+<div id='div-top'>
+	<div id='container'>
+		<ul>
+		<% @categories.each do |category| %>
+			<li><h2><%= link_to category.name, category %></h2></li>
+		<% end %>
+		</ul>
+	</div>
+</div>
+<div id="pop-up"></div>
+<div id="pop-up-background"></div>
+
+<div id='post-info'></div>
