@@ -122,17 +122,18 @@ function selectGroup(group) {
     });
     
     group.get('.back').fill("#aff");
-    dimCurrentGroup();
+    deselectCurrentGroup();
     currentGroup = group;
     setMenuEditItemMode();
     group.startDrag();
   }
 }
 
-function dimCurrentGroup() {
+function deselectCurrentGroup() {
   if (currentGroup) {
     removeAnchor(currentGroup);
     currentGroup.get('.back').fill("white");
+    currentGroup = null;
   }
   layer.draw();
 }
@@ -269,24 +270,30 @@ function createPost() {
 }
 
 function deletePost(id) {
-  if (confirm('Are you sure you want to delete this post?')) {
-    $.ajax({
-      url: '/posts/'+id,
-      type: 'DELETE',
-      dataType: 'json',
-      success: function(response) {
-        if (response.valid) {
-          currentGroup.remove();
-          saveLayout();
-          layer.draw();
-          currentGroup = null;
-          setMenuEditItemMode();
-        }
-        else {
-          console.log("Could not find post!");
-        }
-      },
-      error: function(response) { console.log("delete post error!"); console.log(response); }
-    });
-  }
+  showPopup(
+    "<h2 class='warning-message'>Are you sure you want to delete this post?</h2>" + 
+    "<input id='button-delete-confirmed' value='Confirm' type='Submit'/>" + 
+    "<input id='button-cancel-popup' value='Cancel' type='Submit'/>"
+  );
+}
+
+function deletePostConfirmed(id) {
+  $.ajax({
+    url: '/posts/'+id,
+    type: 'DELETE',
+    dataType: 'json',
+    success: function(response) {
+      if (response.valid) {
+        currentGroup.remove();
+        saveLayout();
+        layer.draw();
+        currentGroup = null;
+        setMenuEditItemMode();
+      }
+      else {
+        console.log("Could not find post!");
+      }
+    },
+    error: function(response) { console.log("delete post error!"); console.log(response); }
+  });
 }

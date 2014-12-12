@@ -7,7 +7,7 @@ class PostsController < ApplicationController
 	end
 
 	def create
-		post = current_user.posts.new(
+		post = current_category.posts.new(
 			title: params[:title], 
 			body: params[:body],
 		)

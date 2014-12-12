@@ -158,6 +158,10 @@ textarea
   color: red;
 }
 
+.warning-message {
+  color: red;
+}
+
 .signout {
   display: block;
   float: right;

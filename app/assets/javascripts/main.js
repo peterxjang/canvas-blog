@@ -2,9 +2,6 @@ $(document).ready(function() {
   stage = createStage();
   layer = createLayer(stage);
   var menu = createMenu();
-
-  // $(document).on("click", "#sign-in", viewLayout);
-  $(document).on("mousedown touchstart", "#pop-up-background", hidePopup);
 });
 
 function editLayout(event) {

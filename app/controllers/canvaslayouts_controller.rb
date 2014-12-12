@@ -6,8 +6,6 @@ class CanvaslayoutsController < ApplicationController
 			result['layout'] = current_layout.objects
 			result['htmlMenu'] = render_to_string(partial: 'show_menu')
 		else
-			# @error = "Incorrect email or password!"
-			# session[:user_id] = nil
 			result['valid'] = false
 		end
 		render json: result

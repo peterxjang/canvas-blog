@@ -9,3 +9,6 @@ function hidePopup() {
   $("#pop-up-background").fadeOut("slow");
   $("#pop-up").fadeOut("slow");
 }
+
+$(document).on("mousedown touchstart", "#pop-up-background", hidePopup);
+$(document).on("click", "#button-cancel-popup", hidePopup);

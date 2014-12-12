@@ -17,4 +17,5 @@
 //= require pxloader
 //= require pxloaderimage
 //= require jquery.mousewheel
+//= require jquery.smartmenus
 //= require_tree .
