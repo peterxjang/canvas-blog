@@ -9,8 +9,9 @@ Rails.application.routes.draw do
 
   resources :posts
 
-  get 'categories' => 'categories#index'
-  get 'categories/:id' => 'categories#show'
+  # get 'categories' => 'categories#index'
+  # get 'categories/:id' => 'categories#show'
+  resources :categories
 
   post 'save_layout' => 'canvaslayouts#save_layout'
   get 'get_layout' => 'canvaslayouts#get_layout'

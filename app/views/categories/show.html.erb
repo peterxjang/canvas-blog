@@ -1,0 +1,21 @@
+<nav id='menu'>
+  <button type="button" id='button-edit-posts'>Edit posts</button>
+  <button type="button" id='button-save-posts'>Save</button>
+  <button type="button" id='button-cancel-posts'>Cancel</button>
+  <button type="button" id='button-view-posts'>View posts</button>
+  <button type="button" id='button-moveup'>Move up</button>
+  <button type="button" id='button-movedown'>Move down</button>
+  <button type="button" id='button-edit-post'>Edit post</button>
+  <button type="button" id='button-delete-post'>Delete post</button>
+  <button type="button" id='button-new-post'>New post</button>
+  <%= button_to "Sign out", destroy_session_path(current_user), method: :delete, :form => { :id => "button-sign-out" } %>
+</nav>
+<div id="canvasWrapper"></div>
+<div id='div-top'>
+	<!-- <div id='container'>
+	</div> -->
+</div>
+<div id="pop-up"></div>
+<div id="pop-up-background"></div>
+
+<div id='post-info'></div>

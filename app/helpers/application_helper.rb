@@ -4,7 +4,9 @@ module ApplicationHelper
 	end
 
 	def current_category
-		current_user.categories.first
+		# p 'fdsafsdafsda'
+		Category.find_by_id(session[:category_id])
+		# current_user.categories.first
 	end
 
 	def current_layout

@@ -4,6 +4,6 @@ class CategoriesController < ApplicationController
 	end
 
 	def show
-
+		session[:category_id] = params[:id]
 	end
 end
