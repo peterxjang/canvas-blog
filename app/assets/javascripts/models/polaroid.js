@@ -111,7 +111,7 @@ function selectGroup(group) {
     group.stopDrag();
     var back = group.get(".back")[0];
     addAnchor(group, back, back.width(), back.height(), "bottomRight");
-    // group.moveToTop();
+    group.moveToTop();
 
     var curPos = group.getPosition();
     var curOffset = group.offset();
