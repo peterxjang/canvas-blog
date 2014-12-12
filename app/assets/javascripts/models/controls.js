@@ -17,9 +17,9 @@ function createControls(polaroid, size) {
 		image: imageUp,
 		width: size,
 		height: size,
-		opacity: 0.5
+		opacity: 0.3
 	});
-	buttonUp.on('click tap', moveObjectUp);
+	buttonUp.on('mousedown touchstart', moveObjectUp);
 
 	var buttonDown = new Kinetic.Image({
 		x: size,
@@ -27,9 +27,9 @@ function createControls(polaroid, size) {
 		image: imageDown,
 		width: size,
 		height: size,
-		opacity: 0.5
+		opacity: 0.3
 	});
-	buttonDown.on('click tap', moveObjectDown);
+	buttonDown.on('mousedown touchstart', moveObjectDown);
 
 	var buttonEdit = new Kinetic.Image({
 		x: size * 2,
@@ -37,11 +37,9 @@ function createControls(polaroid, size) {
 		image: imageCompose,
 		width: size,
 		height: size,
-		opacity: 0.5
+		opacity: 0.3
 	});
-	buttonEdit.on('click tap', function(e) {
-    editPost(currentGroup.attrs.id);
-  });
+	buttonEdit.on('mousedown touchstart', editCurrentPost);
 
 	var buttonTrash = new Kinetic.Image({
 		x: size * 3,
@@ -49,12 +47,10 @@ function createControls(polaroid, size) {
 		image: imageTrash,
 		width: size,
 		height: size,
-		opacity: 0.5
+		opacity: 0.3
 	});
-	buttonTrash.on('click tap', function(e) {
-    deletePost(currentGroup.attrs.id);
-  });
-	
+	buttonTrash.on('mousedown touchstart', deleteCurrentPost);
+
 	controls.add(buttonUp);
 	controls.add(buttonDown);
 	controls.add(buttonEdit);

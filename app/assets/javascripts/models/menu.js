@@ -5,12 +5,8 @@ function createMenu() {
   $(document).on("click", "#button-view-posts", viewLayout);
   $(document).on("click", "#button-moveup", moveObjectUp);
   $(document).on("click", "#button-movedown", moveObjectDown);
-  $(document).on("click", "#button-edit-post", function(e) {
-    editPost(currentGroup.attrs.id);
-  });
-  $(document).on("click", "#button-delete-post", function(e) {
-    deletePost(currentGroup.attrs.id);
-  });
+  $(document).on("click", "#button-edit-post", editCurrentPost);
+  $(document).on("click", "#button-delete-post", deleteCurrentPost);
   $(document).on("click", "#button-new-post", function(e) {
     newPost();
   });

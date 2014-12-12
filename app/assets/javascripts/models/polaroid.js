@@ -181,6 +181,14 @@ function moveObjectDown(event) {
   }
 }
 
+function editCurrentPost(event) {
+  editPost(currentGroup.attrs.id);
+}
+
+function deleteCurrentPost(event) {
+  deletePost(currentGroup.attrs.id);
+}
+
 function showPost(id) {
   $.ajax({
     url: '/posts/'+id,
