@@ -67,9 +67,19 @@ function createPolaroidNoImage(object, editable) {
     });
   }
   else {
-    group.on('dblclick dbltap', function(e) {
-      e.preventDefault();
+    text.on('click tap', function(e) {
       showPost(group.attrs.id);
+    });
+    
+    text.on("mouseover", function(){
+      document.body.style.cursor = "pointer";
+      text.fill('blue');
+      layer.draw();
+    });
+    text.on("mouseout", function(){
+      document.body.style.cursor = "default";
+      text.fill('black');
+      layer.draw();
     });
     var hammertime = Hammer(group)
     .on("hold", function(e) {

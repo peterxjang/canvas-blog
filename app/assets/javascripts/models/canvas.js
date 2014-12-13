@@ -62,7 +62,7 @@ function addZoomBackground(layer) {
     setMenuEditItemMode();
   });
 
-  background.on('dblclick dbltap', function(event) {
+  $('#canvasWrapper').on('dblclick dbltap', function(event) {
     zoomFit(event);
   });
 }
