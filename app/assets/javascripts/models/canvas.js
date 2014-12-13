@@ -51,7 +51,7 @@ function addZoomBackground(layer) {
     e.preventDefault();
     zoomObject(layer,
                layer.getScaleX(), 
-               (e.originalEvent.deltaY > 0 ? 0.9 : 1.1), 
+               (e.originalEvent.deltaY > 0 ? 0.95 : 1.05), 
                layer.getOffset(), 
                {x: e.originalEvent.clientX, y: e.originalEvent.clientY});
     layer.draw();
