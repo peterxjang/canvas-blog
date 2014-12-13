@@ -67,10 +67,15 @@ function createPolaroidNoImage(object, editable) {
     });
   }
   else {
-    text.on('click tap', function(e) {
+    pinchToZoom(layer, group);
+    var hammertime = Hammer(group)
+    .on("doubletap", function(e) {
+      zoomFit(event);
+    });
+
+    text.on('mousedown touchstart', function(e) {
       showPost(group.attrs.id);
     });
-    
     text.on("mouseover", function(){
       document.body.style.cursor = "pointer";
       text.fill('blue');
@@ -81,11 +86,6 @@ function createPolaroidNoImage(object, editable) {
       text.fill('black');
       layer.draw();
     });
-    var hammertime = Hammer(group)
-    .on("hold", function(e) {
-      e.preventDefault();
-      showPost(group.attrs.id);
-    })
   }
   layer.add(group);
   group.setZIndex(object.zIndex);
