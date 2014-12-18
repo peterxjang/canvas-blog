@@ -1,3 +1,7 @@
+click on text to edit in edit mode
+delete option in edit popup
+add css backgroun styles per blog
+
 clean up routes, multiple blogs for a user
 
 context-specific toolbars (edit, view)

@@ -67,15 +67,25 @@ function createPolaroidNoImage(object, editable) {
     });
   }
   else {
-    group.on('dblclick dbltap', function(e) {
-      e.preventDefault();
+    pinchToZoom(layer, group);
+    var hammertime = Hammer(group)
+    .on("doubletap", function(e) {
+      zoomFit(event);
+    });
+
+    text.on('mousedown touchstart', function(e) {
       showPost(group.attrs.id);
     });
-    var hammertime = Hammer(group)
-    .on("hold", function(e) {
-      e.preventDefault();
-      showPost(group.attrs.id);
-    })
+    text.on("mouseover", function(){
+      document.body.style.cursor = "pointer";
+      text.fill('blue');
+      layer.draw();
+    });
+    text.on("mouseout", function(){
+      document.body.style.cursor = "default";
+      text.fill('black');
+      layer.draw();
+    });
   }
   layer.add(group);
   group.setZIndex(object.zIndex);

@@ -32,26 +32,12 @@ function addZoomBackground(layer) {
   });
   // background.setZIndex(-1);
   layer.add(background);
-  var startScale = 1;
-  var startRotate = 0;
-  var zoomOrigin = {x: 0, y: 0};
-  var hammertime = Hammer(layer)
-  .on("transformstart", function(e) {
-    startScale = layer.scaleX();
-    zoomOrigin = layer.getOffset();
-  }).on("transform", function(e) {
-    zoomObject(layer,
-               startScale, 
-               e.gesture.scale, 
-               zoomOrigin, 
-               {x: e.gesture.center.pageX, y: e.gesture.center.pageY});
-  });
-
+  pinchToZoom(layer);
   $('#canvasWrapper').bind('mousewheel', function(e, delta) {
     e.preventDefault();
     zoomObject(layer,
                layer.getScaleX(), 
-               (e.originalEvent.deltaY > 0 ? 0.9 : 1.1), 
+               (e.originalEvent.deltaY > 0 ? 0.95 : 1.05), 
                layer.getOffset(), 
                {x: e.originalEvent.clientX, y: e.originalEvent.clientY});
     layer.draw();
@@ -62,9 +48,37 @@ function addZoomBackground(layer) {
     setMenuEditItemMode();
   });
 
-  background.on('dblclick dbltap', function(event) {
+  // stage.on('dblclick dbltap', function(event) {
+  //   zoomFit(event);
+  // });
+
+  // background.on('dblclick dbltap', function(event) {
+  //   zoomFit(event);
+  // });
+
+  var hammertime = Hammer(layer)
+  .on("doubletap", function(e) {
     zoomFit(event);
   });
+}
+
+function pinchToZoom(node, startNode) {
+  if (!startNode) { startNode = node; }
+  var startScale = 1;
+  var startRotate = 0;
+  var zoomOrigin = {x: 0, y: 0};
+  var hammertime = Hammer(startNode)
+  .on("transformstart", function(e) {
+    startScale = node.scaleX();
+    zoomOrigin = node.getOffset();
+  }).on("transform", function(e) {
+    zoomObject(node,
+               startScale, 
+               e.gesture.scale, 
+               zoomOrigin, 
+               {x: e.gesture.center.pageX, y: e.gesture.center.pageY});
+  });
+
 }
 
 function zoomObject(object, oldscale, factor, zoomOrigin, center) {
