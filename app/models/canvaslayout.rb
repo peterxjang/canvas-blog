@@ -1,9 +1,9 @@
 class Canvaslayout < ActiveRecord::Base
 	belongs_to :category
-	serialize :objects, JSON
+	serialize :json_layout, JSON
 
 	def update_json_object(id, args)
-		self.objects["objects"].each do |object|
+		self.json_layout["objects"].each do |object|
 			if object["id"] == id
 				args.each do |key, value|
 					object[key] = value
@@ -14,7 +14,7 @@ class Canvaslayout < ActiveRecord::Base
 	end
 
 	def delete_json_object(id)
-		self.objects["objects"].delete_if { |object| object["id"] == id }
+		self.json_layout["objects"].delete_if { |object| object["id"] == id }
 		self.save!
 	end
 

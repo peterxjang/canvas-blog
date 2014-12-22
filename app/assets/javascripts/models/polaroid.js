@@ -65,6 +65,10 @@ function createPolaroidNoImage(object, editable) {
                  {x: e.gesture.center.pageX, y: e.gesture.center.pageY});
       rotatePolaroid(group, startRotate + e.gesture.rotation);
     });
+
+    text.on('mousedown touchstart', function(e) {
+      editPost(group.attrs.id);
+    });
   }
   else {
     pinchToZoom(layer, group);
@@ -76,17 +80,18 @@ function createPolaroidNoImage(object, editable) {
     text.on('mousedown touchstart', function(e) {
       showPost(group.attrs.id);
     });
-    text.on("mouseover", function(){
-      document.body.style.cursor = "pointer";
-      text.fill('blue');
-      layer.draw();
-    });
-    text.on("mouseout", function(){
-      document.body.style.cursor = "default";
-      text.fill('black');
-      layer.draw();
-    });
   }
+
+  text.on("mouseover", function(){
+    document.body.style.cursor = "pointer";
+    text.fill('blue');
+    layer.draw();
+  });
+  text.on("mouseout", function(){
+    document.body.style.cursor = "default";
+    text.fill('black');
+    layer.draw();
+  });
   layer.add(group);
   group.setZIndex(object.zIndex);
   layer.draw();

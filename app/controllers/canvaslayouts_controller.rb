@@ -2,10 +2,11 @@ class CanvaslayoutsController < ApplicationController
 	def get_layout
 		result = {}
 		if current_user
-			@categories = current_user.categories
+			@categories = current_user.categories.sort { |a, b| a.name <=> b.name }
 			result['valid'] = true
-			result['layout'] = current_layout.objects
+			result['layout'] = current_layout.json_layout
 			result['htmlMenu'] = render_to_string(partial: 'show_menu')
+			result['css'] = current_category.css
 		else
 			result['valid'] = false
 		end
@@ -13,7 +14,7 @@ class CanvaslayoutsController < ApplicationController
 	end
 
 	def save_layout
-		current_layout.update_attributes!(objects: params[:layout])
+		current_layout.update_attributes!(json_layout: params[:layout])
 		render json: {message: 'Successfully saved layout.'}
 	end
 end

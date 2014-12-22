@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20141117002639) do
 
   create_table "canvaslayouts", force: true do |t|
     t.integer  "category_id"
-    t.text     "objects"
+    t.text     "json_layout"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20141117002639) do
     t.string   "name"
     t.text     "description"
     t.string   "image"
+    t.text     "css"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

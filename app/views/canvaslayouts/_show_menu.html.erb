@@ -5,20 +5,23 @@
     <% @categories.each do |category| %>
       <% if category != current_category %>
         <li><%= link_to category.name, category, class: 'menu-title' %></li>
+      <% else %>
+        <li><a class="menu-title-current"><%= category.name %></a></li>
       <% end %>
     <% end %>
     </ul>
     </li>
   </ul>
-  <a href="#" class='menu-item' id='button-edit-posts'>Edit posts</a>
+  <a href="#" class='menu-item' id='button-edit-posts'>Edit</a>
   <a href="#" class='menu-item' id='button-save-posts'>Save</a>
   <a href="#" class='menu-item' id='button-cancel-posts'>Cancel</a>
-  <a href="#" class='menu-item' id='button-view-posts'>View posts</a>
+<!--   <a href="#" class='menu-item' id='button-view-posts'>View</a>
   <a href="#" class='menu-item' id='button-moveup'>Move up</a>
   <a href="#" class='menu-item' id='button-movedown'>Move down</a>
   <a href="#" class='menu-item' id='button-edit-post'>Edit post</a>
-  <a href="#" class='menu-item' id='button-delete-post'>Delete post</a>
+  <a href="#" class='menu-item' id='button-delete-post'>Delete post</a> -->
   <a href="#" class='menu-item' id='button-new-post'>New post</a>
+  <a href="#" class='menu-item' id='button-edit-background'>Customize background</a>
   <%= button_to "Sign out", destroy_session_path(current_user), method: :delete, :form => { :id => "button-sign-out" } %>
 <% else %>
   <!-- <button type="button" id='button-sign-in'>Sign in</button> -->

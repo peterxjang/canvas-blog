@@ -16,6 +16,9 @@ Rails.application.routes.draw do
   post 'save_layout' => 'canvaslayouts#save_layout'
   get 'get_layout' => 'canvaslayouts#get_layout'
 
+  get 'categories_edit_background' => 'categories#edit_background'
+  put 'categories_update_background' => 'categories#update_background'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
