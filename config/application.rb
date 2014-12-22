@@ -23,5 +23,6 @@ module CanvasBlog
     # config.i18n.default_locale = :de
     # config.autoload_paths += "#{Rails.root}/app/uploaders"
     # config.autoload_paths += Dir[Rails.root.join('app', 'uploaders')]
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
   end
 end
