@@ -110,7 +110,7 @@ textarea
   position: absolute;
   width: 100%;
   z-index: 1;
-  height: 5%;
+  height: 2em;
   padding-bottom: 10px;
   background-color: black;
   color: white;
@@ -196,7 +196,7 @@ textarea
   z-index: 10;
 }
 
-#button-moveup, #button-edit-post {
+#button-new-post, #button-customize-background {
   margin-left: 40px;
 }
 

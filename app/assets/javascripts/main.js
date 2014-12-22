@@ -37,7 +37,6 @@ function viewLayout(event) {
         $('#div-top').html('');
         setMenuViewMode(response.htmlMenu);
         loadViewLayout(response.layout);
-        console.log(response.css);
         $('#canvasWrapper').attr("style", response.css);
         $('#canvasWrapper').css("position", "absolute");
       }
@@ -95,4 +94,35 @@ function saveLayout(event) {
 
 function cancelLayout(event) {
   viewLayout(event);
+}
+
+function editBackground(event) {
+  $.ajax({
+    url: '/categories_edit_background',
+    type: 'GET',
+    dataType: 'json',
+    success: function(response) {
+      if (response.valid) { showPopup(response.html); }
+      else { console.log("Could not find category!"); }
+    },
+    error: function(response) { console.log("edit background error!"); console.log(response); }
+  });
+}
+
+function updateBackground(event) {
+  console.log($("form#form-update-background").serialize());
+  $.ajax({
+    url: '/categories_update_background',
+    type: 'PUT',
+    dataType: 'json',
+    data: $("form#form-update-background").serialize(),
+    success: function(response) {
+      if (response.valid) {
+        $('#canvasWrapper').attr("style", response.css);
+        $('#canvasWrapper').css("position", "absolute");
+      }
+      else { console.log("Could not find category!"); }
+    },
+    error: function(response) { console.log("update category error!"); console.log(response); }
+  });
 }
