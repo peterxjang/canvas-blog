@@ -5,6 +5,8 @@
     <% @categories.each do |category| %>
       <% if category != current_category %>
         <li><%= link_to category.name, category, class: 'menu-title' %></li>
+      <% else %>
+        <li><a class="menu-title-current"><%= category.name %></a></li>
       <% end %>
     <% end %>
     </ul>

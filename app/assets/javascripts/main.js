@@ -37,6 +37,9 @@ function viewLayout(event) {
         $('#div-top').html('');
         setMenuViewMode(response.htmlMenu);
         loadViewLayout(response.layout);
+        console.log(response.css);
+        $('#canvasWrapper').attr("style", response.css);
+        $('#canvasWrapper').css("position", "absolute");
       }
       else {
         $('#error-signin').text('Incorrect email or password!');

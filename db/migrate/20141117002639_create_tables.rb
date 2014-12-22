@@ -13,6 +13,7 @@ class CreateTables < ActiveRecord::Migration
       t.string :name
       t.text :description
       t.string :image
+      t.text :css
       t.timestamps
     end
 
@@ -43,7 +44,7 @@ class CreateTables < ActiveRecord::Migration
 
     create_table :canvaslayouts do |t|
       t.belongs_to :category
-      t.text :objects
+      t.text :json_layout
       t.timestamps
     end
   end

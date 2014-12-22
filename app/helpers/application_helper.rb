@@ -28,15 +28,13 @@ module ApplicationHelper
 				end
 				layoutData = {
 					objects: objects, 
-					layer: {
-						scale: 1.0,
-						x: 0.0,
-						y: 0.0,
-						offsetX: 0.0,
-						offsetY: 0.0,
-					}
+					layer: {scale: 1.0,
+									x: 0.0,
+									y: 0.0,
+									offsetX: 0.0,
+									offsetY: 0.0}
 				}
-				layout = Canvaslayout.create!(category: current_category, objects: layoutData)
+				layout = Canvaslayout.create!(category: current_category, json_layout: layoutData)
 			end
 			layout
 		end
