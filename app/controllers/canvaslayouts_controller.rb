@@ -2,7 +2,7 @@ class CanvaslayoutsController < ApplicationController
 	def get_layout
 		result = {}
 		if current_user
-			@categories = current_user.categories
+			@categories = current_user.categories.sort { |a, b| a.name <=> b.name }
 			result['valid'] = true
 			result['layout'] = current_layout.json_layout
 			result['htmlMenu'] = render_to_string(partial: 'show_menu')

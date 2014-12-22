@@ -14,7 +14,6 @@ class CategoriesController < ApplicationController
 	def update_background
 		if current_category
 			current_category.update_attributes(css: params[:css])
-			# current_category.save!
 			if current_category.valid?
 				render json: {valid: true, css: current_category.css}
 			else
