@@ -24,6 +24,8 @@ function createMenu() {
   //   hidePopup();
   //   deletePostConfirmed(currentGroup.attrs.id);
   // });
+
+  $(document).on("click", "#link-image-search", newImageSearch);
 }
 
 function setMenuEditMode(html) {

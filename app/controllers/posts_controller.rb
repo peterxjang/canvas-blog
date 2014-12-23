@@ -89,10 +89,12 @@ class PostsController < ApplicationController
 
 	def amazon_image_search
 		search_index = 'All'
-		search_index = 'Books' if current_category.name == 'Books'
-		search_index = 'Video' if current_category.name == 'Movies'
-		search_index = 'Music' if current_category.name == 'Music'
-		search_index = 'Software' if current_category.name == 'Games'
+		if current_category
+			search_index = 'Books' if current_category.name == 'Books'
+			search_index = 'Video' if current_category.name == 'Movies'
+			search_index = 'Music' if current_category.name == 'Music'
+			search_index = 'Software' if current_category.name == 'Games'
+		end
 		request = Vacuum.new
 		request.configure(aws_access_key_id: Rails.application.secrets.aws_access_key_id,
 									    aws_secret_access_key: Rails.application.secrets.aws_secret_access_key,
@@ -100,21 +102,17 @@ class PostsController < ApplicationController
 		response = request.item_search(
 		  query: {
 		    'Keywords'    => params[:title],
-		    'SearchIndex' => search_index, # All Blended Books Video Music Software Electronics
+		    'SearchIndex' => search_index,
 		    'ResponseGroup' => 'Medium'
 		  }
 		)
 		items = []
 		response.to_h["ItemSearchResponse"]["Items"]["Item"].each do |item|
-			src_small = item['SmallImage'] ? item['SmallImage']['URL'] : nil
-			src = item['LargeImage'] ? item['LargeImage']['URL'] : nil
-			items << {title: item['ItemAttributes']['Title'], src: src, src_small: src_small}
+			title = item['ItemAttributes']['Title'] rescue "No title"
+			src_small = item['SmallImage']['URL'] rescue nil
+			src_large = item['LargeImage']['URL'] rescue nil
+			items << {title: title, src_large: src_large, src_small: src_small}
 		end
-		render json: {valid: true, items: items.take(5)}
-		# response.to_h["ItemSearchResponse"]["Items"]["Item"].each do |item|
-		#   p "#{item}"
-		#   p "#{item['ItemAttributes']['Title']}"
-		#   p "#{item['LargeImage']}"
-		# end
+		render json: {valid: true, items: items}
 	end
 end

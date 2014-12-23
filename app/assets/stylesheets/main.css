@@ -53,7 +53,7 @@ p {
 li {
   padding: 2px;
 }
-input {
+.full-width {
   width: 100%;
 }
 textarea
