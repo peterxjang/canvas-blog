@@ -11,17 +11,19 @@
 <div id='post-info'></div>
 
 <script type="text/javascript" charset="utf-8">
-	viewLayout();
+  $(document).ready(function(){
+  	viewLayout();
 
-  imageUp = new Image();
-  imageUp.src = "<%= asset_path('arrow-up-b.png') %>";
+    imageUp = new Image();
+    imageUp.src = "<%= asset_path('arrow-up-b.png') %>";
 
-  imageDown = new Image();
-  imageDown.src = "<%= asset_path('arrow-down-b.png') %>";
+    imageDown = new Image();
+    imageDown.src = "<%= asset_path('arrow-down-b.png') %>";
 
-  imageCompose = new Image();
-  imageCompose.src = "<%= asset_path('compose.png') %>";
+    imageCompose = new Image();
+    imageCompose.src = "<%= asset_path('compose.png') %>";
 
-  imageTrash = new Image();
-  imageTrash.src = "<%= asset_path('trash-b.png') %>";
+    imageTrash = new Image();
+    imageTrash.src = "<%= asset_path('trash-b.png') %>";
+  });
 </script>

@@ -23,20 +23,20 @@ body{
 }
 
 body, input, button, textarea {
-  font-family: 'Special Elite', serif;
+  font-family: 'Special Elite';
 }
 h1 {
-  font-family: 'Permanent Marker', cursive;
+  font-family: 'Permanent Marker';
   font-size: 3em;
   margin-bottom: 1em;
 }
 h2 {
-  font-family: 'Permanent Marker', cursive;
+  font-family: 'Permanent Marker';
   font-size: 2em;
   margin-bottom: 0.5em;
 }
 #title {
-  font-family: 'Permanent Marker', cursive;
+  font-family: 'Permanent Marker';
   font-size: 1.5em;
 }
 
@@ -286,4 +286,19 @@ ul#category-menu li:hover ul {
 
 .center-wrapper * {
   margin: 0 auto;
+}
+
+.img-zoom {
+  width: 310px;
+  -webkit-transition: all .2s ease-in-out;
+  -moz-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+  -ms-transition: all .2s ease-in-out;
+}
+
+.transition {
+  -webkit-transform: scale(2); 
+  -moz-transform: scale(2);
+  -o-transform: scale(2);
+  transform: scale(2);
 }

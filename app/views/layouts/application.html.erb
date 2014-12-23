@@ -3,6 +3,12 @@
 <head>
   <title>CanvasBlog</title>
   <meta name="viewport" content="user-scalable=no, width=device-width, minimum-scale=1.0 , initial-scale=1.0, maximum-scale=1.0" />
+  <style>
+	  @font-face { font-family: 'Permanent Marker'; src: url('<%= asset_path 'PermanentMarker.ttf' %>') format('truetype'); }
+		@font-face { font-family: 'Special Elite'; src: url('<%= asset_path 'SpecialElite.ttf' %>') format('truetype'); }
+  </style>
+  <div style="font-family:'Permanent Marker'; position: absolute; opacity: 0;">&nbsp;</div>
+  <div style="font-family:'Special Elite'; position: absolute; opacity: 0;">&nbsp;</div>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
@@ -10,7 +16,7 @@
 <body>
 
   <main>
-  <%= yield %>
+	  <%= yield %>
   </main>
 
 </body>
