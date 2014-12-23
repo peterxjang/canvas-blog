@@ -17,5 +17,4 @@
 //= require pxloader
 //= require pxloaderimage
 //= require jquery.mousewheel
-//= require jquery.photobox
 //= require_tree .

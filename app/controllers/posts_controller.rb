@@ -110,7 +110,7 @@ class PostsController < ApplicationController
 			src = item['LargeImage'] ? item['LargeImage']['URL'] : nil
 			items << {title: item['ItemAttributes']['Title'], src: src, src_small: src_small}
 		end
-		render json: {valid: true, items: items}
+		render json: {valid: true, items: items.take(5)}
 		# response.to_h["ItemSearchResponse"]["Items"]["Item"].each do |item|
 		#   p "#{item}"
 		#   p "#{item['ItemAttributes']['Title']}"

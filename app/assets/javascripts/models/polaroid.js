@@ -271,9 +271,7 @@ function newImageSearch(e) {
   e.preventDefault();
   $('#link-image-search').bind('click', false);
   $('#link-image-search').text('Searching...');
-  // $('#gallery').photobox('destroy');
-  $('#gallery').photobox('prepareDOM');
-  $('#gallery').empty();
+  resetImageResults();
   $.ajax({
     url: '/amazon_image_search',
     type: 'GET',
@@ -281,15 +279,17 @@ function newImageSearch(e) {
     data: $("form#form-create-post").serialize(),
     success: function(response) {
       if (response.valid) { 
+        $('#image-search-selected').html('<p>' + response.items[0].title + '</p>');
+        $('#image-search-selected').append('<img src="' + response.items[0].src + '">');
         for(var i=0;i<response.items.length; i++) {
           var src_large = response.items[i].src
           var src_small = response.items[i].src_small
           var title = response.items[i].title
-          $('#gallery').append('<a href="' + src_large + '"><img src="' + src_small + '" alt="' + title + '"></a>');
+          $('#image-search-thumbnails').append(
+            '<a class="image-thumbnail" href="' + src_large + '" alt="' + title + '"><img src="' + src_small + '"></a>'
+          );
         }
-        $('#gallery').photobox('a');
-        $('.pbWrapper').on('click', selectImage);
-        console.log(response); 
+        $('.image-thumbnail').on('click', selectImage);
       }
       else { console.log("Could not find images!"); }
     },
@@ -302,11 +302,21 @@ function newImageSearch(e) {
 }
 
 function selectImage(e) {
-  console.log(e.target.currentSrc);
-  console.log($('.pbCaptionText > .title').text());
-  $('#gallery').photobox('destroy');
-  $('#gallery').empty();
-  // $('#gallery').photobox('prepareDOM');
+  e.preventDefault();
+  $('#image-search-selected').css('opacity', 0.5);
+  var newImage = new Image();
+  var title = $(this).attr("alt");
+  $(newImage).load(function (event) {
+      $('#image-search-selected').html('<p>' + title + '</p>');
+      $('#image-search-selected').append(newImage);
+      $('#image-search-selected').css('opacity', 1.0);
+  });
+  $(newImage).attr("src", $(this).attr("href"));
+}
+
+function resetImageResults() {
+  $('#image-search-selected').empty();
+  $('#image-search-thumbnails').empty();
 }
 
 function createPost() {
