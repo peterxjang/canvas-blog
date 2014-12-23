@@ -86,4 +86,35 @@ class PostsController < ApplicationController
 			render json: {valid: false}
 		end
 	end
+
+	def amazon_image_search
+		search_index = 'All'
+		search_index = 'Books' if current_category.name == 'Books'
+		search_index = 'Video' if current_category.name == 'Movies'
+		search_index = 'Music' if current_category.name == 'Music'
+		search_index = 'Software' if current_category.name == 'Games'
+		request = Vacuum.new
+		request.configure(aws_access_key_id: Rails.application.secrets.aws_access_key_id,
+									    aws_secret_access_key: Rails.application.secrets.aws_secret_access_key,
+									    associate_tag: 'peterjang')
+		response = request.item_search(
+		  query: {
+		    'Keywords'    => params[:title],
+		    'SearchIndex' => search_index, # All Blended Books Video Music Software Electronics
+		    'ResponseGroup' => 'Medium'
+		  }
+		)
+		items = []
+		response.to_h["ItemSearchResponse"]["Items"]["Item"].each do |item|
+			src_small = item['SmallImage'] ? item['SmallImage']['URL'] : nil
+			src = item['LargeImage'] ? item['LargeImage']['URL'] : nil
+			items << {title: item['ItemAttributes']['Title'], src: src, src_small: src_small}
+		end
+		render json: {valid: true, items: items}
+		# response.to_h["ItemSearchResponse"]["Items"]["Item"].each do |item|
+		#   p "#{item}"
+		#   p "#{item['ItemAttributes']['Title']}"
+		#   p "#{item['LargeImage']}"
+		# end
+	end
 end

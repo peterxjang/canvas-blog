@@ -1,17 +1,25 @@
 <form id="form-create-post" enctype="multipart/form-data">
 <ul class='list-no-bullets'>
-	<li>
+<!-- 	<li>
 		<label>Image:</label>
 		<input type="file" name="filename" accept="image/*"/>
-	</li>
+	</li> -->
+	<!-- <li>
+		<input name='search' id='search' placeholder='Search'/>
+		<a href="" id='link-image-search'>Search for image</a>
+	</li> -->
 	<li>
-		<label>Title: </label>
+		<!-- <label>Title: </label> -->
 		<input name='title' id='title' value='<%= @post.title %>' placeholder='Title'/>
+		<a href="" id='link-image-search'>Search for image</a>
 	</li>
-	<li>
+	<div class="center-wrapper">
+		<div id='gallery'></div>
+	</div>
+<!-- 	<li>
 		<label>Body: </label>
 		<textarea name='body' cols="2" rows="10" ><%= @post.body %></textarea>
-	</li>
+	</li> -->
 	<li>
 		<input id='button-create-post' type='Submit'/>
 	</li>

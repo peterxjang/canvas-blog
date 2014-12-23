@@ -279,3 +279,11 @@ ul#category-menu li:hover ul {
   opacity: 1;
   visibility: visible;
 }
+
+.center-wrapper{
+  text-align: center;
+}
+
+.center-wrapper * {
+  margin: 0 auto;
+}

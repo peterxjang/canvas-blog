@@ -254,6 +254,7 @@ function updatePost(id) {
 }
 
 function newPost() {
+  $(document).on("click", "#link-image-search", newImageSearch);
   $.ajax({
     url: '/posts/new',
     type: 'GET',
@@ -264,6 +265,48 @@ function newPost() {
     },
     error: function(response) { console.log("new post error!"); console.log(response); }
   });
+}
+
+function newImageSearch(e) {
+  e.preventDefault();
+  $('#link-image-search').bind('click', false);
+  $('#link-image-search').text('Searching...');
+  // $('#gallery').photobox('destroy');
+  $('#gallery').photobox('prepareDOM');
+  $('#gallery').empty();
+  $.ajax({
+    url: '/amazon_image_search',
+    type: 'GET',
+    dataType: 'json',
+    data: $("form#form-create-post").serialize(),
+    success: function(response) {
+      if (response.valid) { 
+        for(var i=0;i<response.items.length; i++) {
+          var src_large = response.items[i].src
+          var src_small = response.items[i].src_small
+          var title = response.items[i].title
+          $('#gallery').append('<a href="' + src_large + '"><img src="' + src_small + '" alt="' + title + '"></a>');
+        }
+        $('#gallery').photobox('a');
+        $('.pbWrapper').on('click', selectImage);
+        console.log(response); 
+      }
+      else { console.log("Could not find images!"); }
+    },
+    error: function(response) { console.log("image search error!"); console.log(response); },
+    complete: function(response) { 
+      $('#link-image-search').unbind('click', false); 
+      $('#link-image-search').text('Search for image');
+    }
+  });
+}
+
+function selectImage(e) {
+  console.log(e.target.currentSrc);
+  console.log($('.pbCaptionText > .title').text());
+  $('#gallery').photobox('destroy');
+  $('#gallery').empty();
+  // $('#gallery').photobox('prepareDOM');
 }
 
 function createPost() {
@@ -312,3 +355,4 @@ function deletePostConfirmed(id) {
     error: function(response) { console.log("delete post error!"); console.log(response); }
   });
 }
+

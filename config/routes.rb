@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   get 'categories_edit_background' => 'categories#edit_background'
   put 'categories_update_background' => 'categories#update_background'
 
+  get 'amazon_image_search' => 'posts#amazon_image_search'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
