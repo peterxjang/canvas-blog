@@ -9,9 +9,7 @@ function newImageSearch(e) {
     dataType: 'json',
     data: $("form#form-create-post").serialize(),
     success: function(response) {
-      if (response.valid) { 
-        $('#image-search-selected').html('<p>' + response.items[0].title + '</p>');
-        $('#image-search-selected').append('<img src="' + response.items[0].src_large + '">');
+      if (response.valid) {
         for(var i=0;i<response.items.length; i++) {
           var src_large = response.items[i].src_large
           var src_small = response.items[i].src_small
@@ -19,6 +17,10 @@ function newImageSearch(e) {
           $('#image-search-thumbnails').append(
             '<a class="image-thumbnail" href="' + src_large + '" alt="' + title + '"><img src="' + src_small + '"></a>'
           );
+          if (i==0) {
+		        $('#image-search-selected').html('<p>' + title + '</p>');
+		        $('#image-search-selected').append('<img src="' + src_large + '" alt="' + title + '">');
+          }
         }
         $('.image-thumbnail').on('click', selectThumbnail);
         $('#image-search-selected').on('click', selectImage);
@@ -44,14 +46,26 @@ function selectThumbnail(e) {
       $('#image-search-selected').css('opacity', 1.0);
   });
   $(newImage).attr("src", $(this).attr("href"));
+  $(newImage).attr("alt", title);
 }
 
 function selectImage(e) {
   e.preventDefault();
-  console.log('hi');
+  $("#title").attr('value', $(e.target).attr("alt"));
+  $("#new-filename").attr('value', $(e.target).attr("src"));
+  // setBackground($('#title'), $(e.target).attr("src"));
+  // setBackground($('#textarea-body'), $(e.target).attr("src"));
+  $("#div-image-thumbnail").html("<img id='img-thumbnail' src='" +  $(e.target).attr("src") + "'>");
+  $('#div-image-search').remove();
+  $('#div-post-details').show();
 }
 
 function resetImageResults() {
   $('#image-search-selected').empty();
   $('#image-search-thumbnails').empty();
+}
+
+function setBackground(item, src) {
+	item.css('background', 'url(' + src + ') no-repeat center center fixed');
+	item.css('background-size', 'cover');
 }

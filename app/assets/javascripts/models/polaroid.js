@@ -290,8 +290,10 @@ function createPost() {
 function deletePost(id) {
   showPopup(
     "<h2 class='warning-message'>Are you sure you want to delete this post?</h2>" + 
+    "<div class='center-wrapper'>" + 
     "<input id='button-delete-confirmed' value='Confirm' type='Submit'/>" + 
-    "<input id='button-cancel-popup' value='Cancel' type='Submit'/>"
+    "<input id='button-cancel-popup' value='Cancel' type='Submit'/>" + 
+    "</div>"
   );
 }
 

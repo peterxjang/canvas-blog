@@ -11,7 +11,15 @@ class PostsController < ApplicationController
 			title: params[:title], 
 			body: params[:body],
 		)
-		post.image = params[:filename]
+		# post.image = params[:filename]
+		p 'fdsafdsafdsafsafdsafdaf'
+		p params[:remotefilename]
+		p params[:filename]
+		if !params[:filename].nil?
+			post.image = params[:filename]
+		else
+			post.remote_image_url = params[:remotefilename]
+		end
 		post.save
 		if post.valid?
 			# current_layout.create_json_object(post)
@@ -101,7 +109,7 @@ class PostsController < ApplicationController
 									    associate_tag: 'peterjang')
 		response = request.item_search(
 		  query: {
-		    'Keywords'    => params[:title],
+		    'Keywords'    => params[:searchterms],
 		    'SearchIndex' => search_index,
 		    'ResponseGroup' => 'Medium'
 		  }
