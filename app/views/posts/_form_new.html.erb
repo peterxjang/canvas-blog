@@ -1,19 +1,45 @@
 <form id="form-create-post" enctype="multipart/form-data">
+<!-- 		<input type='text' name='title' id='title' placeholder='Search'/>
+		<input type='button' value='Search' id='link-image-search'> -->
 <ul class='list-no-bullets'>
-	<li>
+<!-- 	<li>
 		<label>Image:</label>
 		<input type="file" name="filename" accept="image/*"/>
-	</li>
-	<li>
-		<label>Title: </label>
-		<input name='title' id='title' value='<%= @post.title %>' placeholder='Title'/>
-	</li>
-	<li>
-		<label>Body: </label>
-		<textarea name='body' cols="2" rows="10" ><%= @post.body %></textarea>
-	</li>
-	<li>
-		<input id='button-create-post' type='Submit'/>
-	</li>
+	</li> -->
+	<div id='div-image-search'>
+		<li>
+			<input name='searchterms' id='searchterms' class='full-width' placeholder='Search for an image...'/>
+			<a href="" id='link-image-search'>Search</a>
+		</li>
+		<div class="center-wrapper">
+			<div id='image-search-thumbnails'></div>
+			<div id='image-search-selected'></div>
+		</div>
+	</div>
+	<div id='div-post-details' style='display:none'>
+		<div id='div-image-remote'>
+			<div id='div-image-thumbnail'></div>
+			<input name="remotefilename" id='new-filename' style='display:none'/>
+		</div>
+		<div id='div-image-upload'>
+			<li>
+				<label>Or select an image from your computer:</label>
+				<input type="file" name="filename" accept="image/*"/>
+			</li>
+		</div>
+		<div id='div-post-info'>
+			<li>
+				<label>Title: </label>
+				<input name='title' id='title' class='full-width' placeholder='Title'/>
+			</li>
+			<li>
+				<label>Body: </label>
+				<textarea name='body' id='textarea-body' cols="2" rows="10" ><%= @post.body %></textarea>
+			</li>
+		</div>
+		<li>
+			<input id='button-create-post' type='Submit'/>
+		</li>
+	</div>
 </ul>
 </form>

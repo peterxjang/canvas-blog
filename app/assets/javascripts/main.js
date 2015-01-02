@@ -16,6 +16,8 @@ function editLayout(event) {
         $('#div-top').html('');
         setMenuEditMode(response.htmlMenu);
         loadEditLayout(response.layout);
+        $('#canvasWrapper').attr("style", 'background-color: #777; background-image: linear-gradient(45deg, gray 25%, transparent 25%, transparent 75%, gray 75%, gray),  linear-gradient(45deg, gray 25%, transparent 25%, transparent 75%, gray 75%, gray); background-size:60px 60px; background-position:0 0, 30px 30px');
+        $('#canvasWrapper').css("position", "absolute");
       }
       else {
         $('#error-signin').text('Incorrect email or password!');

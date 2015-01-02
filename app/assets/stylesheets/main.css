@@ -23,20 +23,20 @@ body{
 }
 
 body, input, button, textarea {
-  font-family: 'Special Elite', serif;
+  font-family: 'Special Elite';
 }
 h1 {
-  font-family: 'Permanent Marker', cursive;
+  font-family: 'Permanent Marker';
   font-size: 3em;
   margin-bottom: 1em;
 }
 h2 {
-  font-family: 'Permanent Marker', cursive;
+  font-family: 'Permanent Marker';
   font-size: 2em;
   margin-bottom: 0.5em;
 }
 #title {
-  font-family: 'Permanent Marker', cursive;
+  font-family: 'Permanent Marker';
   font-size: 1.5em;
 }
 
@@ -53,7 +53,7 @@ p {
 li {
   padding: 2px;
 }
-input {
+.full-width {
   width: 100%;
 }
 textarea
@@ -174,6 +174,7 @@ textarea
   top: 10vh;
   height: 70vh;
   overflow-y: auto;
+  /*overflow: hidden;*/
   margin-left: auto;
   margin-right: auto;
   box-shadow: 0 0 7px 7px rgb(255,255,255);
@@ -225,17 +226,11 @@ ul#category-menu {
   margin: 0;
   padding: 15px 4px 17px 0;
   list-style: none;
-  /*-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);*/
 }
 ul#category-menu li {
-  /*font: bold 12px/18px sans-serif;*/
   display: inline-block;
   margin-right: -4px;
   position: relative;
-  /*padding: 15px 20px;*/
-  /*background: #fff;*/
   cursor: pointer;
   -webkit-transition: all 0.2s;
   -moz-transition: all 0.2s;
@@ -245,7 +240,6 @@ ul#category-menu li {
 }
 ul#category-menu li:hover {
   background: #222;
-  /*color: #fff;*/
 }
 ul#category-menu li ul {
   padding: 0;
@@ -278,4 +272,50 @@ ul#category-menu li:hover ul {
   display: block;
   opacity: 1;
   visibility: visible;
+}
+
+.center-wrapper{
+  text-align: center;
+}
+
+.center-wrapper * {
+  margin: 0 auto;
+}
+
+#image-search-thumbnails > a {
+  padding: 2px;
+}
+
+#button-delete-confirmed, #button-cancel-popup {
+  padding: 5px;
+  margin: 5px;
+}
+
+#div-post-details {
+  width: 100%;
+  position:relative;
+}
+
+#div-image-thumbnail {
+  float:left;
+  width:10%;
+  position:relative;
+  overflow:hidden;
+}
+
+#img-thumbnail {
+  width: 100%;
+  height: auto;
+  padding-right: 5%;
+}
+
+#div-image-upload {
+  float:left;
+  width:80%;
+  position:relative;
+  overflow:hidden;
+}
+
+#div-post-info {
+  clear: both;
 }

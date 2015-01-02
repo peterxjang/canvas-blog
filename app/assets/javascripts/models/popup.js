@@ -8,6 +8,7 @@ function hidePopup() {
   layer.setDraggable(true);
   $("#pop-up-background").fadeOut("slow");
   $("#pop-up").fadeOut("slow");
+  $("#pop-up").removeAttr('style');
 }
 
 $(document).on("mousedown touchstart", "#pop-up-background", hidePopup);

@@ -6,5 +6,5 @@ class Post < ActiveRecord::Base
 
 	mount_uploader :image, ImageUploader
 
-	validates :title, :body, :image, presence: true
+	validates :title, :image, presence: true
 end
